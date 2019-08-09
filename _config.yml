@@ -3,17 +3,17 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Hexo
+title: Mycroft的个人博客
 subtitle:
-description:
-keywords:
-author: John Doe
-language: en
-timezone:
+description: 天道酬勤
+keywords: blog,mycroft,android,spring,mycroftwong
+author: Mycroft Wong
+language: zh-Hans
+timezone: CN
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://yoursite.com
+url: https://blog.mycroft.wang
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -73,7 +73,7 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: landscape
+theme: theme
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
