@@ -1,6 +1,7 @@
 ---
 title: 使用hexo搭建博客
 date: 2019-08-09 11:21:43
+categories: 网站搭建
 tags:
 ---
 
