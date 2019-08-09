@@ -9,7 +9,7 @@ description: 天道酬勤
 keywords: blog,mycroft,android,spring,mycroftwong
 author: Mycroft Wong
 language: zh-Hans
-timezone: CN
+timezone: Asia/Shanghai
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
@@ -79,5 +79,6 @@ theme: next
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: https://gitee.com/mycroftwong/mycroftwong.git
-  branch: master
+  repo: 
+    gitee: https://gitee.com/mycroftwong/mycroftwong.git,master
+    github: https://github.com/MycroftWong/MycroftWong.github.io.git,master
