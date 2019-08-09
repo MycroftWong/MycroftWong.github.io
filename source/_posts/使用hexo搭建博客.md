@@ -126,3 +126,6 @@ deploy:
 
 [git无法pull仓库refusing to merge unrelated histories](https://blog.csdn.net/lindexi_gd/article/details/52554159)
 
+[Hexo托管到Coding；Hexo同时部署到多个平台](http://laker.me/blog/2015/09/28/15_0928_hexo_to_coding/)
+
+[Hexo server报错Cannot read property 'offset' of null解决方法](lanhuapp.com/web/#/item/project/board?pid=4cba2aed-b116-4375-a9ef-e5a065cb1ed6)
