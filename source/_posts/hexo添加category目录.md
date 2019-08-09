@@ -1,8 +1,11 @@
 ---
 title: hexo添加category目录
 date: 2019-08-09 15:07:53
-categories: 网站搭建
+categories: 
+- 网站搭建
 tags:
+- hexo
+- categories
 ---
 
 # hexo添加category目录

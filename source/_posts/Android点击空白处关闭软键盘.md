@@ -1,8 +1,12 @@
 ---
 title: Android点击空白处关闭软键盘
 date: 2019-08-09 15:02:34
-categories: Android
-tags: android,EditText,软键盘
+categories: 
+- Android
+tags: 
+- android
+- EditText
+- 软键盘
 ---
 
 # Android点击空白处关闭软键盘

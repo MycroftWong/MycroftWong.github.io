@@ -1,8 +1,14 @@
 ---
 title: nginx配置多个域名
 date: 2019-08-09 14:06:50
-categories: 网站搭建
-tags: nginx,blog,hexo,github.gitee
+categories: 
+- 网站搭建
+tags: 
+- nginx
+- blog
+- hexo
+- github
+- gitee
 ---
 
 # nginx配置多个域名
