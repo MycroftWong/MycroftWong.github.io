@@ -77,11 +77,9 @@ tags:
 	url = https://gitee.com/mycroftwong/LoveServer.git
 	fetch = +refs/heads/*:refs/remotes/origin/*
 	url = https://code.aliyun.com/mycroftwong/LoveServer.git
-
 [branch "master"]
 	remote = origin
 	merge = refs/heads/master
-	
 [remote "aliyun"]
     url = https://code.aliyun.com/mycroftwong/LoveServer.git
     fetch = +refs/heads/*:refs/remotes/gitee/*

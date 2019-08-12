@@ -9,6 +9,7 @@ description: 天道酬勤
 keywords: blog,mycroft,android,spring,mycroftwong
 author: Mycroft Wong
 language: zh-CN
+# language: zh-Hans
 timezone: Asia/Shanghai
 
 # URL
@@ -16,6 +17,7 @@ timezone: Asia/Shanghai
 url: https://mycroftwong.gitee.io/
 root: /
 permalink: :year/:month/:day/:title/
+# permalink: post/:title/
 permalink_defaults:
 
 # Directory
@@ -35,7 +37,7 @@ titlecase: false # Transform title into titlecase
 external_link: true # Open external links in new tab
 filename_case: 0
 render_drafts: false
-post_asset_folder: false
+post_asset_folder: true
 relative_link: false
 future: true
 highlight:
@@ -98,7 +100,10 @@ pagination_dir: page
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
 # theme: next
-theme: next
+# theme: next
+theme: hexo-theme-matery
+# theme: inside
+# theme: material-x
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
