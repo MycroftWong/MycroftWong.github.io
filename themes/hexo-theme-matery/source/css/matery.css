@@ -163,11 +163,13 @@ mark {
 }
 
 .bg-color {
-    background-image: linear-gradient(to right, #4cbf30 0%, #0f9d58 100%);
+    /* background-image: linear-gradient(to right, #4cbf30 0%, #0f9d58 100%); */
+    background-image: linear-gradient(to right, #00A685 0%, #00A685 100%);
 }
 
 .text-color {
-    color: #0f9d58 !important;
+    /* color: #0f9d58 !important; */
+    color: #FEFEFE !important;
 }
 
 .white-color {
@@ -304,8 +306,10 @@ header .side-nav .social-link {
 }
 
 .cover-btns a:hover {
-    border: 1px solid #f44336;
-    background-color: #f44336;
+    /* border: 1px solid #f44336; */
+    /* background-color: #f44336; */
+    border: 1px solid #00A685;
+    background-color: #00A685;
     box-shadow: 0 14px 26px -12px rgba(233, 30, 99, 0.42), 0 4px 23px 0 rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(233, 30, 99, 0.2);
 }
 
@@ -1070,6 +1074,7 @@ table tr:nth-child(2n), thead {
 .chip-container .chip-active {
     color: #FFF !important;
     background: linear-gradient(to bottom right, #FF5E3A 0%, #FF2A68 100%) !important;
+    /* background: linear-gradient(to bottom right, #00A685 0%, #00A685 100%) !important; */
     box-shadow: 2px 5px 10px #aaa !important;
 }
 
@@ -1114,7 +1119,8 @@ table tr:nth-child(2n), thead {
     height: 80px;
     margin: 10px 0 50px -20px;
     padding: 21px 10px;
-    background-color: #ff5722;
+    /* background-color: #ff5722; */
+    background-color: #00A685;
     color: #fff;
     font-size: 1.8rem;
     font-weight: 600;

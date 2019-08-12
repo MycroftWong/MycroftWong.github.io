@@ -32,10 +32,10 @@ cover:
 # index page dream text,
 # 配置首页显示"梦想"的语句.
 dream:
-  enable: false
-  showTitle: false
-  title: 我的梦想
-  text: 天道酬勤
+  enable: true
+  showTitle: true
+  title: 我的人生观
+  text: 我一直相信天道酬勤的道理，如果我没有获得更多，那么一定是我努力的不够
 
 # Whether to display the musics.
 # 是否在首页显示音乐.
@@ -77,7 +77,7 @@ recommend:
 # Configure website favicon and LOGO
 # 配置网站favicon和网站LOGO
 favicon: /favicon.png
-logo: /medias/logo.png
+logo: https://image.mycroft.wang/default_avatar.jpg
 
 # The configuration of the second button in the home banner,
 # including the display name of the button, the font awesome icon, and the hyperlink to the button.
@@ -148,7 +148,7 @@ wordCount:
 # Whether to activate the 'love' effect of clicking on the page.
 # 是否激活点击页面的'爱心'效果，默认激活.
 clicklove:
-  enable: true
+  enable: false
 
 # profile in about page, including avatars, career, and personal introductions.
 # 在”关于”页面中配置个人信息，包括头像、职业和个人介绍.
@@ -194,9 +194,6 @@ mySkills:
     Kotlin:
       background: 'linear-gradient(to right, #2196F3 0%, #42A5F5 100%)'
       percent: 70%
-    CSS:
-      background: 'linear-gradient(to right, #00BCD4 0%, #80DEEA 100%)'
-      percent: 70%
     SQL:
       background: 'linear-gradient(to right, #4CAF50 0%, #81C784 100%)'
       percent: 70%
@@ -210,9 +207,9 @@ mySkills:
 myGallery:
   enable: true
   data:
-    - /medias/featureimages/0.jpg
-    - /medias/featureimages/1.jpg
-    - /medias/featureimages/2.jpg
+    - /medias/featureimages/10.jpg
+    - /medias/featureimages/13.jpg
+    - /medias/featureimages/16.jpg
 
 # Whether to display post-calender in the `archive` page
 # 设置在归档页面中是否显示'文章日历'控件
