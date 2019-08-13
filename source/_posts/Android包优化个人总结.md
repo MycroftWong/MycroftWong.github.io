@@ -346,3 +346,13 @@ andResGuard {
 
 另外，还可以多看看`Analyze`下的一些功能，可以帮助提升代码质量。一经检查，发现修改根本停不下来...
 
+## 一些可以参考的文章
+
+[Android APP终极瘦身指南](http://jayfeng.com/2016/03/01/Android-APP%E7%BB%88%E6%9E%81%E7%98%A6%E8%BA%AB%E6%8C%87%E5%8D%97/)
+
+[APK瘦身三步曲](https://www.jianshu.com/p/24eb823edebc)
+
+[Android 可能你想要的APK瘦身笔记](https://juejin.im/post/5d4407baf265da03f04caf59)
+
+[西瓜视频apk瘦身之 Java access 方法删除](https://mp.weixin.qq.com/s/ZHisCVjO_ZrtvvEWBYUQFQ)
+
