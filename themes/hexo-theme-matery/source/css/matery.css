@@ -1140,7 +1140,7 @@ table tr:nth-child(2n), thead {
     margin: 10px 0 50px -20px;
     padding: 21px 10px;
     /* background-color: #ff5722; */
-    background-color: #00A685;
+    background-color: #009688;
     color: #fff;
     font-size: 1.8rem;
     font-weight: 600;
@@ -1156,23 +1156,27 @@ table tr:nth-child(2n), thead {
     height: 60px;
     margin: 10px 0 30px -10px;
     padding: 14px 16px;
-    background-color: #ef6c00;
+    background-color: #4db6ac;
     color: #fff;
     font-size: 1.7rem;
     font-weight: 600;
 }
 
 #cd-timeline .month a {
-    color: #fff;
+    color: #333 ;
 }
 
 #cd-timeline .day {
     position: relative;
     padding: 8px 10px;
-    background-color: #ffa726;
-    color: #fff;
+    background-color: #b2dfdb;
+    color: #000;
     font-size: 1.2rem;
     font-weight: 500;
+}
+
+#cd-timeline .day a {
+    color: #1a1a1a ;
 }
 
 #cd-timeline {
@@ -1191,7 +1195,8 @@ table tr:nth-child(2n), thead {
     left: 18px;
     height: 100%;
     width: 4px;
-    background: #0f9d58;
+    /* background: #0f9d58; */
+    background: #00a685;
 }
 
 @media only screen and (min-width: 900px) {
@@ -1700,7 +1705,8 @@ footer .copy-right {
 }
 
 .top-scroll .btn-floating {
-    background: linear-gradient(to bottom right, #FF5E3A 0%, #FF2A68 100%);
+    /* background: linear-gradient(to bottom right, #FF5E3A 0%, #FF2A68 100%); */
+    background: linear-gradient(to bottom right, #FFA726 0%, #FB8700 100%);
     width: 48px;
     height: 48px;
 }
