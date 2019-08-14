@@ -21,5 +21,11 @@
 </div>
 <script>
 // 每天切换 banner 图.  Switch banner image every day.
-$('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay() + '.jpg)');
+if (screen.width < 601) {
+    $('.bg-cover').css('background-image', 'url(/medias/banner/' + Number(new Date().getDay()) + '.jpg)');
+} else if (screen.width < 992) {
+    $('.bg-cover').css('background-image', 'url(/medias/banner/' + (Number(new Date().getDay()) + 1) + '.jpg)');
+} else {
+    $('.bg-cover').css('background-image', 'url(/medias/banner/' + (Number(new Date().getDay()) + 2) + '.jpg)');
+}
 </script>
