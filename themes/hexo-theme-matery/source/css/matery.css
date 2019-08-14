@@ -408,26 +408,6 @@ header .go-back i {
     font-size: 1.9rem;
 }
 
-@-webkit-keyframes rainbow {
-    0%,
-    100% {
-        background: rgba(0, 166, 133, 0);
-        background: linear-gradient(45deg, rgba(0, 166, 133, 0) 0%, rgba(0, 166, 133, 0) 100%);
-        background: -moz-linear-gradient(135deg, rgba(0, 166, 133, 0) 0%, rgba(0, 166, 133, 0) 100%);
-        background: -webkit-linear-gradient(135deg, rgba(0, 166, 133, 0) 0%, rgba(0, 166, 133, 0) 100%);        
-    }
-}
-
-@keyframes rainbow {
-    0%,
-    100% {
-        background: rgba(0, 166, 133, 0);
-        background: linear-gradient(45deg, rgba(0, 166, 133, 0) 0%, rgba(0, 166, 133, 0) 100%);
-        background: -moz-linear-gradient(135deg, rgba(0, 166, 133, 0) 0%, rgba(0, 166, 133, 0) 100%);
-        background: -webkit-linear-gradient(135deg, rgba(0, 166, 133, 0) 0%, rgba(0, 166, 133, 0) 100%);        
-    }
-}
-
 /* @-webkit-keyframes rainbow {
     0%,
     100% {
