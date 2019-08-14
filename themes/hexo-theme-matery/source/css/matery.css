@@ -172,6 +172,10 @@ mark {
     color: #FEFEFE !important;
 }
 
+.badge-text-color {
+    color: #00A685 !important;
+}
+
 .white-color {
     color: #fff;
 }

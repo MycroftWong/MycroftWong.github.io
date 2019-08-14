@@ -63,8 +63,10 @@ $(function () {
     });
 
     AOS.init({
-        easing: 'ease-in-out-sine',
-        duration: 700,
+        // easing: 'ease-in-out-sine',
+        easing: 'ease-out-quart',
+        once: true,
+        duration: 500,
         delay: 100
     });
 
