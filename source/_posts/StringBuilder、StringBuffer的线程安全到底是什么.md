@@ -71,6 +71,47 @@ public AbstractStringBuilder append(String str) {
 
 但是在`StringBuffer`中，重写了所有的`append`之类的操作，添加了`synchronized`关键字，保证了这一段代码的原子性，保证了线程安全。
 
+### 测试代码
+
+```java
+import java.util.Locale;
+import java.util.Random;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+
+public class Main {
+
+    private static final Random seedRandom = new Random(4L);
+
+    public static void main(String[] args) throws Exception {
+        StringBuilder builder = new StringBuilder();
+        StringBuffer buffer = new StringBuffer();
+
+        ExecutorService executor = Executors.newCachedThreadPool();
+        for (int i = 0; i < 50; i++) {
+            executor.execute(() -> {
+                Random random = new Random(seedRandom.nextLong());
+                builder.append(random.nextInt(10));
+                buffer.append(random.nextInt(10));
+            });
+        }
+
+        TimeUnit.SECONDS.sleep(1);
+        System.out.println(builder);
+        System.out.println(builder.length());
+
+        System.out.println(buffer);
+        System.out.println(buffer.length());
+
+        executor.shutdown();
+    }
+}
+```
+
+多执行这段代码几次，`StringBuffer`得到的结果长度会总是`50`，而`StringBuilder`偶尔会少于`50`次，这就是线程不安全的情况下出现的错误。
+
 ## 我的疑问
 
 这样的线程安全有什么用，说实话，没有用过`StringBuffer`，一般的需求都是在单线程进行字符串的拼接。
