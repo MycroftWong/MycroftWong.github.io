@@ -76,7 +76,7 @@ recommend:
 
 # Configure website favicon and LOGO
 # 配置网站favicon和网站LOGO
-favicon: /favicon.png
+favicon: https://www.mycroft.wang/images/favicon.ico
 logo: https://image.mycroft.wang/default_avatar.jpg
 
 # The configuration of the second button in the home banner,

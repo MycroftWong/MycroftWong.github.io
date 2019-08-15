@@ -21,11 +21,14 @@
 </div>
 <script>
 // 每天切换 banner 图.  Switch banner image every day.
+// 手机屏幕
 if (screen.width < 601) {
-    $('.bg-cover').css('background-image', 'url(/medias/banner/' + Number(new Date().getDay()) + '.jpg)');
-} else if (screen.width < 992) {
-    $('.bg-cover').css('background-image', 'url(/medias/banner/' + (Number(new Date().getDay()) + 1) + '.jpg)');
+    $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay() + '_phone.jpg)');
+// 平板屏幕，和电脑屏幕异常处理
+// } else if (screen.width < 992) {
+    // $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay() + '.jpg)');
+// 电脑屏幕
 } else {
-    $('.bg-cover').css('background-image', 'url(/medias/banner/' + (Number(new Date().getDay()) + 2) + '.jpg)');
+    $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay() + '.jpg)');
 }
 </script>
