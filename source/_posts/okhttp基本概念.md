@@ -59,15 +59,15 @@ System.out.println(response.body().string());
 
 ### 2. RequestBody
 
-`HTTP`的请求体，如`POST`请求通常为多个`key-value`的拼接
+`HTTP`的请求体，如`POST`提交表单。
 
-常用到的有两个子类：`FormBody`，`MultipartBody`。前者多用于`POST`的`key-value`请求，后者多用于文件上传。
+常用到的有两个子类：`FormBody`，`MultipartBody`。前者多用于`POST`表单提交，后者多用于文件上传。
 
 ### 3. Call
 
 > A call is a request that has been prepared for execution. A call can be canceled. As this object represents a single request/response pair (stream), it cannot be executed twice.
 
-翻译：`Call`表示为请求做准备执行。`Call`可以被取消。它只代表单独的一个请求-相应对，所以不能被执行两次。
+翻译：`Call`表示将`Request`请求为执行做准备。`Call`可以被取消。它只代表单独的一个请求-相应对，所以不能被执行两次。
 
 `Call`是一个接口，包含的主要方法：`Response execute()`，`void enqueue(Callback)`，`cancel()`，分别表示同步执行、加入队列等待执行、取消执行。
 
@@ -75,11 +75,11 @@ System.out.println(response.body().string());
 
 > An HTTP response. Instances of this class are not immutable: the response body is a one-shot value that may be consumed only once and then closed. All other properties are immutable.
 
-翻译：`HTTP`响应。实例不可变：其中的响应体是一次性的值，当被消费一次之后就会被关闭。其他所有属性都是不可变的。
+翻译：`HTTP`响应。实例不可变：其中的`ResponseBody`是一次性的值，当被消费一次之后就会被关闭。其他所有属性都是不可变的。
 
 `Response`封装了响应结果，其中主要的属性有：`code`，`message`，`request`，`header`，`body`。
 
-`body`指的是`ResponseBody`
+`body`指的是`ResponseBody`。
 
 ### 5. ResponseBody
 
