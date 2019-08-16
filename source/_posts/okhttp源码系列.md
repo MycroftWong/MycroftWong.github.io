@@ -44,3 +44,5 @@ tags:
 [Okhttp3源码分析](https://www.jianshu.com/p/b0353ed71151)
 
 [OkHttp3架构分析](https://www.jianshu.com/p/9deec36f2759)
+
+[Android OkHttp3源码分析](https://blog.csdn.net/baidu_36959886/article/details/90900261)
