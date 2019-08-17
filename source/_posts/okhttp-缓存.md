@@ -169,7 +169,7 @@ public final class CacheInterceptor implements Interceptor {
         1. 是，缓存网络返回结果
         2. 否，不缓存
 
-这些条件的由来，是对`HTTP`协议的理解。根据`HTTP`协议，判断是否使用缓存、是否更新缓存、是否删除缓存。
+这些条件的由来，是对`HTTP`协议的理解。根据`HTTP`协议，判断是否使用缓存、是否更新缓存、是否删除缓存、缓存是否过期等。
 
 ## InternalCache
 
@@ -294,3 +294,7 @@ Cache(File directory, long maxSize, FileSystem fileSystem) {
 1. `InternalCache`定义了`CacheInterceptor`操作缓存的接口，不提供额外的功能
 2. `Cache`则是向应用层提供了操作接口，隐藏了代理`InternalCache`的方法
 
+
+## 特别感谢
+
+[OKHttp源码解析(六)--中阶之缓存基础](https://www.jianshu.com/p/b32d13655be7)
