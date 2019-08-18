@@ -214,9 +214,72 @@ private RealConnection findConnection(int connectTimeout, int readTimeout, int w
 
 现在知道了`RealConnection`才是真正的服务器连接。通过它进行连接服务器，建立好连接之后，通过`ExchangeCodec newCodec(OkHttpClient, Interceptor.Chain)`返回`ExchangeCodec`用于处理`IO`，并将其封装在`Exchange`中，供应用层调用（大部分是在`CallServerInterceptor`使用）。
 
-而`RealConnection`实际上实现了`Connection`接口
+在`Java`中，连接服务器使用的是`Socket`，我们查看`Socket`的使用，真正调用`Socket.connect(SocketAddress, int)`只有两处，`Platform.connectSocket(Socket, InetSocketAddress, int)`和`AndroidPlatform.connectSocket(Socket, InetSocketAddress, int)`，`AndroidPlatform`继承`Platform`的。这个方法在哪里被调用呢，`connectSocket(int, int, Call, EventListener)`，最后都是在`RealConnection.connect(int, int, int, int, boolean, Call, EventListener)`中被调用了，所以在一次证明了`RealConnection`建立了真正的连接。
+
+终于，我们来看一下，一个完整的连接过程
+
+![okhttp Connection连接](okhttp-Connection连接.jpg)
+
+在这张图上，我们可以看到，这个跟`Connection`和`ConnectionPool`并没有任何关系。而`RealConnection`实际上实现了`Connection`接口
 
 ## Connection
 
 > The sockets and streams of an HTTP, HTTPS, or HTTPS+HTTP/2 connection. May be used for multiple HTTP request/response exchanges. Connections may be direct to the origin server or via a proxy.
+
+翻译：`HTTP`，`HTTPS`，`HTTPS+HTTP/2`连接的`Socket`和流。可能会被用于多个`HTTP`请求/相应交换。可以直接连接服务器，也可以通过代理连接服务器。
+
+> Typically instances of this class are created, connected and exercised automatically by the HTTP client. Applications may use this class to monitor HTTP connections as members of a {@linkplain ConnectionPool connection pool}.
+
+翻译：通常，这个类会自动被`OkHttp`创建、连接、使用。应用层可以使用这个类作为`ConnectionPool`的成员来监听`HTTP`连接。
+
+> Do not confuse this class with the misnamed {@code HttpURLConnection}, which isn't so much a connection as a single request/response exchange.
+
+翻译：不要和`HttpURLConnection`弄混了，后者不是一个单独的请求响应交换的连接。
+
+下面是`Connection`的代码：
+
+```java
+public interface Connection {
+    /**
+     * Returns the route used by this connection.
+     */
+    Route route();
+
+    /**
+     * Returns the socket that this connection is using. Returns an {@linkplain
+     * javax.net.ssl.SSLSocket SSL socket} if this connection is HTTPS. If this is an HTTP/2
+     * connection the socket may be shared by multiple concurrent calls.
+     */
+    Socket socket();
+
+    /**
+     * Returns the TLS handshake used to establish this connection, or null if the connection is not
+     * HTTPS.
+     */
+    @Nullable
+    Handshake handshake();
+
+    /**
+     * Returns the protocol negotiated by this connection, or {@link Protocol#HTTP_1_1} if no protocol
+     * has been negotiated. This method returns {@link Protocol#HTTP_1_1} even if the remote peer is
+     * using {@link Protocol#HTTP_1_0}.
+     */
+    Protocol protocol();
+}
+```
+
+可以看到，这个类提供了连接的`Socket`和一些其他属性。使用这个`Socket`可以直接与服务器进行数据交换。这个类抽象了连接。同时，`OkHttp`也告诉我们，通常只是通过`Connection`来用于监听，所以实际上，它并没有做什么实质性的工作，存在的目的是为应用层提供连接过程中的一些信息。
+
+## ConnectionPool
+
+> Manages reuse of HTTP and HTTP/2 connections for reduced network latency. HTTP requests that share the same {@link Address} may share a {@link Connection}. This class implements the policy of which connections to keep open for future use.
+
+翻译：管理`HTTP`和`HTTP/2`的连接的重复使用，以减少网络延迟。使用同一地址的`HTTP`请求可能会分享同一个`Connection`。这个类实现了哪些连接应该保持打开以供后来使用的策略。
+
+现在，我们知道了`ConnectionPool`是用来管理连接的，然而，它并没有做实质性的工作，代理了`RealConnectionPool`，所以实际的连接池是`RealConnectionPool`。
+
+提一下，`ConnectionPool`默认可以保持5个空的连接，最长5分钟的空置时间。根据需要可以更改这两个属性。
+
+## RealConnectionPool
+
 
