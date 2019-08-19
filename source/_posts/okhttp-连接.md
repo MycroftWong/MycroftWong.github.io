@@ -1,6 +1,7 @@
 ---
-title: okhttp 连接池ConnectionPool
+title: okhttp 连接
 date: 2019-08-17 20:10:10
+categories:
 - 开源库
     - okhttp
 tags:
@@ -14,11 +15,11 @@ tags:
 - ConnectionPool
 ---
 
-# okhttp 连接池ConnectionPool
+# okhttp 连接
 
 ## 前言
 
-前面一篇，主要分析了`OkHttp`的整体设计，但是需要重提一句`OkHttp`是一个网络库。所以这篇和下一篇，来说一说`OkHttp`如何建立连接和如何交换数据的。
+前面一篇，主要分析了`OkHttp`的整体设计，但是需要重提一句`OkHttp`是一个网络库。所以这篇开始，来说一说`OkHttp`如何建立连接和如何交换数据的。
 
 ## ConnectInterceptor
 
@@ -208,13 +209,22 @@ private RealConnection findConnection(int connectTimeout, int readTimeout, int w
 }
 ```
 
-`ExchangeFinder.find(Interceptor.Chain, boolean)`得到`IO`操作的`ExchangeCodec`，在其中调用了`RealConnection findHealthyConnection(int, int, int, int, boolean, boolean)`，又通过`RealConnection finderConnection(int, int, int, int, boolean)`得到了一个`RealConnection`，然后调用`RealConnection.connect(int, int, int, int, boolean, Call, EventListener)`建立了真正的连接，然后通过这个`RealConnection`返回了最后的`ExchangeCodec`。
+1. `ExchangeFinder.find(Interceptor.Chain, boolean)`得到`IO`操作的`ExchangeCodec`
+2. 在其中调用了`RealConnection ExchangeFinder.findHealthyConnection(int, int, int, int, boolean, boolean)`
+3. 继续调用`RealConnection ExchangeFinder.findConnection(int, int, int, int, boolean)`得到了一个`RealConnection`
+3. 然后调用`RealConnection.connect(int, int, int, int, boolean, Call, EventListener)`建立了真正的连接
+4. 最后通过这个`RealConnection`返回了的`ExchangeCodec`。
 
 ## RealConnection
 
 现在知道了`RealConnection`才是真正的服务器连接。通过它进行连接服务器，建立好连接之后，通过`ExchangeCodec newCodec(OkHttpClient, Interceptor.Chain)`返回`ExchangeCodec`用于处理`IO`，并将其封装在`Exchange`中，供应用层调用（大部分是在`CallServerInterceptor`使用）。
 
-在`Java`中，连接服务器使用的是`Socket`，我们查看`Socket`的使用，真正调用`Socket.connect(SocketAddress, int)`只有两处，`Platform.connectSocket(Socket, InetSocketAddress, int)`和`AndroidPlatform.connectSocket(Socket, InetSocketAddress, int)`，`AndroidPlatform`继承`Platform`的。这个方法在哪里被调用呢，`connectSocket(int, int, Call, EventListener)`，最后都是在`RealConnection.connect(int, int, int, int, boolean, Call, EventListener)`中被调用了，所以在一次证明了`RealConnection`建立了真正的连接。
+在`Java`中，连接服务器使用的是`Socket`，我们查看`Socket`的使用。下面，我们返回来看，哪里真正调用`Socket.connect(SocketAddress, int)`了呢。
+
+1. 两处进行了连接，`Platform.connectSocket(Socket, InetSocketAddress, int)`和`AndroidPlatform.connectSocket(Socket, InetSocketAddress, int)`，`AndroidPlatform`继承了`Platform`
+2. 查看`Platform.connectSocket(Socket, InetSocketAddress, int)`的使用，就发现是`RealConnection.connectSocket(int, int, Call, EventListener)`
+3. 最后直接或间接都被`RealConnection.connect(int, int, int, int, boolean, Call, EventListener)`调用
+
 
 终于，我们来看一下，一个完整的连接过程
 
@@ -268,7 +278,7 @@ public interface Connection {
 }
 ```
 
-可以看到，这个类提供了连接的`Socket`和一些其他属性。使用这个`Socket`可以直接与服务器进行数据交换。这个类抽象了连接。同时，`OkHttp`也告诉我们，通常只是通过`Connection`来用于监听，所以实际上，它并没有做什么实质性的工作，存在的目的是为应用层提供连接过程中的一些信息。
+可以看到，这个类提供了连接的`Socket`和一些其他属性。使用这个`Socket`可以直接与服务器进行数据交换。这个类抽象了连接。同时，`OkHttp`也告诉我们，通常只是通过`Connection`来用于监听，所以实际上，它并没有做什么实质性的工作，存在的目的是为应用层提供连接的一些信息。
 
 ## ConnectionPool
 
@@ -280,6 +290,32 @@ public interface Connection {
 
 提一下，`ConnectionPool`默认可以保持5个空的连接，最长5分钟的空置时间。根据需要可以更改这两个属性。
 
+## 继承与代理
+
+可以思考一下，在应用层，我们是使用的`Connection`和`ConnectionPool`，而在`OkHttp`内部，使用的却是`RealConnection`和`RealConnectionPool`。我们就可以明白了，`OkHttp`在尽量少的暴露内部`API`。
+
+无论是`RealConnection`继承`Connection`，还是`ConnectionPool`代理`RealConnectionPool`，都是为了让使用者尽量少的知道内部的实现。
+
 ## RealConnectionPool
 
+明白了`OkHttp`的设计之后，就比较容易理解每个类的功能了。
 
+`RealConnectionPool`对外，提供和`ConnectionPool`一样的功能。那么对内是怎么实现连接池的功能呢？下一篇详说。
+
+## 总结
+
+现在我们来简单总结一下，每个类的抽象概念。
+
+下面是应用层的概念：
+
+1. `ConnectionInterceptor`：实现链的功能，承载着`OkHttp`建立连接的任务
+2. `Transmitter`：应用层与网络层的桥梁，通知网络层进行连接，对应用层提供`Exchange`。
+3. `Exchange`：单个网络请求，使用它可以进行`IO`操作。在内部，使用`ExchangeCodec`进行`IO`操作
+
+下面是网络层的概念：
+
+1. `ExchangeFinder`：为`Exchange`找到合适的`RealConnection`，并使用`RealConnection`构造`ExchangeCodec`
+2. `RealConnection`：进行网络连接，并提供网络连接的属性。
+
+
+而`Connection`和`ConnectionPool`则是对外提供使用。上面这些类并不提供外部使用。
