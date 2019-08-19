@@ -11,8 +11,10 @@ tags:
 - https
 - 面试
 - 责任链模式
-- Connection
-- ConnectionPool
+- ConnectInterceptor
+- Transmitter
+- Exchange
+- RealConnection
 ---
 
 # okhttp 连接
@@ -309,13 +311,12 @@ public interface Connection {
 下面是应用层的概念：
 
 1. `ConnectionInterceptor`：实现链的功能，承载着`OkHttp`建立连接的任务
-2. `Transmitter`：应用层与网络层的桥梁，通知网络层进行连接，对应用层提供`Exchange`。
+2. `Transmitter`：应用层与网络层的桥梁，通知网络层进行连接，对应用层提供`Exchange`
 3. `Exchange`：单个网络请求，使用它可以进行`IO`操作。在内部，使用`ExchangeCodec`进行`IO`操作
 
 下面是网络层的概念：
 
 1. `ExchangeFinder`：为`Exchange`找到合适的`RealConnection`，并使用`RealConnection`构造`ExchangeCodec`
-2. `RealConnection`：进行网络连接，并提供网络连接的属性。
-
+2. `RealConnection`：进行网络连接，并提供网络连接的属性
 
 而`Connection`和`ConnectionPool`则是对外提供使用。上面这些类并不提供外部使用。

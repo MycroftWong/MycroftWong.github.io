@@ -276,7 +276,7 @@ githubLink:
 # 阅读文章的密码验证功能，如要使用此功能请激活该配置项，并在对应文章的Front-matter中写上'password'的键和加密后的密文即可.
 # 请注意：为了保证密码原文不会被泄露到网页中，文章的密码必须是通过'SHA256'加密的，这样就不会被破解.
 verifyPassword:
-  enable: false
+  enable: true
   promptMessage: 请输入访问本文章的密码
   errorMessage: 密码错误，将返回主页！
 
@@ -352,6 +352,28 @@ featureImages:
 - /medias/featureimages/21.jpg
 - /medias/featureimages/22.jpg
 - /medias/featureimages/23.jpg
+- /medias/featureimages/24.jpg
+- /medias/featureimages/25.jpg
+- /medias/featureimages/26.jpg
+- /medias/featureimages/27.jpg
+- /medias/featureimages/28.jpg
+- /medias/featureimages/29.jpg
+- /medias/featureimages/30.jpg
+- /medias/featureimages/31.jpg
+- /medias/featureimages/32.jpg
+- /medias/featureimages/33.jpg
+- /medias/featureimages/34.jpg
+- /medias/featureimages/35.jpg
+- /medias/featureimages/36.jpg
+- /medias/featureimages/37.jpg
+- /medias/featureimages/38.jpg
+- /medias/featureimages/39.jpg
+- /medias/featureimages/40.jpg
+- /medias/featureimages/41.jpg
+- /medias/featureimages/42.jpg
+- /medias/featureimages/43.jpg
+- /medias/featureimages/44.jpg
+- /medias/featureimages/44.jpg
 
   # default configs that the default policy for every articles/posts
   # default 配置文章的默认转载规则
