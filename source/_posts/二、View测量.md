@@ -1,8 +1,6 @@
 ---
-title: 二、View测量与布局
+title: 二、View测量
 date: 2019-08-24 14:34:31
-password: 7d9c6fc5dade15956ae6d39b035b62d9e47067bf2adf4d6574edc096ac0e2acb
-summary: 本文仍在撰写中
 categories:
 - Android
     - View
@@ -16,11 +14,13 @@ tags:
 - 面试
 ---
 
-# 二、View测量与布局
-
-自定义`View`实际上就是根据`Android`给我们定下的一些规则，我们需要遵循这些规则去定义一个`View`。实际上，它并没有如`Java`的强类型般的限制我们，我们可能时长在破坏这些规则。不了解这些规则就导致了我们定义的`View`却不是我们想要的那种。所以定义`View`之前，一定要清楚明白这些规则是什么。
+# View测量
 
 ## 前言
+
+自定义`View`实际上是`Android`给我们定下了一些规则，我们需要遵循这些规则去定义一个`View`，符合这个规则的`View`才会更好的显示。实际上，它并没有如`Java`的强类型般的限制我们怎么做，我们在使用中可能时长在破坏这些规则。不了解规则就导致了我们定义的`View`却不是我们想要。所以定义`View`之前，一定要清楚明白这些规则是什么。
+
+## 基础知识
 
 先来说明一下一个`View`显示在屏幕上需要哪些属性：
 
@@ -36,7 +36,7 @@ tags:
 
 `MeasureSpec`是什么？这是一个非常重要，且难以理解的概念。
 
-先看看`MeasureSpec`的说明，是`View`的一个静态公开内部类。
+`MeasureSpec`是`View`的一个静态公开内部类，先看看的说明。
 
 > A MeasureSpec encapsulates the layout requirements passed from parent to child. Each MeasureSpec represents a requirement for either the width or the height. A MeasureSpec is comprised of a size and a mode. There are three possible modes:
 > UNSPECIFIED: The parent has not imposed any constraint on the child. It can be whatever size it wants.
@@ -44,21 +44,25 @@ tags:
 > AT_MOST: The child can be as large as it wants up to the specified size.
 > MeasureSpecs are implemented as ints to reduce object allocation. This class is provided to pack and unpack the &lt;size, mode&gt; tuple into the int.
 
-翻译：`MeasureSpec`封装了`parent`对`child`的布局要求。每个`MeasureSpec`表示宽或高的要求。一个`MeasureSpec`是一个`mode`和一个`size`的组合。有如下三种`mode`：
-1. `UNSPECIFED`：`parent`对`child`的尺寸不做限制。`child`想显示多大都可以。
-2. `EXACTLY`：`parent`确定了`child`的尺寸。不管`child`想要多大，必须按照`parent`给的尺寸。
-3. `AT_MOST`：`parent`对`child`限制了一个最大尺寸，`child`应该不大于这个尺寸。
+翻译：`MeasureSpec`封装了`parent`对`child`的布局（实际上是尺寸）要求。每个`MeasureSpec`代表宽或高的要求。一个`MeasureSpec`是一个`mode`和一个`size`的组合。有如下三种`mode`：
+
+1. `UNSPECIFED`：`parent`对`child`的尺寸不做限制。`child`想显示多大都可以
+2. `EXACTLY`：`parent`确定了`child`的尺寸。不管`child`想要多大，必须按照`parent`给的尺寸
+3. `AT_MOST`：`parent`对`child`限制了一个最大尺寸，`child`应该不大于这个尺寸
 
 为了减少内存消耗，`MeasureSpec`使用的是`int`来实现。`MeasureSpec`类提供了封装和解封`<size, mode>`组合为`int`的方法。
 
+---
+
 从这几句话当中，我们可以提取出几点：
-1. `MeasureSpec`是`parent`对`child`的布局（实际上是尺寸）要求。
-2. `MeasureSpec`是由两部分组成：`mode`、`size`。
-3. `MeasureSpec`实际上是`int`值。
+
+1. `MeasureSpec`是`parent`对`child`的布局（实际上是尺寸）要求
+2. `MeasureSpec`是由两部分组成：`mode`、`size`
+3. `MeasureSpec`实际上是`int`值
 
 ### MeasureSpec的组成
 
-`MeasureSpec`是由一个32位的`int`值表示。其中，前两位表示的是`mode`，后30为表示的是`size`（屏幕尺寸远远小于30位组成的`int`值`1,073,741,823`，所以不用担心屏幕大小超出值的问题）。
+`MeasureSpec`是由一个32位的`int`值表示。其中，前2位表示`mode`，后30位表示`size`（屏幕尺寸远远小于30位组成的`int`值`1,073,741,823`，所以不用担心屏幕大小超出值的问题）。
 
 我们知道，两位可以组成4个数，在这里`00`代表`UNSEPECIFIED`，`01`代表`EXACTLY`，`10`代表`AT_MOST`，`11`并没有用到。
 
@@ -203,11 +207,11 @@ public static int getChildMeasureSpec(int spec, int padding, int childDimension)
 }
 ```
 
-代码非常的长，但是还是比较容易理解。起决定因素的是`ViewGroup`自己的`MeasureSpec`，和`View`的`LayoutParams`属性。
+代码非常的长，但是还是比较容易理解。起决定因素的是`ViewGroup`自己的`MeasureSpec`，和`View`的`LayoutParams`属性。简化之后如下图所示：
 
 ![MeasureSpec值的生成](MeasureSpec值的生成.webp)
 
-### MeasureSpec的作用
+### MeasureSpec如何影响尺寸
 
 `MeasureSpec`决定了`View`的最终尺寸（宽高）。为什么呢，怎么做到的呢，对于这点，我们需要对`measure`的一些方法进行解释。
 
@@ -289,11 +293,11 @@ public static int getChildMeasureSpec(int spec, int padding, int childDimension)
 
 ## View的尺寸
 
-前面，已经看到了真正设置`View`尺寸的是`setMeasuredDimension(int, int)`方法。
+前面，已经看到了真正设置`View`尺寸的是`setMeasuredDimension(int, int)`方法。而尺寸的来源，则是根据`parent`给的`MeasureSpec`加上一些限制条件，如背景的尺寸、设置的`minHeight`，业务逻辑。
 
 ### 简单的自定义的View
 
-我自定义了一个简单的时钟，其实大部分工作是在`onDraw`。所以需要明白的一点是，`View`的工作实际上是显示内容的，很多时候决定尺寸的恰恰是内容，如`TextView`通常设置了`wrap_content`，尺寸也随着内容的变化而变化。
+我自定义了一个简单的时钟，在`onMeasure`中根据`parent`给的`MeasureSpec`和自身的逻辑确定了尺寸，而大部分工作是在`onDraw`。所以需要明白的一点是，`View`的工作实际上是显示内容的，很多时候决定尺寸的恰恰是内容，如`TextView`通常设置了`wrap_content`，尺寸也随着内容的变化而变化。
 
 ```kotlin
 class Clock : View {
@@ -589,6 +593,12 @@ class Clock : View {
 }
 ```
 
+在`onMeasure`中的逻辑：
+
+1. 根据`parent`给的`MeasureSpec`，并结合`background`、`minWidth/minHeight`计算出理想的尺寸
+2. 但是为了符合业务逻辑，如果得到的尺寸太小，则强制使用我期望的最小值。
+3. 确定计算得到的宽高
+
 ## 总结
 
-`View`的尺寸计算非常简单，因为它只是对它本身的计算，并没有`child`，大部分工作在`onDraw`里。主要明白在`onMeasure`中如何计算得到想要的尺寸，再更多的学习`Canvas`相关的`API`就可以了。
+`View`的尺寸计算非常简单，因为它只是对它本身的计算，并没有`child`，大部分工作在`onDraw`里。所以，我们在定义`View`时，知道在`onMeasure`中如何计算得到想要的尺寸，再更多的学习`Canvas`相关的`API`就可以了。

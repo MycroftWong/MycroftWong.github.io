@@ -25,7 +25,7 @@ tags:
 ## 系列文章
 
 1. {% post_link 一、View基础知识 %}
-2. {% post_link 二、View测量与布局 %}
+2. {% post_link 二、View测量 %}
 
 ## 参考文章
 
