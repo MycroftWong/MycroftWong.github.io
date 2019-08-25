@@ -26,6 +26,7 @@ tags:
 
 1. {% post_link 一、View基础知识 %}
 2. {% post_link 二、View测量 %}
+3. {% post_link 三、View布局 %}
 
 ## 参考文章
 

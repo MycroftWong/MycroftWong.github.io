@@ -90,67 +90,53 @@ tags:
 ```java
 @RemoteView
 public class FrameLayout extends ViewGroup {
+    // 默认的gravity
     private static final int DEFAULT_CHILD_GRAVITY = Gravity.TOP | Gravity.START;
 
-    @ViewDebug.ExportedProperty(category = "measurement")
+    // 是否强制测量所有的children，可以在xml中指定measureAllChildren
     boolean mMeasureAllChildren = false;
 
-    @ViewDebug.ExportedProperty(category = "padding")
+    // 下面四个属性，指的是foreground的padding，若foreground有padding，那么将影响最后的尺寸
     private int mForegroundPaddingLeft = 0;
-
-    @ViewDebug.ExportedProperty(category = "padding")
     private int mForegroundPaddingTop = 0;
-
-    @ViewDebug.ExportedProperty(category = "padding")
     private int mForegroundPaddingRight = 0;
-
-    @ViewDebug.ExportedProperty(category = "padding")
     private int mForegroundPaddingBottom = 0;
 
+    // 所有layout_width或layout_height指定了match_parent属性的children，用于2次计算尺寸
     private final ArrayList<View> mMatchParentChildren = new ArrayList<>(1);
 
+    // 下面四个构造器
     public FrameLayout(@NonNull Context context) {
         super(context);
     }
-
     public FrameLayout(@NonNull Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
-
     public FrameLayout(@NonNull Context context, @Nullable AttributeSet attrs,
             @AttrRes int defStyleAttr) {
         this(context, attrs, defStyleAttr, 0);
     }
-
     public FrameLayout(@NonNull Context context, @Nullable AttributeSet attrs,
             @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-
         final TypedArray a = context.obtainStyledAttributes(
                 attrs, R.styleable.FrameLayout, defStyleAttr, defStyleRes);
-
+        // 获取并设置measureAllChildren属性
         if (a.getBoolean(R.styleable.FrameLayout_measureAllChildren, false)) {
             setMeasureAllChildren(true);
         }
-
         a.recycle();
     }
 
     /**
-     * Describes how the foreground is positioned. Defaults to START and TOP.
-     *
-     * @param foregroundGravity See {@link android.view.Gravity}
-     *
-     * @see #getForegroundGravity()
-     *
-     * @attr ref android.R.styleable#View_foregroundGravity
+     * 描述前景色的gravity，默认是START|TOP，可以通过foregroundGravity属性设置
      */
     @android.view.RemotableViewMethod
     public void setForegroundGravity(int foregroundGravity) {
         if (getForegroundGravity() != foregroundGravity) {
             super.setForegroundGravity(foregroundGravity);
 
-            // calling get* again here because the set above may apply default constraints
+            // 获取foreground的padding属性，用于布局
             final Drawable foreground = getForeground();
             if (getForegroundGravity() == Gravity.FILL && foreground != null) {
                 Rect padding = new Rect();
@@ -167,20 +153,24 @@ public class FrameLayout extends ViewGroup {
                 mForegroundPaddingBottom = 0;
             }
 
+            // 重新布局
             requestLayout();
         }
     }
 
     /**
-     * Returns a set of layout parameters with a width of
-     * {@link android.view.ViewGroup.LayoutParams#MATCH_PARENT},
-     * and a height of {@link android.view.ViewGroup.LayoutParams#MATCH_PARENT}.
+     * 返回一个默认MATCH_PARENT的FrameLayout.LayoutParams
+     * child没有LayoutParams时使用这个
      */
     @Override
     protected LayoutParams generateDefaultLayoutParams() {
         return new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
     }
 
+    /**
+     * 下面四个是获取FrameLayout的padding，将foreground计算在内
+     * Android内部使用，只用于FrameLayout和内部的屏幕layout
+     */
     int getPaddingLeftWithForeground() {
         return isForegroundInsidePadding() ? Math.max(mPaddingLeft, mForegroundPaddingLeft) :
             mPaddingLeft + mForegroundPaddingLeft;
@@ -201,13 +191,21 @@ public class FrameLayout extends ViewGroup {
             mPaddingBottom + mForegroundPaddingBottom;
     }
 
+    /**
+     * 真正的measure过程
+     */
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         int count = getChildCount();
 
+        // 这句话的意思是：FrameLayout的尺寸需要根据children的尺寸确定（长或宽不是确定的）
+        // 那么就需要测量两次：
+        // 1. 找出最大的child，FrameLayout尺寸根据最大的child得出
+        // 2. 重新测量所有match_parent的children
         final boolean measureMatchParentChildren =
                 MeasureSpec.getMode(widthMeasureSpec) != MeasureSpec.EXACTLY ||
                 MeasureSpec.getMode(heightMeasureSpec) != MeasureSpec.EXACTLY;
+        // 用于存储需要重新测量的children(match_parent)
         mMatchParentChildren.clear();
 
         int maxHeight = 0;
@@ -216,14 +214,21 @@ public class FrameLayout extends ViewGroup {
 
         for (int i = 0; i < count; i++) {
             final View child = getChildAt(i);
+            // View不是GONE，或者强制测量所有的children时才进行测量
             if (mMeasureAllChildren || child.getVisibility() != GONE) {
+                // 测量一个child
                 measureChildWithMargins(child, widthMeasureSpec, 0, heightMeasureSpec, 0);
+                // 获取LayoutParams
                 final LayoutParams lp = (LayoutParams) child.getLayoutParams();
+                // 计算得到maxWidth
                 maxWidth = Math.max(maxWidth,
                         child.getMeasuredWidth() + lp.leftMargin + lp.rightMargin);
+                // 计算得到maxHeight
                 maxHeight = Math.max(maxHeight,
                         child.getMeasuredHeight() + lp.topMargin + lp.bottomMargin);
+                // 计算childState
                 childState = combineMeasuredStates(childState, child.getMeasuredState());
+                // 找出需要测量两次的children
                 if (measureMatchParentChildren) {
                     if (lp.width == LayoutParams.MATCH_PARENT ||
                             lp.height == LayoutParams.MATCH_PARENT) {
@@ -233,26 +238,31 @@ public class FrameLayout extends ViewGroup {
             }
         }
 
-        // Account for padding too
+        // 在宽高上加上FrameLayout本身的padding
         maxWidth += getPaddingLeftWithForeground() + getPaddingRightWithForeground();
         maxHeight += getPaddingTopWithForeground() + getPaddingBottomWithForeground();
 
-        // Check against our minimum height and width
+        // 宽高不能小于最小值（background和minHeight检测）
         maxHeight = Math.max(maxHeight, getSuggestedMinimumHeight());
         maxWidth = Math.max(maxWidth, getSuggestedMinimumWidth());
 
-        // Check against our foreground's minimum height and width
+        // 宽高不能小于最小值（foreground检测）
         final Drawable drawable = getForeground();
         if (drawable != null) {
             maxHeight = Math.max(maxHeight, drawable.getMinimumHeight());
             maxWidth = Math.max(maxWidth, drawable.getMinimumWidth());
         }
 
+        // 确定FrameLayout的尺寸
         setMeasuredDimension(resolveSizeAndState(maxWidth, widthMeasureSpec, childState),
                 resolveSizeAndState(maxHeight, heightMeasureSpec,
                         childState << MEASURED_HEIGHT_STATE_SHIFT));
 
+        // 二次测量match_parent的children，下面的一些就不说了，说一下这个count
         count = mMatchParentChildren.size();
+        // 这里判断count>1并不是count>0，是因为
+        // 1.如果没有MATCH_PARENT，那么count==0
+        // 2.如果有MATCH_PARENT，那么count=1的话，那么child就是尺寸最大的，不需要再次测量
         if (count > 1) {
             for (int i = 0; i < count; i++) {
                 final View child = mMatchParentChildren.get(i);
@@ -291,14 +301,19 @@ public class FrameLayout extends ViewGroup {
         }
     }
 
+    /**
+     * 我们真正关心的地方
+     */
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         layoutChildren(left, top, right, bottom, false /* no force left gravity */);
     }
 
+    // 真正的逻辑执行地方
     void layoutChildren(int left, int top, int right, int bottom, boolean forceLeftGravity) {
         final int count = getChildCount();
 
+        // 获取padding用于layout
         final int parentLeft = getPaddingLeftWithForeground();
         final int parentRight = right - left - getPaddingRightWithForeground();
 
@@ -307,6 +322,7 @@ public class FrameLayout extends ViewGroup {
 
         for (int i = 0; i < count; i++) {
             final View child = getChildAt(i);
+            // 只layout非GONE的View
             if (child.getVisibility() != GONE) {
                 final LayoutParams lp = (LayoutParams) child.getLayoutParams();
 
@@ -317,29 +333,37 @@ public class FrameLayout extends ViewGroup {
                 int childTop;
 
                 int gravity = lp.gravity;
+                // 若无gravity，则设置默认的gravity
                 if (gravity == -1) {
                     gravity = DEFAULT_CHILD_GRAVITY;
                 }
 
+                // 布局方向，一般是从左至右
                 final int layoutDirection = getLayoutDirection();
+                // absoluteGravity，忽略布局方向，可以认为是horizontalGravity
                 final int absoluteGravity = Gravity.getAbsoluteGravity(gravity, layoutDirection);
                 final int verticalGravity = gravity & Gravity.VERTICAL_GRAVITY_MASK;
 
+                // 计算horizontal方向，即childLeft
                 switch (absoluteGravity & Gravity.HORIZONTAL_GRAVITY_MASK) {
+                    // centerHorizontal，计算出在中间位置是的childLeft
                     case Gravity.CENTER_HORIZONTAL:
                         childLeft = parentLeft + (parentRight - parentLeft - width) / 2 +
                         lp.leftMargin - lp.rightMargin;
                         break;
+                    // right/end，注意，实际上一定会执行下面的if
                     case Gravity.RIGHT:
                         if (!forceLeftGravity) {
                             childLeft = parentRight - width - lp.rightMargin;
                             break;
                         }
+                    // 默认是start|top
                     case Gravity.LEFT:
                     default:
                         childLeft = parentLeft + lp.leftMargin;
                 }
 
+                // 计算vertical方向，即childTop
                 switch (verticalGravity) {
                     case Gravity.TOP:
                         childTop = parentTop + lp.topMargin;
@@ -355,19 +379,14 @@ public class FrameLayout extends ViewGroup {
                         childTop = parentTop + lp.topMargin;
                 }
 
+                // 进行layout
                 child.layout(childLeft, childTop, childLeft + width, childTop + height);
             }
         }
     }
 
     /**
-     * Sets whether to consider all children, or just those in
-     * the VISIBLE or INVISIBLE state, when measuring. Defaults to false.
-     *
-     * @param measureAll true to consider children marked GONE, false otherwise.
-     * Default value is false.
-     *
-     * @attr ref android.R.styleable#FrameLayout_measureAllChildren
+     * 设置是否measure所有的children，默认false，不measure设置GONE的View
      */
     @android.view.RemotableViewMethod
     public void setMeasureAllChildren(boolean measureAll) {
@@ -375,15 +394,7 @@ public class FrameLayout extends ViewGroup {
     }
 
     /**
-     * Determines whether all children, or just those in the VISIBLE or
-     * INVISIBLE state, are considered when measuring.
-     *
-     * @return Whether all children are considered when measuring.
-     *
-     * @deprecated This method is deprecated in favor of
-     * {@link #getMeasureAllChildren() getMeasureAllChildren()}, which was
-     * renamed for consistency with
-     * {@link #setMeasureAllChildren(boolean) setMeasureAllChildren()}.
+     * 返回是否measure所有的children，deprecated
      */
     @Deprecated
     public boolean getConsiderGoneChildrenWhenMeasuring() {
@@ -391,30 +402,35 @@ public class FrameLayout extends ViewGroup {
     }
 
     /**
-     * Determines whether all children, or just those in the VISIBLE or
-     * INVISIBLE state, are considered when measuring.
-     *
-     * @return Whether all children are considered when measuring.
+     * 返回是否measure所有的children
      */
     public boolean getMeasureAllChildren() {
         return mMeasureAllChildren;
     }
 
+    /**
+     * 根据xml配置，获取LayoutParams
+     */
     @Override
     public LayoutParams generateLayoutParams(AttributeSet attrs) {
         return new FrameLayout.LayoutParams(getContext(), attrs);
     }
 
+    /**
+     * 不应该拦截press显示状态
+     */
     @Override
     public boolean shouldDelayChildPressedState() {
         return false;
     }
 
+    // 检查LayoutParams是否是FrameLayout.LayoutParams
     @Override
     protected boolean checkLayoutParams(ViewGroup.LayoutParams p) {
         return p instanceof LayoutParams;
     }
 
+    // 转换LayoutParams
     @Override
     protected ViewGroup.LayoutParams generateLayoutParams(ViewGroup.LayoutParams lp) {
         if (sPreserveMarginParamsInLayoutParamConversion) {
@@ -427,12 +443,13 @@ public class FrameLayout extends ViewGroup {
         return new LayoutParams(lp);
     }
 
+    // 用于accessibility
     @Override
     public CharSequence getAccessibilityClassName() {
         return FrameLayout.class.getName();
     }
 
-    /** @hide */
+    // 内部的方法
     @Override
     protected void encodeProperties(@NonNull ViewHierarchyEncoder encoder) {
         super.encodeProperties(encoder);
@@ -445,11 +462,7 @@ public class FrameLayout extends ViewGroup {
     }
 
     /**
-     * Per-child layout information for layouts that support margins.
-     * See {@link android.R.styleable#FrameLayout_Layout FrameLayout Layout Attributes}
-     * for a list of all child view attributes that this class supports.
-     *
-     * @attr ref android.R.styleable#FrameLayout_Layout_layout_gravity
+     * children的LayoutParams，包含了布局属性margin和layout_gravity
      */
     public static class LayoutParams extends MarginLayoutParams {
         /**
@@ -458,16 +471,6 @@ public class FrameLayout extends ViewGroup {
          */
         public static final int UNSPECIFIED_GRAVITY = -1;
 
-        /**
-         * The gravity to apply with the View to which these layout parameters
-         * are associated.
-         * <p>
-         * The default value is {@link #UNSPECIFIED_GRAVITY}, which is treated
-         * by FrameLayout as {@code Gravity.TOP | Gravity.START}.
-         *
-         * @see android.view.Gravity
-         * @attr ref android.R.styleable#FrameLayout_Layout_layout_gravity
-         */
         public int gravity = UNSPECIFIED_GRAVITY;
 
         public LayoutParams(@NonNull Context c, @Nullable AttributeSet attrs) {
@@ -482,18 +485,6 @@ public class FrameLayout extends ViewGroup {
             super(width, height);
         }
 
-        /**
-         * Creates a new set of layout parameters with the specified width, height
-         * and weight.
-         *
-         * @param width the width, either {@link #MATCH_PARENT},
-         *              {@link #WRAP_CONTENT} or a fixed size in pixels
-         * @param height the height, either {@link #MATCH_PARENT},
-         *               {@link #WRAP_CONTENT} or a fixed size in pixels
-         * @param gravity the gravity
-         *
-         * @see android.view.Gravity
-         */
         public LayoutParams(int width, int height, int gravity) {
             super(width, height);
             this.gravity = gravity;
@@ -507,12 +498,6 @@ public class FrameLayout extends ViewGroup {
             super(source);
         }
 
-        /**
-         * Copy constructor. Clones the width, height, margin values, and
-         * gravity of the source.
-         *
-         * @param source The layout params to copy from.
-         */
         public LayoutParams(@NonNull LayoutParams source) {
             super(source);
 
@@ -521,3 +506,70 @@ public class FrameLayout extends ViewGroup {
     }
 }
 ```
+
+`FrameLayout`代码分析完了，其实非常简单，需要注意的是，`FrameLayout`可能会对`match_parent`的`children`进行两次测量。
+
+我们这里着重需要关心的还是`layout`：
+
+1. 考虑到了`padding`，所以我们在定义`View`时，注意`padding`是我们在定义时决定的，所以不要忘记
+2. 考虑`margin`，`margin`是`child`相对于在`parent`的，需要在`ViewGroup`控制
+3. 考虑`child`的`visibility`属性，如果是`GONE`，那么`ViewGroup`则不应该显示
+4. 计算出`child`的左上角的位置，自然就可以得到右下角的位置，调用`child.layout(int, int, int, int)`，如此循环
+
+## 自定义View需要注意的点
+
+`FrameLayout`除了实现`onMeasure(int, int)`和`onLayout(boolean, int, int, int, int)`之外，还重写了一些方法。`FrameLayout`本身是一个非常简单的`ViewGroup`，所以它的实现可以作为定义初级`ViewGroup`的参考。
+
+### LayoutParams generateDefaultLayoutParams()
+
+> Returns a set of default layout parameters. These parameters are requested when the View passed to {@link #addView(View)} has no layout parameters already set. If null is returned, an exception is thrown from addView.
+
+翻译：返回默认的`LayoutParams`。其中的属性要求在`addView(View)`时传递，因为这时没有指定`LayoutParams`。如果为`null`，那么在调用`addView(View)`时会抛出异常。
+
+### LayoutParams generateLayoutParams(AttributeSet attrs)
+
+> Returns a new set of layout parameters based on the supplied attributes set.
+
+翻译：返回读取`AttributeSet`属性的`LayoutParams`。
+
+这样可以在`xml`配置一些布局相关的属性，这些属性封装在自定义的`LayoutParams`中。
+
+### boolean shouldDelayChildPressedState()
+
+> Return true if the pressed state should be delayed for children or descendants of this ViewGroup. Generally, this should be done for containers that can scroll, such as a List. This prevents the pressed state from appearing when the user is actually trying to scroll the content.
+
+翻译：如果`ViewGroup`的`children`或子代（可能`child`是一个`ViewGroup`，其内又有`View`），如果返回`true`，表示自身将优先处理`press`状态。通常，这应该是在可以滑动的容器中返回`true`，例如一个`ListView`。这避免了`press`状态在用户实际上想滑动内容时提前出现。
+
+### boolean checkLayoutParams(ViewGroup.LayoutParams p)
+
+检查`LayoutParams`是否是我们需要的类型。如果我们自定义了一个`LayoutParams`，那么我们应该应该实现这个方法，保证会配合`generateLayoutParams(LayoutParams)`生成我们自定义的`LayoutParams`。
+
+### ViewGroup.LayoutParams generateLayoutParams(ViewGroup.LayoutParams lp)
+
+> Returns a safe set of layout parameters based on the supplied layout params. When a ViewGroup is passed a View whose layout params do not pass the test of {@link #checkLayoutParams(android.view.ViewGroup.LayoutParams)}, this method is invoked. This method should return a new set of layout params suitable for this ViewGroup, possibly by copying the appropriate attributes from the specified set of layout params.
+
+翻译：基于提供的`ViewGroup.LayoutParams`返回一个类型安全的`LayoutParams`。当一个`View`添加到`ViewGroup`中，但是`View`的`LayoutParams`并不能通过`checkLayoutParams(ViewGroup.LayoutParams)`检查，那么这个方法将会被调用。这个方法返回了一个新的`LayoutParams`（通常是自定义的），并且可能会从提供的`ViewGroup.LayoutParams`中复制一些合适的属性。
+
+### CharSequence getAccessibilityClassName()
+
+> Return the class name of this object to be used for accessibility purposes. Subclasses should only override this if they are implementing something that should be seen as a completely new class of view when used by accessibility, unrelated to the class it is deriving from.  This is used to fill in `AccessibilityNodeInfo#setClassName AccessibilityNodeInfo.setClassName`.
+
+大致翻译：返回用于`accessibility`目的当前的类名。如果需要提供这样的功能，那么子类应该实现这个方法。
+
+### LayoutParams
+
+> LayoutParams are used by views to tell their parents how they want to be laid out.
+
+翻译：`LayoutParams`被`view`用于告诉他们的`parent`他们想要的布局信息。
+
+我们知道`LayoutParams`包含了很多布局信息，在`xml`中通常是以`android:layout_xxx`的形式存在，如`android:layout_gravity:start|top`。在`Android`读取`xml`生成对应的`View`对象时，将一些属性赋予`LayoutParams`，那么`View`的`parent`就可以根据`LayoutParams`来对它进行布局。
+
+## 总结
+
+其实`layout`是一个相对而言比较繁琐的工作。因为要考虑到各个方面，`padding`，`margin`，`gravity`等等。更重要的是，通常`Layout`如`LinearLayout`，`ConstraintLayout`会有自己的一套布局逻辑，这个逻辑可能非常的繁琐，如`ConstraintLayout`。逻辑相对简单的`LinearLayout`也有2000多行的代码。
+
+`layout`的相关方法使用很简单，难的是需要实现自己的逻辑。这篇文章分析了简单的`FrameLayout`，我们在定义时，可以参考`FrameLayout`的实现，同时如果想要更好的定义`ViewGroup`，建议多阅读其他优秀实现的源码。
+
+## 参考文章
+
+[小Demo小知识-android:foreground与android:background](https://www.jianshu.com/p/b5ecd39ed494)

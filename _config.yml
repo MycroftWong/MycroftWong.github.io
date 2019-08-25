@@ -110,6 +110,6 @@ theme: hexo-theme-matery
 deploy:
   type: git
   repo: 
-    gitee: https://gitee.com/mycroftwong/mycroftwong.git,master
-    github: https://github.com/MycroftWong/MycroftWong.github.io.git,master
-    aliyun: https://code.aliyun.com/mycroftwong/blog.git,master
+    gitee: git@gitee.com:mycroftwong/mycroftwong.git,master
+    github: git@github.com:MycroftWong/MycroftWong.github.io.git,master
+    aliyun: git@code.aliyun.com:mycroftwong/blog.git,master

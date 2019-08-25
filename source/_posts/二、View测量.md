@@ -18,7 +18,7 @@ tags:
 
 ## 前言
 
-自定义`View`实际上是`Android`给我们定下了一些规则，我们需要遵循这些规则去定义一个`View`，符合这个规则的`View`才会更好的显示。实际上，它并没有如`Java`的强类型般的限制我们怎么做，我们在使用中可能时长在破坏这些规则。不了解规则就导致了我们定义的`View`却不是我们想要。所以定义`View`之前，一定要清楚明白这些规则是什么。
+自定义`View`实际上是`Android`给我们定下了一些规则，我们需要遵循这些规则去定义一个`View`，符合这个规则的`View`才会更好的显示。实际上，它并没有如`Java`的强类型般的限制我们怎么做，我们在使用中可能时长在破坏这些规则。不了解规则就导致了我们定义的`View`却不是我们想要的。所以定义`View`之前，一定要清楚明白这些规则是什么。
 
 ## 基础知识
 
@@ -293,7 +293,7 @@ public static int getChildMeasureSpec(int spec, int padding, int childDimension)
 
 ## View的尺寸
 
-前面，已经看到了真正设置`View`尺寸的是`setMeasuredDimension(int, int)`方法。而尺寸的来源，则是根据`parent`给的`MeasureSpec`加上一些限制条件，如背景的尺寸、设置的`minHeight`，业务逻辑。
+前面，已经看到了真正设置`View`尺寸的是`setMeasuredDimension(int, int)`方法。而尺寸的来源，则是根据`parent`给的`MeasureSpec`加上一些限制条件的结果。这些限制条件有如背景的尺寸、设置的`minHeight`，业务逻辑等。
 
 ### 简单的自定义的View
 
