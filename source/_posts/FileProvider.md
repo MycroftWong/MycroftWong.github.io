@@ -10,6 +10,10 @@ tags:
 
 # FileProvider
 
+## 前言
+
+`Android`开发始终脱离不了图片处理，特别是`Android 7.0`开始，无法通过`file:///`的`URI`来进行在应用之间共享文件，取而代之的是`content uri`。这样必然增加了开发难度，如必须生成`content uri`，赋予一些权限，同时暂时没有找到能够通过`content uri`获取文件大小的方法。同时一些特殊需要，如安装`apk`，调用相机拍照都需要改成`content uri`，而无法再直接通过`Uri.fromFile(File)`获取的`URI`共享文件。所以认真研究`FileProvider`是必要的。
+
 下面着重通过官方文档介绍`FileProvider`的使用：[FileProvider](https://developer.android.google.cn/reference/android/support/v4/content/FileProvider)
 
 ## 翻译
@@ -28,7 +32,7 @@ tags:
 
 1. 定义`FileProvider`
 2. 指定可用的文件
-3. 获得一个文件的`content uri`
+3. 为一个文件生成`content uri`
 4. 为一个`uri`赋予临时权限
 5. 提供`content uri`给其他应用
 
@@ -89,3 +93,80 @@ tags:
 <external-files-path name="name" path="path" />
 ```
 
+代表`app`外部存储区域的文件。此子目录的值和`Context.getExternalFilesDir(null)`的返回值相同。
+
+```xml
+<external-cache-path name="name" path="path" />
+```
+
+代表`app`外部存储区域的缓存子目录文件。此子目录的值和`Context.getExternalCacheDir()`的返回值相同。
+
+```xml
+<external-media-path name="name" path="path" />
+```
+
+代表`app`外部存储区域的多媒体子目录文件。此子目录的值和`Context.getExternalMediaDirs()`的返回值相同。（`Context.getExternalMediaDirs()`需要`API > 21`）
+
+---
+
+这些子元素使用相同的属性：
+
+1. `name`：`uri`相对路径。为了强制保证安全，这个值用于隐藏实际分享的子目录。子目录名包含在`path`属性上。
+2. `path`：被分享的目录。`name`被认为是`uri`相对路径，`path`则是实际分享的子目录。注意，`path`的值是一个子目录，不是具体的文件。不能单独指定一个分享的文件名，也不能使用通配符指定一系列的文件。
+
+一定要将被分享文件的所在目录添加到`paths`中，作为一个子元素，如下`xml`中制定了两个子目录：
+
+```xml
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <files-path name="my_images" path="images/"/>
+    <files-path name="my_docs" path="docs/"/>
+</paths>
+```
+
+将`paths`元素和其子元素添加到项目中的`xml`文件中。例如将其放在`res/xml/file_paths.xml`中。为了在`FileProvider`中引用这个文件，添加一个`<meta-data>`元素作为我们定义的`<provider>`的子元素。设置`<meta-data>`元素的子元素`android:name`值为`android.support.FILE_PROVIDER_PATHS`，设置子元素`android:resource`的属性值为`@xml/file_paths`（注意不需要添加后缀`.xml`）。如下：
+
+```xml
+<provider
+    android:name="androidx.core.content.FileProvider"
+    android:authorities="wang.mycroft.fileprovider"
+    android:exported="false"
+    android:grantUriPermissions="true">
+    <meta-data
+        android:name="android.support.FILE_PROVIDER_PATHS"
+        android:resource="@xml/file_paths" />
+</provider>
+```
+
+### 3. 为一个文件生成`content uri`
+
+为了使用`content uri`分享一个文件到另外的应用程序，你的`app`必须生成`content uri`。为了生成`content uri`，为这个文件构造一个`File`对象，传入`FileProvider.getUriForFile()`方法中，得到一个`URI`对象。你可以将得到的`URI`添加到一个`Intent`中，然后发送到另外的应用程序。收到`URI`的应用程序，可以通过调用`ContentResolver.openFileDescriptor()`得到一个`ParcelFileDescriptor`对象，用于打开文件和获取其中的内容。
+
+例如，假定你的`app`使用一个`FileProvider`分享文件到其他`app`中，`authority`值为`wang.mycroft.fileprovier`。为了获取在内部存储区域的`images/`子目录中的文件`default_image.jpg`的`content uri`，使用如下代码：
+
+```java
+File imagePath = new File(Context.getFilesDir(), "images");
+File newFile = new File(imagePath, "default_image.jpg");
+Uri contentUri = getUriForFile(getContext(), "wang.mycroft.fileprovider", newFile);
+```
+
+最后得到的`content uri`的值是：`content://wang.mycroft.fileprovider/images/default_image.jpg`。
+
+### 4. 为一个`uri`赋予临时权限
+
+为了为`FileProvider.getUriForFile()`得到的`content uri`赋予访问权限，需要如下步骤：
+
+1. 为一个`content uri`调用`Context.grantUriPermission(package, Uri, mode_flags)`，使用期望的标记（`flags`）。这样就为指定的包赋予了`content uri`临时的访问权限。标记（`flags`）可以设置的值为：`Intent.FLAG_GRANT_READ_URI_PERMISSION`和（或）` Intent.FLAG_GRANT_WRITE_URI_PERMISSION`。权限保留到你调用`revokeUriPermission()`或者直到设备重启。
+2. 调用`Intent.setData()`将`content uri`添加到`Intent`中。
+3. 调用`Intent.setFlags()`设置`Intent.FLAG_GRANT_READ_URI_PERMISSION`和（或）` Intent.FLAG_GRANT_WRITE_URI_PERMISSION`。最后将`Intent`发送到另外的`app`中。大多数时候，你会通过`Activity.setResult()`使用。
+
+`content uri`的`Activity`所在的栈保持活跃状态，那么权限就会一直会被保留。当任务栈结束，权限将自动移除。权限会被赋予给`Activity`所在`app`的所有组件。
+
+### 5. 提供`content uri`给其他应用
+
+会有多种方法将一个`content uri`提供给其他`app`。一个通用的方法是通过调用`startActivityForResult()`，其他应用通过发送一个`Intent`启动我们`app`的`Activity`。作为相应，我们的`app`将直接返回一个`content uri`给对方的`app`，或者提供一个界面，让用户选择文件。在后一种情况下，一旦用户选择我们`app`的文件，我们将提供文件的`content uri`。在两种情况下，我们的`app`都会通过`setResult()`返回带有`content uri`的`Intent`。
+
+你也可以将`content uri`放在`ClipData`中。然后将`ClipData`添加到`Intent`发送到指定`app`。通过调用`Intent.setClipData()`即可。可以在`Intent`添加多个`ClipData`。当你调用`Intent.setFlags()`设置临时权限时，同样的权限将被设置到所有的`content uri`中。
+
+## 源码
+
+**TODO**
