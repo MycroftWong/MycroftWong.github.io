@@ -12,9 +12,11 @@ tags:
 
 ## 前言
 
-`Android`开发始终脱离不了图片处理，特别是`Android 7.0`开始，无法通过`file:///`的`URI`来进行在应用之间共享文件，取而代之的是`content uri`。这样必然增加了开发难度，如必须生成`content uri`，赋予一些权限，同时暂时没有找到能够通过`content uri`获取文件大小的方法。同时一些特殊需要，如安装`apk`，调用相机拍照都需要改成`content uri`，而无法再直接通过`Uri.fromFile(File)`获取的`URI`共享文件。所以认真研究`FileProvider`是必要的。
+`Android`开发始终脱离不了图片处理，特别是`Android 7.0`开始，无法通过`file:///`的`URI`来进行在应用之间共享文件，取而代之的是`content uri`。这样必然增加了开发难度，如必须生成`content uri`，赋予访问权限，同时暂时没有找到能够通过`content uri`获取文件大小的方法。同时一些特殊需要，如安装`apk`、调用相机拍照都需要改成`content uri`，而无法再直接通过`Uri.fromFile(File)`获取的`URI`共享文件。所以认真研究`FileProvider`是必要的。
 
 下面着重通过官方文档介绍`FileProvider`的使用：[FileProvider](https://developer.android.google.cn/reference/android/support/v4/content/FileProvider)
+
+注：本文所用代码在[FileProvider](https://github.com/MycroftWong/FileProvider)中，可进行查阅。
 
 ## 翻译
 
@@ -169,4 +171,149 @@ Uri contentUri = getUriForFile(getContext(), "wang.mycroft.fileprovider", newFil
 
 ## 源码
 
-**TODO**
+`FileProvider`的源码比较简单，反而我觉得应该更多的了解`ContentResolver`，`FileDescriptor`，`ParcelFileDescriptor`的使用，这是`FileProvider`的基础知识。所以这里不分析源码，后面有机会再深入了解。
+
+## 使用
+
+举几个我们在开发过程中，实际会遇到的问题。
+
+下面的代码中都是用了`Intent.addFlags(int)`添加`Intent.FLAG_GRANT_READ_URI_PERMISSION`或`Intent.FLAG_GRANT_WRITE_URI_PERMISSION`权限，这样就为`Intent`中所有的`Uri`和`ClipData`赋予了临时权限。另外还有一种方法是使用`Context.grantUriPermission(String, Uri)`来单独为某一个`package`（包/`app`）赋予`Uri`的访问权限。两者必有其一，不用重复添加。
+
+### 前提
+
+在`manifest中添加`FileProvider`：
+
+```xml
+<provider
+    android:name="androidx.core.content.FileProvider"
+    android:authorities="wang.mycroft.fileprovider.fileprovider"
+    android:exported="false"
+    android:grantUriPermissions="true">
+    <meta-data
+        android:name="android.support.FILE_PROVIDER_PATHS"
+        android:resource="@xml/file_paths" />
+</provider>
+```
+
+下面是`res/xml/file_paths.xml`的内容：
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <files-path
+        name="image"
+        path="image_file" />
+    <external-files-path
+        name="apk"
+        path="apk_file" />
+</paths>
+```
+
+### 1. 下载`apk`，调用系统安装
+
+因为无法再使用`Uri.fromFile(File)`，所以就必须使用`FileProvider`。如下所示，得到`apk`文件的`content uri`，然后启动`Android`安装器。另外需要注意，添加安装文件的权限。
+
+```kotlin
+private fun installApk(file: File) {
+    val uri = FileProvider.getUriForFile(this, "wang.mycroft.fileprovider.fileprovider", file)
+    val installIntent = Intent(Intent.ACTION_INSTALL_PACKAGE)
+    installIntent.data = uri
+    installIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+
+    val packageList = packageManager.queryIntentActivities(installIntent, 0)
+    if (packageList.size > 0) {
+        startActivity(installIntent)
+    }
+}
+```
+
+```xml
+<!-- 请求安装APK的权限，API29舍弃，应该使用PackageInstaller -->
+<uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+```
+
+### 2. 调用相机拍照
+
+下面将`app`私有文件提供给相机，拍照后进行保存。
+
+```kotlin
+private var tempPhotoUri: Uri? = null
+
+private var tempFile: File? = null
+
+private fun takePhoto() {
+    tempFile = File(File(filesDir, "image_file"), "${UUID.randomUUID()}.jpg")
+    if (!tempFile?.parentFile?.exists()!! && tempFile?.parentFile?.mkdirs()!!) {
+        return
+    }
+    tempPhotoUri =
+        FileProvider.getUriForFile(this, "wang.mycroft.fileprovider.fileprovider", tempFile!!)
+
+    val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+    intent.putExtra(MediaStore.EXTRA_OUTPUT, tempPhotoUri)
+    intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
+
+    val packageList = packageManager.queryIntentActivities(intent, 0)
+    if (packageList.size > 0) {
+        startActivityForResult(intent, 1)
+    }
+}
+
+override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    super.onActivityResult(requestCode, resultCode, data)
+
+    if (requestCode == 1) {
+        // 回收权限
+        revokeUriPermission(tempPhotoUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
+
+        // 有可能返回结果为Activity.RESULT_CANCEL
+        if (resultCode == Activity.RESULT_OK) {
+            val option = BitmapFactory.Options()
+            option.inSampleSize = 4
+            image.setImageBitmap(BitmapFactory.decodeFile(tempFile?.absolutePath, option))
+        }
+    }
+}
+```
+
+### 3. 图片读取并压缩
+
+在如下代码中，读取一个`content uri`的图片文件，进行压缩，并显示在屏幕上。
+
+```kotlin
+private fun compressImageUri(imageUri: Uri) {
+    // 打开流
+    contentResolver.openInputStream(imageUri)?.let {
+        // 仅仅读取尺寸
+        val options = BitmapFactory.Options()
+        options.inJustDecodeBounds = true
+        BitmapFactory.decodeStream(it, null, options)
+
+        // 读取到了尺寸，设置inSampleSize
+        options.inJustDecodeBounds = false
+        val screenWidth = getScreenWidth()
+        if (screenWidth != -1) {
+            options.inSampleSize = options.outWidth / screenWidth
+        }
+
+        // 真正的读取内容
+        val bitmap = BitmapFactory.decodeStream(contentResolver.openInputStream(imageUri), null, options)
+        bitmap.let {
+            // 显示在ImageView上
+            image.setImageBitmap(bitmap)
+        }
+    }
+}
+private fun getScreenWidth(): Int {
+    val wm = getSystemService(Context.WINDOW_SERVICE) as WindowManager
+    val point = Point()
+    wm.defaultDisplay.getRealSize(point)
+    return point.x
+}
+```
+
+## 总结
+
+我们在`app`之间共享内容最多的应该就是图片了，而`Android 7.0`开始，不允许直接使用`file:///`的`URI`进行共享，这样会触发`FileUriExposedException`。取而代之的是使用`content uri`。避免了文件安全问题，但是也增加了开发成本，当然也是我们必须学习的一环。
+
+`FileProvider`的使用其实非常简单，难以理解的是`Uri`的操作。但是作为安卓开发工作者要接受一个比较重要的概念：避免直接使用文件，一切使用`Uri`来共享内容，并赋予访问权限。
