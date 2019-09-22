@@ -78,7 +78,7 @@ object TokenInterceptor : Interceptor {
         return chain.proceed(newRequestBuilder.build())
     }
 
-    private fun isNeedToken(request: Request): boolean {
+    private fun isNeedToken(request: Request): Boolean {
         // 匹配...
     }
 }
@@ -128,7 +128,7 @@ object TokenInterceptor : Interceptor {
         return chain.proceed(newRequestBuilder.build())
     }
 
-    private fun isNeedToken(request: Request): boolean {
+    private fun isNeedToken(request: Request): Boolean {
         // 匹配...
     }
 }
