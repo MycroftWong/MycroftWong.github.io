@@ -24,7 +24,7 @@ tags:
 
 `FileProvider`是`ContentProvider`的一个特殊子类，为了加强在应用之间安全的分享文件。通过创建`content://`的`uri`替换`file:///`的`uri`。
 
-`content://`的`uri`允许授予临时的读写权限。当我们创建一个`Intent`，其中包含一个`content uri`，为了能够让对方的应用能够访问到这个`content uri`，可以使用`Intent.setFlags()`添加权限。如果收到`content uri`的是`Activity`，那么这些权限一直会存在，只要收到`content uri`的`Activity`栈处于活动状态。如果收到`content uri`的是`Service`，那么`Service`一直运行，权限就会一直在。
+`content://`的`uri`允许授予临时的读写权限。当我们创建一个`Intent`，其中包含一个`content uri`，为了能够让对方的应用能够访问到这个`content uri`，可以使用`Intent.setFlags()`添加权限。如果收到`content uri`的是`Activity`，只要该`Activity`所在栈处于活动状态，那么这些权限一直会存在。如果收到`content uri`的是`Service`，那么`Service`一直运行，权限就会一直在。
 
 相对于`file:///`的`uri`，你想控制文件的控制权限，那么你必须修改系统的底层文件权限。你提供的这些权限将对所有的应用有效，一直保留到你更改他们。这种权限控制根本上是不安全的。
 
@@ -148,7 +148,7 @@ tags:
 ```java
 File imagePath = new File(Context.getFilesDir(), "images");
 File newFile = new File(imagePath, "default_image.jpg");
-Uri contentUri = getUriForFile(getContext(), "wang.mycroft.fileprovider", newFile);
+Uri contentUri = FileProvider.getUriForFile(getContext(), "wang.mycroft.fileprovider", newFile);
 ```
 
 最后得到的`content uri`的值是：`content://wang.mycroft.fileprovider/images/default_image.jpg`。
@@ -181,7 +181,7 @@ Uri contentUri = getUriForFile(getContext(), "wang.mycroft.fileprovider", newFil
 
 ### 前提
 
-在`manifest中添加`FileProvider`：
+在`manifest`中添加`FileProvider`：
 
 ```xml
 <provider
