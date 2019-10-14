@@ -120,9 +120,9 @@ object TokenInterceptor : Interceptor {
                 response.header("NewToken")?.let {
                     DataService.accessToken = it
                 }
-            }
 
-            return response
+                return response
+            }
         }
 
         return chain.proceed(newRequestBuilder.build())
