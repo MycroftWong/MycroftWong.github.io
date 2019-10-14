@@ -205,3 +205,6 @@ override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) 
     android:protectionLevel="dangerous" />
 ```
 
+## 总结
+
+理解设计权限的目的，就非常容易理解权限的使用。自定义权限较少，大多数时候我们是在使用权限。当然自定义权限也可以使用到，不过这通常是在`Service`中。另外注意`Android 8.0`开始，`ContentProvider`的静态声明受到了极大限制，对于推送功能的实现，目前都需要根据厂商的渠道。
