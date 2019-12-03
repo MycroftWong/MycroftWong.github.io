@@ -1,0 +1,1110 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="Permission 权限, blog,mycroft,android,spring,mycroftwong">
+    <meta name="description" content="Permission 权限Android引入权限的目的是保护用户隐私。APP一定要在访问用户敏感数据（如短信服务）和系统功能（如相机、网络）时申请权限。对于不同的功能，系统可能会自动通过权限申请，也可能提示用户批准权限。
+安卓系统安全架构的">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Permission 权限 | Mycroft</title>
+    <link rel="icon" type="image/x-icon, image/vnd.microsoft.icon" href="https://www.mycroft.wang/images/favicon.ico">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    <style type="text/css">
+        
+        code[class*="language-"], pre[class*="language-"] {
+            white-space: pre !important;
+        }
+        
+    </style>
+
+    <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<body>
+
+<header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="https://image.mycroft.wang/default_avatar.jpg" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">Mycroft</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fa fa-navicon"></i></a>
+<ul class="right">
+    
+    <li class="hide-on-med-and-down">
+        <a href="/" class="waves-effect waves-light">
+            
+            <i class="fa fa-home"></i>
+            
+            <span>首页</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/tags" class="waves-effect waves-light">
+            
+            <i class="fa fa-tags"></i>
+            
+            <span>标签</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/categories" class="waves-effect waves-light">
+            
+            <i class="fa fa-bookmark"></i>
+            
+            <span>分类</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/archives" class="waves-effect waves-light">
+            
+            <i class="fa fa-archive"></i>
+            
+            <span>归档</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/about" class="waves-effect waves-light">
+            
+            <i class="fa fa-user-circle-o"></i>
+            
+            <span>关于</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/friends" class="waves-effect waves-light">
+            
+            <i class="fa fa-address-book"></i>
+            
+            <span>友情链接</span>
+        </a>
+    </li>
+    
+    <li>
+        <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+            <i id="searchIcon" class="fa fa-search" title="搜索"></i>
+        </a>
+    </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="https://image.mycroft.wang/default_avatar.jpg" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">Mycroft</div>
+        <div class="logo-desc">
+            
+            天道酬勤
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li>
+            <a href="/" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-home"></i>
+                
+                首页
+            </a>
+        </li>
+        
+        <li>
+            <a href="/tags" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-tags"></i>
+                
+                标签
+            </a>
+        </li>
+        
+        <li>
+            <a href="/categories" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-bookmark"></i>
+                
+                分类
+            </a>
+        </li>
+        
+        <li>
+            <a href="/archives" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-archive"></i>
+                
+                归档
+            </a>
+        </li>
+        
+        <li>
+            <a href="/about" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-user-circle-o"></i>
+                
+                关于
+            </a>
+        </li>
+        
+        <li>
+            <a href="/friends" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-address-book"></i>
+                
+                友情链接
+            </a>
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/MycroftWong" class="waves-effect waves-light" target="_blank">
+                <i class="fa fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/MycroftWong" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+
+<script src="/libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '/';
+            }
+        }
+    })();
+</script>
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/26.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        Permission 权限
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 20px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/Permission/" target="_blank">
+                                <span class="chip bg-color">Permission</span>
+                            </a>
+                        
+                            <a href="/tags/权限/" target="_blank">
+                                <span class="chip bg-color">权限</span>
+                            </a>
+                        
+                            <a href="/tags/ContentProvider/" target="_blank">
+                                <span class="chip bg-color">ContentProvider</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fa fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/Android-基础/" class="post-category" target="_blank">
+                                Android - 基础
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                <div class="post-date info-break-policy">
+                    <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2019-10-14
+                </div>
+
+                
+                    
+                    <div class="info-break-policy">
+                        <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
+                        2.6k
+                    </div>
+                    
+
+                    
+                    <div class="info-break-policy">
+                        <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                        9 分
+                    </div>
+                    
+                
+				
+				
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="fa fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="Permission-权限"><a href="#Permission-权限" class="headerlink" title="Permission 权限"></a>Permission 权限</h1><p><code>Android</code>引入权限的目的是保护用户隐私。<code>APP</code>一定要在访问用户敏感数据（如短信服务）和系统功能（如相机、网络）时申请权限。对于不同的功能，系统可能会自动通过权限申请，也可能提示用户批准权限。</p>
+<p>安卓系统安全架构的中心点是禁止任何<code>APP</code>默认拥有对其他<code>APP</code>、系统或是用户拥有不利影响操作的权限。</p>
+<h2 id="申请权限"><a href="#申请权限" class="headerlink" title="申请权限"></a>申请权限</h2><p><code>APP</code>功能需要的权限一定要在<code>manifest</code>中声明。如下<code>APP</code>需要发送短信功能的权限时：</p>
+<pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>manifest</span> <span class="token attr-name"><span class="token namespace">xmlns:</span>android</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>http://schemas.android.com/apk/res/android<span class="token punctuation">"</span></span>
+          <span class="token attr-name">package</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.example.snazzyapp<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>uses-permission</span> <span class="token attr-name"><span class="token namespace">android:</span>name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>android.permission.SEND_SMS<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>application</span> <span class="token attr-name">...</span><span class="token punctuation">></span></span>
+        ...
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>application</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>manifest</span><span class="token punctuation">></span></span></code></pre>
+<ol>
+<li>如果在<code>manifest</code>中申请的权限是<strong>普通权限</strong>，那么系统将自动同意</li>
+<li>如果在<code>manifest</code>中申请的权限是<strong>危险权限</strong>，系统将提示用户同意<code>APP</code>的权限申请</li>
+</ol>
+<p>关于<strong>普通权限</strong>和<strong>危险权限</strong>的区别，查看后面的<strong>保护等级</strong>。</p>
+<h3 id="危险权限的申请提示"><a href="#危险权限的申请提示" class="headerlink" title="危险权限的申请提示"></a>危险权限的申请提示</h3><p>根据<code>Android</code>版本的不同和<code>APP</code>的目标版本的不同，<code>Android</code>提示用户批准危险权限的方式也不同。</p>
+<h4 id="运行时申请-Android-6-0及以上"><a href="#运行时申请-Android-6-0及以上" class="headerlink" title="运行时申请 Android 6.0及以上"></a>运行时申请 <code>Android 6.0</code>及以上</h4><p><code>Android</code>版本在<code>6.0</code>及以上，并且<code>APP</code>目标版本在23及以上时，在安装时，系统不会提醒用户批准权限（荣耀手机会在安装完成时，显示一个用户可以操作权限的界面），用户需要在运行时申请权限。如下图左，系统将弹出<code>Dialog</code>供用户操作。若用户已经拒绝过一次，<code>APP</code>再次申请该权限是，<code>Dialog</code>则会显示“不再提醒”的勾选框，以后<code>APP</code>申请权限时，将不在提示用户申请，自动拒绝，如下图右（现在很多系统会在第一次申请时就显示“不再提醒”的勾选框）：</p>
+<p><img src="runtime_permission_request.png" alt="申请运行时权限"></p>
+<p>另外，及时用户通过了权限，但是也可以在之后在系统设置中关闭权限，所以一定要在运行时每次需要就申请。</p>
+<h4 id="安装时申请"><a href="#安装时申请" class="headerlink" title="安装时申请"></a>安装时申请</h4><p><code>Android</code>版本在<code>5.1.1</code>及以下或是<code>APP</code>目标版本在22及以下时，系统将在安装时询问用户批准所有的危险权限。若用户同意，那么系统会批准<code>APP</code>声明的所有权限，若用户不同意，<code>APP</code>将无法安装。（某些定制系统会允许安装，但是需要特殊的方法在运行时申请权限）。</p>
+<h3 id="获取用户敏感信息的申请提示"><a href="#获取用户敏感信息的申请提示" class="headerlink" title="获取用户敏感信息的申请提示"></a>获取用户敏感信息的申请提示</h3><p>一些<code>APP</code>可能需要获取依赖于短信的用户敏感信息。如果想申请这些权限，一定要在运行时申请权限之前，提示用户在系统设置中，修改“默认应用”，如默认的短信服务、电话服务。</p>
+<h2 id="可选的硬件功能的权限"><a href="#可选的硬件功能的权限" class="headerlink" title="可选的硬件功能的权限"></a>可选的硬件功能的权限</h2><p>访问硬件功能时需要申请应用权限。然而，不是所有的安卓设备有特定的硬件功能呢。所以，加入你申请相机权限，那么在<code>manifest</code>中一定要使用<code>&lt;uses-feature&gt;</code>标记声明需要的硬件功能。如下：</p>
+<pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>uses-feature</span> <span class="token attr-name"><span class="token namespace">android:</span>name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>android.hardware.camera<span class="token punctuation">"</span></span> <span class="token attr-name"><span class="token namespace">android:</span>required</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>false<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span></code></pre>
+<p>如果硬件功能的需求设置为<code>true</code>，那么如果硬件上没有该功能，那么系统将不允许安装该<code>APP</code>，如果为<code>false</code>，那么最好在运行时需要改功能前，使用<code>PackageManager.hasSystemFeature()</code>判断设备是否有改功能。</p>
+<h2 id="权限的强制执行"><a href="#权限的强制执行" class="headerlink" title="权限的强制执行"></a>权限的强制执行</h2><p>权限不仅仅用于申请系统的功能，<code>APP</code>的<code>Service</code>也可以强制执行想使用它的自定义权限。关于如果自定义权限，可查看<strong>自定义的<code>APP</code>权限</strong>。</p>
+<h3 id="Activity权限的强制执行"><a href="#Activity权限的强制执行" class="headerlink" title="Activity权限的强制执行"></a>Activity权限的强制执行</h3><p>可以在<code>&lt;activity&gt;</code>标记中添加<code>android:permission</code>属性，限制谁可以启动该<code>Activity</code>。在<code>Context.startActivity()</code>和<code>Activity.startActivityForResult()</code>会检查权限，如果调用者没有该权限，调用时将抛出<code>SecurityException</code>。</p>
+<h3 id="Service权限的强制执行"><a href="#Service权限的强制执行" class="headerlink" title="Service权限的强制执行"></a>Service权限的强制执行</h3><p>和<code>Activity</code>一样，可以在<code>&lt;service&gt;</code>设置需要的权限。将在<code>Context.startService()</code>、<code>Context.stopService()</code>和<code>Context.bindService()</code>中检查权限。</p>
+<h3 id="Broadcast权限的强制执行"><a href="#Broadcast权限的强制执行" class="headerlink" title="Broadcast权限的强制执行"></a>Broadcast权限的强制执行</h3><p>和<code>Activity</code>一样，可以在<code>&lt;receiver&gt;</code>设置需要的权限。系统将在<code>Context.sendBroadcast()</code>返回后检查权限，若通过，系统将发送，若未通过，系统不会抛出异常，但也不会发送该<code>Broadcast</code>。</p>
+<p>动态注册的<code>BroadcastReceiver</code>也可以在注册时的代码中设置权限。</p>
+<p><strong>重点</strong>：发送者和接收者都需要申请权限。</p>
+<h4 id="发送时的权限"><a href="#发送时的权限" class="headerlink" title="发送时的权限"></a>发送时的权限</h4><p>当发送广播<code>Broadcast</code>时，可以指定权限参数。只有拥有该权限的接收者能够收到该广播。如下</p>
+<pre class=" language-kotlin"><code class="language-kotlin"><span class="token function">sendBroadcast</span><span class="token punctuation">(</span><span class="token function">Intent</span><span class="token punctuation">(</span><span class="token string">"com.example.NOTIFY"</span><span class="token punctuation">)</span><span class="token punctuation">,</span> Manifest<span class="token punctuation">.</span>permission<span class="token punctuation">.</span>SEND_SMS<span class="token punctuation">)</span></code></pre>
+<p>接收者一定要获取该权限：</p>
+<pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>uses-permission</span> <span class="token attr-name"><span class="token namespace">android:</span>name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>android.permission.SEND_SMS<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span></code></pre>
+<p>不仅仅可以使用<code>Android</code>自带的权限，也可以使用自定义的权限。</p>
+<h4 id="接收时的权限"><a href="#接收时的权限" class="headerlink" title="接收时的权限"></a>接收时的权限</h4><p>当在<code>&lt;receiver&gt;</code>（接收者）声明时指定权限（危险的权限），那么想要接收者收到该通知，那么一定要在<code>manifest</code>中使用<code>&lt;uses-permission&gt;</code>声明接收者所需要的权限。如下：</p>
+<pre class=" language-kotlin"><code class="language-kotlin"><span class="token operator">&lt;</span>receiver android<span class="token operator">:</span>name<span class="token operator">=</span><span class="token string">".MyBroadcastReceiver"</span>
+          android<span class="token operator">:</span>permission<span class="token operator">=</span><span class="token string">"android.permission.SEND_SMS"</span><span class="token operator">></span>
+    <span class="token operator">&lt;</span>intent<span class="token operator">-</span>filter<span class="token operator">></span>
+        <span class="token operator">&lt;</span>action android<span class="token operator">:</span>name<span class="token operator">=</span><span class="token string">"android.intent.action.AIRPLANE_MODE"</span><span class="token operator">/</span><span class="token operator">></span>
+    <span class="token operator">&lt;</span><span class="token operator">/</span>intent<span class="token operator">-</span>filter<span class="token operator">></span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>receiver<span class="token operator">></span></code></pre>
+<p>动态注册类似</p>
+<h4 id="BroadcastReceiver权限总结"><a href="#BroadcastReceiver权限总结" class="headerlink" title="BroadcastReceiver权限总结"></a>BroadcastReceiver权限总结</h4><ol>
+<li>在发送时指定权限，指的是接收者必须拥有该权限，并且需要在发送者的<code>manifest</code>中定义该权限。</li>
+<li>接收者指定权限，指的是发送者必须拥有并携带权限，并且需要在接收者的<code>manifest</code>中定义该权限。</li>
+</ol>
+<h4 id="Android-8-0-权限限制"><a href="#Android-8-0-权限限制" class="headerlink" title="Android 8.0 权限限制"></a>Android 8.0 权限限制</h4><p>为了避免像<code>IM SDK</code>这种进行相互启动的机制。从<code>Android 8.0</code>开始，对广播进行了极大限制，自定义的<code>ACTION</code>不再能够使用。所以，当我在荣耀手机（<code>Android 9.0</code>）上测试时，使用了自定义的<code>ACTION</code>发送广播，接收者始终没有收到。解决方案是使用动态注册。不过这样就实现不了很多功能了。</p>
+<h3 id="ContentProvider权限的强制执行"><a href="#ContentProvider权限的强制执行" class="headerlink" title="ContentProvider权限的强制执行"></a>ContentProvider权限的强制执行</h3><p>在<code>&lt;provider&gt;</code>上添加<code>android:permission</code>属性声明想要操作<code>ContentProvider</code>数据的权限。<code>ContentProvder</code>拥有额外的一个重要的安全特性，被称为<code>URI</code>权限，后面将说明。不同于其他的组件，<code>ContentProvider</code>有两个单独的权限属性可以设置<code>android:readPermission</code>和<code>android:writePermission</code>。注意，拥有写权限，并不意味着拥有读权限，这两者是独立的。</p>
+<p>当首次检索一个<code>ContentProvider</code>，进行对应操作时将进行权限检查，若未通过，将抛出<code>SecurityException</code>异常。使用<code>ContentResolver.query()</code>时，需要读权限，使用<code>ContentResolver.insert()</code>、<code>ContentResolver.update()</code>、<code>ContentResolver.delete()</code>时，需要写权限。</p>
+<h3 id="URI-权限"><a href="#URI-权限" class="headerlink" title="URI 权限"></a>URI 权限</h3><p>标准的权限系统对<code>ContentProvider</code>的功能有限。<code>ContentProvider</code>获取想保护它自己的读写权限，并且使其提供的<code>URI</code>只被单独需要的<code>APP</code>使用。</p>
+<p>典型的例子是邮箱应用。应该通过权限机制保护用户的隐私数据。如想要展示邮箱应用中的图片时，提供一个<code>URI</code>给图片预览<code>APP</code>，那么当不再预览时，应该收回该权限，因为没有任何理由再让图片预览<code>APP</code>获取其操作了。</p>
+<p>解决方法是为每个<code>URI</code>设置单独的权限，如当启动一个<code>Activity</code>时，设置<code>Intent.FLAG_GRANT_READ_URI_PERMISSION</code>和/或<code>Intent.FLAG_GRANT_WRITE_URI_PERMISSION</code>。这样保证接收的<code>Activity</code>能够获取<code>Intent</code>中指定的<code>URI</code>数据，而不管是否操作<code>ContentProvider</code>的权限。</p>
+<p>关于<code>URI</code>权限的使用，可以参考<a href="/2019/09/05/fileprovider/" title="FileProvider">FileProvider</a></p>
+<h3 id="其他的权限强制执行"><a href="#其他的权限强制执行" class="headerlink" title="其他的权限强制执行"></a>其他的权限强制执行</h3><p>参考：<a href="https://developer.android.google.cn/guide/topics/permissions/overview" target="_blank" rel="noopener">权限概览</a></p>
+<h2 id="权限级别"><a href="#权限级别" class="headerlink" title="权限级别"></a>权限级别</h2><p>权限被分为3个级别：</p>
+<ol>
+<li>普通权限：对于用户隐私或是设备操作没有危险的权限，系统将在安装时自动通过该权限</li>
+<li>签名权限：系统将在安装时通过的权限，但是只有相同签名的<code>APP</code>才能够获取。注意，一些签名权限并不用于第三方<code>APP</code></li>
+<li>危险权限：可能会影响到用户隐私或是设备的普通操作</li>
+</ol>
+<h2 id="特殊权限"><a href="#特殊权限" class="headerlink" title="特殊权限"></a>特殊权限</h2><p>某些权限并不是与普通权限和危险权限表现相同。<code>SYSTEM_ALERT_WINDOW</code>和<code>WRITE_SETTINGS</code>两个权限相当的敏感，大部分<code>APP</code>不应该使用它们。如果<code>APP</code>需要使用，那么需要在<code>manifest</code>中声明，并且发送<code>Intent</code>请求用户验证。如下：</p>
+<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">if</span> <span class="token punctuation">(</span>PackageManager<span class="token punctuation">.</span>PERMISSION_GRANTED <span class="token operator">!=</span> ContextCompat<span class="token punctuation">.</span><span class="token function">checkSelfPermission</span><span class="token punctuation">(</span>
+        <span class="token keyword">this</span><span class="token punctuation">,</span> Manifest<span class="token punctuation">.</span>permission<span class="token punctuation">.</span>WRITE_SETTINGS
+    <span class="token punctuation">)</span>
+<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">startActivityForResult</span><span class="token punctuation">(</span><span class="token function">Intent</span><span class="token punctuation">(</span>Settings<span class="token punctuation">.</span>ACTION_MANAGE_WRITE_SETTINGS<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">apply</span> <span class="token punctuation">{</span>
+        <span class="token keyword">data</span> <span class="token operator">=</span> Uri<span class="token punctuation">.</span><span class="token function">parse</span><span class="token punctuation">(</span><span class="token string">"package:<span class="token interpolation variable">$packageName</span>"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">override</span> <span class="token keyword">fun</span> <span class="token function">onActivityResult</span><span class="token punctuation">(</span>requestCode<span class="token operator">:</span> Int<span class="token punctuation">,</span> resultCode<span class="token operator">:</span> Int<span class="token punctuation">,</span> <span class="token keyword">data</span><span class="token operator">:</span> Intent<span class="token operator">?</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">super</span><span class="token punctuation">.</span><span class="token function">onActivityResult</span><span class="token punctuation">(</span>requestCode<span class="token punctuation">,</span> resultCode<span class="token punctuation">,</span> <span class="token keyword">data</span><span class="token punctuation">)</span>
+    <span class="token keyword">when</span> <span class="token punctuation">(</span>requestCode<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token number">2</span> <span class="token operator">-></span> <span class="token keyword">if</span> <span class="token punctuation">(</span>Settings<span class="token punctuation">.</span>System<span class="token punctuation">.</span><span class="token function">canWrite</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            Toast<span class="token punctuation">.</span><span class="token function">makeText</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> <span class="token string">"获取到了WRITE_SETTINGS权限"</span><span class="token punctuation">,</span> Toast<span class="token punctuation">.</span>LENGTH_LONG<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">show</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+            Toast<span class="token punctuation">.</span><span class="token function">makeText</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> <span class="token string">"没有获取到了WRITE_SETTINGS权限"</span><span class="token punctuation">,</span> Toast<span class="token punctuation">.</span>LENGTH_LONG<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">show</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<h2 id="权限组"><a href="#权限组" class="headerlink" title="权限组"></a>权限组</h2><p>权限根据设备特性或功能被分为不同的组。在这种系统下，权限请求被组织为组级别处理。并且单个清单组对应多个权限声明。例如，<code>SMS</code>权限组包含<code>READ_SMS</code>和<code>RECEIVE_SMS</code>权限。这样对权限进行分组，让用户做出更有意义的选择，而不是被复杂的权限请求弄得不知所措。</p>
+<p>所有危险的权限都属于权限组。无论保护级别如何，任何权限都可以属于权限组。 但是，如果权限很危险，则权限的组只会影响用户体验。</p>
+<p>当设备运行的是<code>Android 6.0</code>及以上，并且<code>APP</code>目标版本是23及以上时，当请求一个危险权限时，系统的表现：当我们请求权限时，系统检查<code>APP</code>是否已经获得同组下的其他权限，若没有，将使用系统<code>Dialog</code>提示用户。若<code>APP</code>已经又有了同组下的危险权限，那么系统将直接通过新申请的权限，不必再提示用户。</p>
+<h2 id="请求应用权限"><a href="#请求应用权限" class="headerlink" title="请求应用权限"></a>请求应用权限</h2><p>非常简单，直接可以参考<a href="https://developer.android.google.cn/training/permissions/requesting" target="_blank" rel="noopener">请求应用权限</a></p>
+<h2 id="定义自定义权限"><a href="#定义自定义权限" class="headerlink" title="定义自定义权限"></a>定义自定义权限</h2><p>自定义权限非常简单，重要的是如何使用权限。如下所示：</p>
+<pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>permission</span>
+    <span class="token attr-name"><span class="token namespace">android:</span>name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.example.myapp.permission.DEADLY_ACTIVITY<span class="token punctuation">"</span></span>
+    <span class="token attr-name"><span class="token namespace">android:</span>label</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>@string/permlab_deadlyActivity<span class="token punctuation">"</span></span>
+    <span class="token attr-name"><span class="token namespace">android:</span>description</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>@string/permdesc_deadlyActivity<span class="token punctuation">"</span></span>
+    <span class="token attr-name"><span class="token namespace">android:</span>permissionGroup</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>android.permission-group.COST_MONEY<span class="token punctuation">"</span></span>
+    <span class="token attr-name"><span class="token namespace">android:</span>protectionLevel</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>dangerous<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span></code></pre>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>理解设计权限的目的，就非常容易理解权限的使用。自定义权限较少，大多数时候我们是在使用权限。当然自定义权限也可以使用到，不过这通常是在<code>Service</code>中。另外注意<code>Android 8.0</code>开始，<code>ContentProvider</code>的静态声明受到了极大限制，对于推送功能的实现，目前都需要根据厂商的渠道。</p>
+
+            </div>
+            <hr/>
+
+            
+            <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.88rem;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-large waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fa fa-close"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.png" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+            
+
+            <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    <div class="social-share" data-disabled="qzone" data-wechat-qrcode-helper="<p>微信里点“发现”->“扫一扫”二维码便可查看分享。</p>"></div>
+    
+</div>
+
+<script src="/libs/share/js/social-share.min.js"></script>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        <p class="reprint-tip">
+            <i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;
+            <span>转载规则</span>
+        </p>
+        
+            <div class="center-align">
+                <a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                    <img alt=""
+                         style="border-width:0"
+                         src="https://i.creativecommons.org/l/by/4.0/88x31.png"/>
+                </a>
+            </div>
+            <br/>
+            <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
+                  property="dct:title" rel="dct:type">
+                    《Permission 权限》
+                </span> 由
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2019/10/14/permission-quan-xian/" property="cc:attributionName"
+               rel="cc:attributionURL">
+                Mycroft Wong
+            </a> 采用
+            <a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                知识共享署名 4.0 国际许可协议
+            </a>进行许可。
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge badge-text-color">
+                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2019/12/03/intent-de-yi-xie-zhi-shi-dian/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="Intent的一些知识点">
+                        
+                        <span class="card-title">Intent的一些知识点</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            Intent的一些知识点Intent的用途Intent是一个消息传递对象。使用Intent向系统请求操作，主要包括：
+
+启动Activity
+启动Service
+发送Broadcast
+
+下图展示了启动Activity时，Intent在两个
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2019-12-03
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Android/" class="post-category" target="_blank">
+                                    Android
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Android/" target="_blank">
+                        <span class="chip bg-color">Android</span>
+                    </a>
+                    
+                    <a href="/tags/Intent/" target="_blank">
+                        <span class="chip bg-color">Intent</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge badge-text-color">
+                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2019/09/21/okhttp-shi-xian-token-yan-zheng/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="okhttp实现token验证">
+                        
+                        <span class="card-title">okhttp实现token验证</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            okhttp实现token验证前言公司目前的项目使用了token来验证用户。登陆之后会返回最新的access token，后续在每次请求API时，服务端会返回最新的access token，客户端进行保存。若一段时间内（假定是7天）没有进行
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-09-21
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/开源库-okhttp/" class="post-category" target="_blank">
+                                    开源库 - okhttp
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/okhttp/" target="_blank">
+                        <span class="chip bg-color">okhttp</span>
+                    </a>
+                    
+                    <a href="/tags/http/" target="_blank">
+                        <span class="chip bg-color">http</span>
+                    </a>
+                    
+                    <a href="/tags/开源/" target="_blank">
+                        <span class="chip bg-color">开源</span>
+                    </a>
+                    
+                    <a href="/tags/token/" target="_blank">
+                        <span class="chip bg-color">token</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: Mycroft<br />'
+            + '作者: Mycroft Wong<br />'
+            + '链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="fa fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fa fa-list"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            collapseDepth: 6,
+            headingSelector: 'h2, h3, h4, h5'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4, h5').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).slideUp(500);
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).slideDown(500);
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+    
+
+</main>
+
+
+<footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            本站由&copy;<a href="https://MycroftWong.github.io/" target="_blank">Mycroft Wong</a>基于
+            <a href="https://hexo.io/" target="_blank">Hexo</a>搭建.
+
+            
+                &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
+                <span class="white-color">44.8k</span>
+            
+
+            
+			
+                <br>
+                
+                <span id="busuanzi_container_site_pv">
+                    <i class="fa fa-heart-o"></i>
+                    本站总访问量 <span id="busuanzi_value_site_pv" class="white-color"></span>
+                </span>
+                
+                
+                <span id="busuanzi_container_site_uv">
+                    <i class="fa fa-users"></i>
+                    次,&nbsp;访客数 <span id="busuanzi_value_site_uv" class="white-color"></span> 人.
+                </span>
+                
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/MycroftWong" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fa fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:mycroftwong@gmail.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fa fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fa fa-rss"></i>
+    </a>
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+<!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fa fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+<!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fa fa-angle-up"></i>
+    </a>
+</div>
+
+
+<script src="/libs/materialize/materialize.min.js"></script>
+<script src="/libs/masonry/masonry.pkgd.min.js"></script>
+<script src="/libs/aos/aos.js"></script>
+<script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+<script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+<script src="/js/matery.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+
+
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+
+
+</body>
+</html>

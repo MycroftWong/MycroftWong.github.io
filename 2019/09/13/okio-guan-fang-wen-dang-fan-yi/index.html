@@ -1,0 +1,1450 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="Okio官方文档翻译, blog,mycroft,android,spring,mycroftwong">
+    <meta name="description" content="Okio官方文档翻译Okio是一个辅助java.io和java.nio变得更易于访问、存储、操作数据的库。它一开始是作为Okhttp的组件存在。Okhttp是在Android中非常好用的HTTP客户端。Okio经过充分测试，并且准备好处理新">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Okio官方文档翻译 | Mycroft</title>
+    <link rel="icon" type="image/x-icon, image/vnd.microsoft.icon" href="https://www.mycroft.wang/images/favicon.ico">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    <style type="text/css">
+        
+        code[class*="language-"], pre[class*="language-"] {
+            white-space: pre !important;
+        }
+        
+    </style>
+
+    <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<body>
+
+<header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="https://image.mycroft.wang/default_avatar.jpg" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">Mycroft</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fa fa-navicon"></i></a>
+<ul class="right">
+    
+    <li class="hide-on-med-and-down">
+        <a href="/" class="waves-effect waves-light">
+            
+            <i class="fa fa-home"></i>
+            
+            <span>首页</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/tags" class="waves-effect waves-light">
+            
+            <i class="fa fa-tags"></i>
+            
+            <span>标签</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/categories" class="waves-effect waves-light">
+            
+            <i class="fa fa-bookmark"></i>
+            
+            <span>分类</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/archives" class="waves-effect waves-light">
+            
+            <i class="fa fa-archive"></i>
+            
+            <span>归档</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/about" class="waves-effect waves-light">
+            
+            <i class="fa fa-user-circle-o"></i>
+            
+            <span>关于</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/friends" class="waves-effect waves-light">
+            
+            <i class="fa fa-address-book"></i>
+            
+            <span>友情链接</span>
+        </a>
+    </li>
+    
+    <li>
+        <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+            <i id="searchIcon" class="fa fa-search" title="搜索"></i>
+        </a>
+    </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="https://image.mycroft.wang/default_avatar.jpg" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">Mycroft</div>
+        <div class="logo-desc">
+            
+            天道酬勤
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li>
+            <a href="/" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-home"></i>
+                
+                首页
+            </a>
+        </li>
+        
+        <li>
+            <a href="/tags" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-tags"></i>
+                
+                标签
+            </a>
+        </li>
+        
+        <li>
+            <a href="/categories" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-bookmark"></i>
+                
+                分类
+            </a>
+        </li>
+        
+        <li>
+            <a href="/archives" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-archive"></i>
+                
+                归档
+            </a>
+        </li>
+        
+        <li>
+            <a href="/about" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-user-circle-o"></i>
+                
+                关于
+            </a>
+        </li>
+        
+        <li>
+            <a href="/friends" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-address-book"></i>
+                
+                友情链接
+            </a>
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/MycroftWong" class="waves-effect waves-light" target="_blank">
+                <i class="fa fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/MycroftWong" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+
+<script src="/libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '/';
+            }
+        }
+    })();
+</script>
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/15.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        Okio官方文档翻译
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 20px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/okio/" target="_blank">
+                                <span class="chip bg-color">okio</span>
+                            </a>
+                        
+                            <a href="/tags/okhttp/" target="_blank">
+                                <span class="chip bg-color">okhttp</span>
+                            </a>
+                        
+                            <a href="/tags/源码/" target="_blank">
+                                <span class="chip bg-color">源码</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fa fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/开源库-okio/" class="post-category" target="_blank">
+                                开源库 - okio
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                <div class="post-date info-break-policy">
+                    <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2019-09-13
+                </div>
+
+                
+                    
+                    <div class="info-break-policy">
+                        <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
+                        5.3k
+                    </div>
+                    
+
+                    
+                    <div class="info-break-policy">
+                        <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                        21 分
+                    </div>
+                    
+                
+				
+				
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="fa fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="Okio官方文档翻译"><a href="#Okio官方文档翻译" class="headerlink" title="Okio官方文档翻译"></a>Okio官方文档翻译</h1><p><code>Okio</code>是一个辅助<code>java.io</code>和<code>java.nio</code>变得更易于访问、存储、操作数据的库。它一开始是作为<code>Okhttp</code>的组件存在。<code>Okhttp</code>是在<code>Android</code>中非常好用的<code>HTTP</code>客户端。<code>Okio</code>经过充分测试，并且准备好处理新的问题了。</p>
+<h2 id="ByteStrings-and-Buffers"><a href="#ByteStrings-and-Buffers" class="headerlink" title="ByteStrings and Buffers"></a>ByteStrings and Buffers</h2><p><code>Okio</code>围绕两种类型构建。将大量的功能集成到一个简单的<code>API</code>中：</p>
+<ul>
+<li><code>ByteString</code>是不可更改的字节序列。对于字符数据，<code>String</code>是基础。<code>ByteString</code>则是<code>String</code>失散多年的兄弟，更易于将二进制数据作为值来处理。这个类非常好用：它知道如何编码和解码为16进制、<code>base64</code>和<code>UTF-8</code>。</li>
+<li><code>Buffer</code>是可更改的字节序列。和<code>ArrayList</code>一样，我们不需要提前设置它的大小。应该像一个队列一样读取和写入<code>Buffer</code>：在末尾写入数据，从头部读取数据。不必考虑管理位置、长度限制和容量。</li>
+</ul>
+<p>在内部，<code>ByteString</code>和<code>Buffer</code>可以节省<code>CPU</code>和内存。如果将<code>UTF-8</code>字符串转换为<code>ByteString</code>，它将保存这个字符串的引用，需要时再进行解码，无需做执行任何操作。</p>
+<p><code>Buffer</code>使用一个<code>Segment</code>链表实现。当我们将数据从一个<code>Buffer</code>移到另一个<code>Buffer</code>时，它重新分配<code>Segment</code>的所有权，而不是复制数据。这在多线程编程中特别有用：一个线程用于网络交换数据，与另一个工作线程交换数据时不必对数据进行复制。</p>
+<h2 id="Sources-and-Sinks"><a href="#Sources-and-Sinks" class="headerlink" title="Sources and Sinks"></a>Sources and Sinks</h2><p><code>java.io</code>包设计非常好的一点是能够将如加密、压缩等转换进行分层。<code>Okio</code>包含了它自己的流类型，被称为<code>Source</code>和<code>Sink</code>。它用起来和<code>InputStream</code>、<code>OutputStream</code>差不多，但是有几点关键的不同：</p>
+<ul>
+<li><code>Timeout</code>，超时。流提供底层<code>IO</code>机制的超时访问。和<code>java.io</code>套接字流不同，<code>read()</code>和<code>write()</code>调用都会有超时信息。</li>
+<li>易于实现。<code>Source</code>定义了三个方法：<code>read()</code>，<code>close()</code>和<code>timeout()</code>。没有如<code>available()</code>或是单字节读取造成正确性和性能的危险。</li>
+<li>易于使用。即是<code>Source</code>和<code>Sink</code>都只有三个方法用于读写，调用者可以通过使用<code>BufferedSource</code>和<code>BufferedSink</code>接口获得更多的<code>API</code>。</li>
+<li>字节流和字符流本质上并没有任何区别，都是数据。<code>UTF-8</code>字符串、<code>big-endian</code>32位整数，<code>little-endian</code>短整数或是任何想要的数据，都可以被认为是字节读取和写入。不必再使用<code>InputStreamReader</code>了。</li>
+<li>易于测试。<code>Buffer</code>类实现了<code>BufferedSource</code>和<code>BufferedSink</code>接口，所以测试代码可以非常简单和清晰。</li>
+</ul>
+<p><code>Source</code>、<code>Sink</code>可以和<code>InputStream</code>、<code>OutputStream</code>相互操作，你可以将任何<code>Source</code>视为<code>InputStream</code>，也可以将<code>InputStream</code>视为<code>Source</code>。<code>Sink</code>和<code>OutputStream</code>同理。</p>
+<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><p>官方写了一些例子来演示如何使用<code>Okio</code>来处理一些常见的问题。阅读学习如何使用他们。需要的话可以进行复制粘贴。</p>
+<h3 id="按行读取一个文本文件"><a href="#按行读取一个文本文件" class="headerlink" title="按行读取一个文本文件"></a>按行读取一个文本文件</h3><p>使用<code>Okio.source(File)</code>打开一个文件。返回的<code>Source</code>接口非常轻量级，并且只有有限的方法。通常会使用一个<code>Buffer</code>来包装这个<code>Source</code>。有两个好处：</p>
+<ol>
+<li><code>API</code>更有用。不像<code>Source</code>只提供了基础的方法，<code>BufferedSource</code>有非常多的方法易于使用。</li>
+<li>编程更快。<code>Buffer</code>可以使用更少的<code>IO</code>操作来完成工作。</li>
+</ol>
+<p><code>Source</code>每次打开都需要关闭。打开流的代码负责保证它的关闭。这里我们使用<code>Java</code>的<code>try</code>块来自动关闭<code>Source</code>。</p>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">readLines</span><span class="token punctuation">(</span>File file<span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException <span class="token punctuation">{</span>
+  <span class="token keyword">try</span> <span class="token punctuation">(</span>Source fileSource <span class="token operator">=</span> Okio<span class="token punctuation">.</span><span class="token function">source</span><span class="token punctuation">(</span>file<span class="token punctuation">)</span><span class="token punctuation">;</span>
+       BufferedSource bufferedSource <span class="token operator">=</span> Okio<span class="token punctuation">.</span><span class="token function">buffer</span><span class="token punctuation">(</span>fileSource<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      String line <span class="token operator">=</span> bufferedSource<span class="token punctuation">.</span><span class="token function">readUtf8Line</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>line <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token keyword">break</span><span class="token punctuation">;</span>
+
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>line<span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span><span class="token string">"square"</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>line<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p><code>readUtf8Line()</code>方法读取一行数据（以换行符<code>\n</code>或<code>\r\n</code>分隔），或者直到文件末尾（无换行符）。返回一个字符串，省略末尾的换行符。如果遇到空行，将返回空字符串。如果到文件末尾，则返回<code>null</code>。</p>
+<p>上面的代码可以内联<code>fileSource</code>变量使得代码更加紧凑，使用漂亮的<code>for</code>循环代替<code>while</code>循环：</p>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">readLines</span><span class="token punctuation">(</span>File file<span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException <span class="token punctuation">{</span>
+  <span class="token keyword">try</span> <span class="token punctuation">(</span>BufferedSource source <span class="token operator">=</span> Okio<span class="token punctuation">.</span><span class="token function">buffer</span><span class="token punctuation">(</span>Okio<span class="token punctuation">.</span><span class="token function">source</span><span class="token punctuation">(</span>file<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>String line<span class="token punctuation">;</span> <span class="token punctuation">(</span>line <span class="token operator">=</span> source<span class="token punctuation">.</span><span class="token function">readUtf8Line</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">!=</span> null<span class="token punctuation">;</span> <span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>line<span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span><span class="token string">"square"</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>line<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p><code>readUtf8Line()</code>方法适用于解析大多数文件。对于某些特定例子，可以考虑使用<code>readUtf8LineStrict()</code>。两者非常相似，但是<code>readUtf8LineStrice()</code>方法要求每行以换行符（<code>\n</code>或<code>\r\n</code>）结尾。在此之前遇到文件末尾，将抛出<code>EOFException</code>异常。<code>readUtf8LineStrict()</code>方法还允许字节数限制，用于防止输入格式错误。</p>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">readLines</span><span class="token punctuation">(</span>File file<span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException <span class="token punctuation">{</span>
+  <span class="token keyword">try</span> <span class="token punctuation">(</span>BufferedSource source <span class="token operator">=</span> Okio<span class="token punctuation">.</span><span class="token function">buffer</span><span class="token punctuation">(</span>Okio<span class="token punctuation">.</span><span class="token function">source</span><span class="token punctuation">(</span>file<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">!</span>source<span class="token punctuation">.</span><span class="token function">exhausted</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      String line <span class="token operator">=</span> source<span class="token punctuation">.</span><span class="token function">readUtf8LineStrict</span><span class="token punctuation">(</span>1024L<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>line<span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span><span class="token string">"square"</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>line<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<h3 id="写入文件"><a href="#写入文件" class="headerlink" title="写入文件"></a>写入文件</h3><p>上面我们使用了<code>Source</code>和<code>BufferedSource</code>读取一个文件。对于写入，我们则使用<code>Sink</code>和<code>BufferedSink</code>。使用<code>Buffer</code>的好处一样：更好的<code>API</code>和性能。</p>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">writeEnv</span><span class="token punctuation">(</span>File file<span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException <span class="token punctuation">{</span>
+  <span class="token keyword">try</span> <span class="token punctuation">(</span>Sink fileSink <span class="token operator">=</span> Okio<span class="token punctuation">.</span><span class="token function">sink</span><span class="token punctuation">(</span>file<span class="token punctuation">)</span><span class="token punctuation">;</span>
+       BufferedSink bufferedSink <span class="token operator">=</span> Okio<span class="token punctuation">.</span><span class="token function">buffer</span><span class="token punctuation">(</span>fileSink<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>Map<span class="token punctuation">.</span>Entry<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> String<span class="token operator">></span> entry <span class="token operator">:</span> System<span class="token punctuation">.</span><span class="token function">getenv</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">entrySet</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      bufferedSink<span class="token punctuation">.</span><span class="token function">writeUtf8</span><span class="token punctuation">(</span>entry<span class="token punctuation">.</span><span class="token function">getKey</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      bufferedSink<span class="token punctuation">.</span><span class="token function">writeUtf8</span><span class="token punctuation">(</span><span class="token string">"="</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      bufferedSink<span class="token punctuation">.</span><span class="token function">writeUtf8</span><span class="token punctuation">(</span>entry<span class="token punctuation">.</span><span class="token function">getValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      bufferedSink<span class="token punctuation">.</span><span class="token function">writeUtf8</span><span class="token punctuation">(</span><span class="token string">"\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>因为没有提供写入换行的<code>API</code>，所以我们手动插入换行字符。大多数时候使用<code>\n</code>作为换行字符。在很少情况下，可以使用<code>System.lineSeparator()</code>代替<code>\n</code>：<code>System.lineSeparator()</code>在<code>Windows</code>系统返回<code>\r\n</code>，而在其他系统则返回<code>\n</code>。</p>
+<p>我们内联<code>fileSink</code>变量，并且利用链式调用来重写上面的方法：</p>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">writeEnv</span><span class="token punctuation">(</span>File file<span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException <span class="token punctuation">{</span>
+  <span class="token keyword">try</span> <span class="token punctuation">(</span>BufferedSink sink <span class="token operator">=</span> Okio<span class="token punctuation">.</span><span class="token function">buffer</span><span class="token punctuation">(</span>Okio<span class="token punctuation">.</span><span class="token function">sink</span><span class="token punctuation">(</span>file<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>Map<span class="token punctuation">.</span>Entry<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> String<span class="token operator">></span> entry <span class="token operator">:</span> System<span class="token punctuation">.</span><span class="token function">getenv</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">entrySet</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      sink<span class="token punctuation">.</span><span class="token function">writeUtf8</span><span class="token punctuation">(</span>entry<span class="token punctuation">.</span><span class="token function">getKey</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+          <span class="token punctuation">.</span><span class="token function">writeUtf8</span><span class="token punctuation">(</span><span class="token string">"="</span><span class="token punctuation">)</span>
+          <span class="token punctuation">.</span><span class="token function">writeUtf8</span><span class="token punctuation">(</span>entry<span class="token punctuation">.</span><span class="token function">getValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+          <span class="token punctuation">.</span><span class="token function">writeUtf8</span><span class="token punctuation">(</span><span class="token string">"\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>上面的代码，我们使用了<code>writeUtf8()</code>方法。调用四次<code>writeUtf8()</code>比下面的代码更高效，因为<code>VM</code>不用去对产生的临时字符串进行垃圾回收。</p>
+<pre class=" language-java"><code class="language-java">sink<span class="token punctuation">.</span><span class="token function">writeUtf8</span><span class="token punctuation">(</span>entry<span class="token punctuation">.</span><span class="token function">getKey</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">"="</span> <span class="token operator">+</span> entry<span class="token punctuation">.</span><span class="token function">getValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">"\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// Slower!</span></code></pre>
+<h3 id="UTF-8"><a href="#UTF-8" class="headerlink" title="UTF-8"></a>UTF-8</h3><p>从上面用到的<code>API</code>可以看出，<code>Okio</code>非常喜欢<code>UTF-8</code>。早期的电脑系统经历了各种字符编码：<code>ISO-8859-1</code>，<code>ShiftJIS</code>，<code>ASCII</code>，<code>EBCDIC</code>等等。为了支持多种字符集的编程非常糟糕，甚至，我们还要使用<code>emoji</code>。目前非常幸运的是，世界各地统一都支持<code>UTF-8</code>。只有很少一部分老系统还在使用其他字符集。</p>
+<p>如果你需要另外的字符集，可以使用<code>readString()</code>和<code>writeString()</code>。这两个方法需要你指定字符集。除非数据只需要本机读取，否则大多数情况下，都应该使用<code>UTF-8</code>方法来编程。</p>
+<p>当在解析字符串时，你需要记住字符串时如何表示和编码的。当一个字形有声调或是其他变形时，它代表一个单独的混合字符，如<code>é</code>，或是一个字符<code>e</code>接一个修饰符<code>´</code>。当整个字形是一个单独的字符时，它被称为<code>NFC</code>，当它是多个字符组成时，被称为<code>NFD</code>。</p>
+<p>即使我们使用<code>IO</code>操作字符串时都使用<code>UTF-8</code>，他们在内存的存在形式是<code>Java String</code>，使用的是另一个变种<code>UTF-16</code>进行编码。这是非常糟糕的编码，因为它大部分字符都使用16字节字符，但是却用不到16个字节。特别是，<code>emoji</code>字符占两个<code>java</code>字符。这存在的问题是，<code>String.length()</code>返回不一样的结果：<code>UTF-16</code>的字符长度，并不是原生字形的长度。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Café 🍩</th>
+<th>Café 🍩</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Form</td>
+<td>NFC</td>
+<td>NFD</td>
+</tr>
+<tr>
+<td>Code Points</td>
+<td>c  a  f  é    ␣   🍩</td>
+<td>c  a  f  e  ´    ␣   🍩</td>
+</tr>
+<tr>
+<td>UTF-8 bytes</td>
+<td>43 61 66 c3a9 20 f09f8da9</td>
+<td>43 61 66 65 cc81 20 f09f8da9</td>
+</tr>
+<tr>
+<td>String.codePointCount</td>
+<td>6</td>
+<td>7</td>
+</tr>
+<tr>
+<td>String.length</td>
+<td>7</td>
+<td>8</td>
+</tr>
+<tr>
+<td>Utf8.size</td>
+<td>10</td>
+<td>11</td>
+</tr>
+</tbody></table>
+<p>大部分情况，<code>Okio</code>可以让你忽略这些问题更关注数据。但是当你需要这些时，有一些方便的<code>API</code>处理低级的<code>UTF-8</code>字符串。</p>
+<p>使用<code>Utf8.size()</code>来统计使用<code>UTF-8</code>编码时的字节长度。这在如协议缓冲等长度前缀编码时非常方便。</p>
+<p>使用<code>BufferedSource.readUtf8CodePoint()</code>读取单个可变长度代码点，使用<code>BufferedSinkel.writeUtf8CodePoint()</code>写入。</p>
+<h3 id="Golden-Values"><a href="#Golden-Values" class="headerlink" title="Golden Values"></a>Golden Values</h3><p><code>Okio</code>喜欢测试。库已经经过了严格的测试，并且它有易于测试的特性。我们找到一种十分好用的测试模式，称为<code>golden value</code>测试。这种测试的目的是确认被早期版本的程序进行编码的数据能够安全的使用当前版本的程序进行解码。</p>
+<p>我们将通过使用<code>Java Serialization</code>（<code>Java</code>序列化）编码来进行演示。题外话，我们一定要放弃糟糕的<code>Java</code>序列化，大多数编程我们应该使用其他编码，如<code>JSON</code>或<code>protobuf</code>。下面是对一个对象进行序列化的方法，返回一个<code>ByteString</code>：</p>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">private</span> ByteString <span class="token function">serialize</span><span class="token punctuation">(</span>Object o<span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException <span class="token punctuation">{</span>
+  Buffer buffer <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Buffer</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">try</span> <span class="token punctuation">(</span>ObjectOutputStream objectOut <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ObjectOutputStream</span><span class="token punctuation">(</span>buffer<span class="token punctuation">.</span><span class="token function">outputStream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    objectOut<span class="token punctuation">.</span><span class="token function">writeObject</span><span class="token punctuation">(</span>o<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">return</span> buffer<span class="token punctuation">.</span><span class="token function">readByteString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>这里对上面的代码进行解释：</p>
+<ol>
+<li>我们构造一个<code>Buffer</code>存储序列化后的数据。<code>Buffer</code>是<code>ByteArrayOutputStream</code>更好的替代者。</li>
+<li>我们获取<code>Buffer</code>的<code>OutputStream</code>，通过它，我们将数据写入<code>Buffer</code>中，并且总在<code>Buffer</code>结尾添加数据。</li>
+<li>构造一个<code>ObjectOutputStream</code>（<code>Java</code>序列化<code>API</code>）并且写入对象。<code>try</code>块为我们自动关闭流。注意关闭<code>Buffer</code>没有用。</li>
+<li>最后，调用<code>Buffer.readByteString()</code>方法，获取<code>ByteString</code>。这个方法允许我们指定读取的字节数，在这里我们不指定数量，获取整个字符串。从<code>Buffer</code>中读取数据，总是能保证数据从<code>Buffer</code>头部读取的。</li>
+</ol>
+<p>通过上面的<code>serialize()</code>方法，我们准备好计算和打印<code>golden value</code>了。</p>
+<pre class=" language-java"><code class="language-java">Point point <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Point</span><span class="token punctuation">(</span><span class="token number">8.0</span><span class="token punctuation">,</span> <span class="token number">15.0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ByteString pointBytes <span class="token operator">=</span> <span class="token function">serialize</span><span class="token punctuation">(</span>point<span class="token punctuation">)</span><span class="token punctuation">;</span>
+System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>pointBytes<span class="token punctuation">.</span><span class="token function">base64</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>打印出<code>ByteString</code>的<code>base64</code>值，是因为<code>base64</code>紧凑和便于嵌入测试用例的特性。程序打印如下：</p>
+<pre class=" language-java"><code class="language-java">rO0ABXNyAB5va2lvLnNhbXBsZXMuR29sZGVuVmFsdWUkUG9pbnTdUW8rMji1IwIAAkQAAXhEAAF5eHBAIAAAAAAAAEAuAAAAAAAA</code></pre>
+<p>这就是我们的<code>golden value</code>了。我们再次使用<code>base64</code>键入到我们的测试用例中，将其转换回一个<code>ByteString</code>：</p>
+<pre class=" language-java"><code class="language-java">ByteString goldenBytes <span class="token operator">=</span> ByteString<span class="token punctuation">.</span><span class="token function">decodeBase64</span><span class="token punctuation">(</span><span class="token string">"rO0ABXNyAB5va2lvLnNhbXBsZ"</span>
+    <span class="token operator">+</span> <span class="token string">"XMuR29sZGVuVmFsdWUkUG9pbnTdUW8rMji1IwIAAkQAAXhEAAF5eHBAIAAAAAAAAEAuA"</span>
+    <span class="token operator">+</span> <span class="token string">"AAAAAAA"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>下一步，将<code>ByteString</code>反序列成我们需要的对象。这个方法和上面的<code>serialize()</code>方法相反：添加一个<code>ByteString</code>到<code>Buffer</code>中，然后使用一个<code>ObjectInputStream</code>进行读取。</p>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">private</span> Object <span class="token function">deserialize</span><span class="token punctuation">(</span>ByteString byteString<span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException<span class="token punctuation">,</span> ClassNotFoundException <span class="token punctuation">{</span>
+  Buffer buffer <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Buffer</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  buffer<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span>byteString<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">try</span> <span class="token punctuation">(</span>ObjectInputStream objectIn <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ObjectInputStream</span><span class="token punctuation">(</span>buffer<span class="token punctuation">.</span><span class="token function">inputStream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> objectIn<span class="token punctuation">.</span><span class="token function">readObject</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>下面我们对<code>golden value</code>进行解码测试：</p>
+<pre class=" language-java"><code class="language-java">ByteString goldenBytes <span class="token operator">=</span> ByteString<span class="token punctuation">.</span><span class="token function">decodeBase64</span><span class="token punctuation">(</span><span class="token string">"rO0ABXNyAB5va2lvLnNhbXBsZ"</span>
+    <span class="token operator">+</span> <span class="token string">"XMuR29sZGVuVmFsdWUkUG9pbnTdUW8rMji1IwIAAkQAAXhEAAF5eHBAIAAAAAAAAEAuA"</span>
+    <span class="token operator">+</span> <span class="token string">"AAAAAAA"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+Point decoded <span class="token operator">=</span> <span class="token punctuation">(</span>Point<span class="token punctuation">)</span> <span class="token function">deserialize</span><span class="token punctuation">(</span>goldenBytes<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">assertEquals</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Point</span><span class="token punctuation">(</span><span class="token number">8.0</span><span class="token punctuation">,</span> <span class="token number">15.0</span><span class="token punctuation">)</span><span class="token punctuation">,</span> decoded<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>通过这里的测试，我们可以在不破坏兼容性的情况下改变<code>Point</code>类的序列化。</p>
+<h3 id="写入二进制文件"><a href="#写入二进制文件" class="headerlink" title="写入二进制文件"></a>写入二进制文件</h3><p>对二进制文件编码和对文本文件编码没有什么不同。<code>Okio</code>同样使用<code>BufferedSink</code>和<code>BufferedSource</code>进行操作。这对那些既包含字节，有包含字符的二进制编码非常友好。</p>
+<p>写入二进制数据比写入文字更加的危险，这是因为非常难诊断出出错的地方。围绕这些问题，可以通过注意下面几点来尽量避免：</p>
+<ol>
+<li>每个域的宽度。这是使用的字节数量。<code>Okio</code>不包含发射部分字节的机制。如果需要这个功能，那么就需要在写入前自己进行位移和屏蔽。</li>
+<li>每个域的字节序。所有超过一个字节的域都有字节序：字节是否经过了排序（从大到小的<code>big endian</code>和从小到达的<code>little endian</code>）。<code>Okio</code>使用在方法名加后缀<code>Le</code>的方式表示使用<code>little-endian</code>的方法；没有后缀则是使用<code>big-endian</code>。</li>
+<li>是否带符号。<code>Java</code>没有不带符号的基础类型（除了<code>char</code>），所以对于这种，通常是在应用层进行处理。为了保证更简单，<code>Okio</code>在<code>writeByte()</code>和<code>writeShort()</code>接收<code>int</code>类型。这样你就可以传入一个无符号的<code>byte</code>如255（<code>byte</code>值最大是127），<code>Okio</code>可以保证写入正确。</li>
+</ol>
+<p>解释：对于上面的第二点，如果写入一个<code>int</code>值3，如果是<code>big endian</code>，那么写入的则是<code>00 00 00 03</code>，如果是<code>little endian</code>则是<code>03 00 00 00</code>。对于上面的第三点，如果写入的一个值是255，如果是<code>Java</code>中的<code>byte</code>类型，它最大值是127，并不能写入<code>255</code>，所以<code>Okio</code>可以使用<code>writeShort()</code>方法写入<code>int</code>值，保证一个字节可以表示<code>255</code>。</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Width</th>
+<th>Endianness</th>
+<th>Value</th>
+<th>Encoded Value</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>writeByte</td>
+<td>1</td>
+<td></td>
+<td>3</td>
+<td>03</td>
+</tr>
+<tr>
+<td>writeShort</td>
+<td>2</td>
+<td>big</td>
+<td>3</td>
+<td>00 03</td>
+</tr>
+<tr>
+<td>writeInt</td>
+<td>4</td>
+<td>big</td>
+<td>3</td>
+<td>00 00 00 03</td>
+</tr>
+<tr>
+<td>writeLong</td>
+<td>8</td>
+<td>big</td>
+<td>3</td>
+<td>00 00 00 00 00 00 00 03</td>
+</tr>
+<tr>
+<td>writeShortLe</td>
+<td>2</td>
+<td>little</td>
+<td>3</td>
+<td>03 00</td>
+</tr>
+<tr>
+<td>writeIntLe</td>
+<td>4</td>
+<td>little</td>
+<td>3</td>
+<td>03 00 00 00</td>
+</tr>
+<tr>
+<td>writeLongLe</td>
+<td>8</td>
+<td>little</td>
+<td>3</td>
+<td>03 00 00 00 00 00 00 00</td>
+</tr>
+<tr>
+<td>writeByte</td>
+<td>1</td>
+<td></td>
+<td>Byte.MAX_VALUE</td>
+<td>7f</td>
+</tr>
+<tr>
+<td>writeShort</td>
+<td>2</td>
+<td>big</td>
+<td>Short.MAX_VALUE</td>
+<td>7f ff</td>
+</tr>
+<tr>
+<td>writeInt</td>
+<td>4</td>
+<td>big</td>
+<td>Int.MAX_VALUE</td>
+<td>7f ff ff ff</td>
+</tr>
+<tr>
+<td>writeLong</td>
+<td>8</td>
+<td>big</td>
+<td>Long.MAX_VALUE</td>
+<td>7f ff ff ff ff ff ff ff</td>
+</tr>
+<tr>
+<td>writeShortLe</td>
+<td>2</td>
+<td>little</td>
+<td>Short.MAX_VALUE</td>
+<td>ff 7f</td>
+</tr>
+<tr>
+<td>writeIntLe</td>
+<td>4</td>
+<td>little</td>
+<td>Int.MAX_VALUE</td>
+<td>ff ff ff 7f</td>
+</tr>
+<tr>
+<td>writeLongLe</td>
+<td>8</td>
+<td>little</td>
+<td>Long.MAX_VALUE</td>
+<td>ff ff ff ff ff ff ff 7f</td>
+</tr>
+</tbody></table>
+<p>下面的代码将一个<code>bitmap</code>写入成一个<code>BMP</code>的文件格式。</p>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">void</span> <span class="token function">encode</span><span class="token punctuation">(</span>Bitmap bitmap<span class="token punctuation">,</span> BufferedSink sink<span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException <span class="token punctuation">{</span>
+  <span class="token keyword">int</span> height <span class="token operator">=</span> bitmap<span class="token punctuation">.</span><span class="token function">height</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">int</span> width <span class="token operator">=</span> bitmap<span class="token punctuation">.</span><span class="token function">width</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">int</span> bytesPerPixel <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span>
+  <span class="token keyword">int</span> rowByteCountWithoutPadding <span class="token operator">=</span> <span class="token punctuation">(</span>bytesPerPixel <span class="token operator">*</span> width<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">int</span> rowByteCount <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>rowByteCountWithoutPadding <span class="token operator">+</span> <span class="token number">3</span><span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">4</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">4</span><span class="token punctuation">;</span>
+  <span class="token keyword">int</span> pixelDataSize <span class="token operator">=</span> rowByteCount <span class="token operator">*</span> height<span class="token punctuation">;</span>
+  <span class="token keyword">int</span> bmpHeaderSize <span class="token operator">=</span> <span class="token number">14</span><span class="token punctuation">;</span>
+  <span class="token keyword">int</span> dibHeaderSize <span class="token operator">=</span> <span class="token number">40</span><span class="token punctuation">;</span>
+
+  <span class="token comment" spellcheck="true">// BMP Header</span>
+  sink<span class="token punctuation">.</span><span class="token function">writeUtf8</span><span class="token punctuation">(</span><span class="token string">"BM"</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// ID.</span>
+  sink<span class="token punctuation">.</span><span class="token function">writeIntLe</span><span class="token punctuation">(</span>bmpHeaderSize <span class="token operator">+</span> dibHeaderSize <span class="token operator">+</span> pixelDataSize<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// File size.</span>
+  sink<span class="token punctuation">.</span><span class="token function">writeShortLe</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// Unused.</span>
+  sink<span class="token punctuation">.</span><span class="token function">writeShortLe</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// Unused.</span>
+  sink<span class="token punctuation">.</span><span class="token function">writeIntLe</span><span class="token punctuation">(</span>bmpHeaderSize <span class="token operator">+</span> dibHeaderSize<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// Offset of pixel data.</span>
+
+  <span class="token comment" spellcheck="true">// DIB Header</span>
+  sink<span class="token punctuation">.</span><span class="token function">writeIntLe</span><span class="token punctuation">(</span>dibHeaderSize<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  sink<span class="token punctuation">.</span><span class="token function">writeIntLe</span><span class="token punctuation">(</span>width<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  sink<span class="token punctuation">.</span><span class="token function">writeIntLe</span><span class="token punctuation">(</span>height<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  sink<span class="token punctuation">.</span><span class="token function">writeShortLe</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">// Color plane count.</span>
+  sink<span class="token punctuation">.</span><span class="token function">writeShortLe</span><span class="token punctuation">(</span>bytesPerPixel <span class="token operator">*</span> Byte<span class="token punctuation">.</span>SIZE<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  sink<span class="token punctuation">.</span><span class="token function">writeIntLe</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">// No compression.</span>
+  sink<span class="token punctuation">.</span><span class="token function">writeIntLe</span><span class="token punctuation">(</span><span class="token number">16</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment" spellcheck="true">// Size of bitmap data including padding.</span>
+  sink<span class="token punctuation">.</span><span class="token function">writeIntLe</span><span class="token punctuation">(</span><span class="token number">2835</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// Horizontal print resolution in pixels/meter. (72 dpi).</span>
+  sink<span class="token punctuation">.</span><span class="token function">writeIntLe</span><span class="token punctuation">(</span><span class="token number">2835</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// Vertical print resolution in pixels/meter. (72 dpi).</span>
+  sink<span class="token punctuation">.</span><span class="token function">writeIntLe</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">// Palette color count.</span>
+  sink<span class="token punctuation">.</span><span class="token function">writeIntLe</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">// 0 important colors.</span>
+
+  <span class="token comment" spellcheck="true">// Pixel data.</span>
+  <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> y <span class="token operator">=</span> height <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span> y <span class="token operator">>=</span> <span class="token number">0</span><span class="token punctuation">;</span> y<span class="token operator">--</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> x <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> x <span class="token operator">&lt;</span> width<span class="token punctuation">;</span> x<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      sink<span class="token punctuation">.</span><span class="token function">writeByte</span><span class="token punctuation">(</span>bitmap<span class="token punctuation">.</span><span class="token function">blue</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      sink<span class="token punctuation">.</span><span class="token function">writeByte</span><span class="token punctuation">(</span>bitmap<span class="token punctuation">.</span><span class="token function">green</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      sink<span class="token punctuation">.</span><span class="token function">writeByte</span><span class="token punctuation">(</span>bitmap<span class="token punctuation">.</span><span class="token function">red</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">// Padding for 4-byte alignment.</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> p <span class="token operator">=</span> rowByteCountWithoutPadding<span class="token punctuation">;</span> p <span class="token operator">&lt;</span> rowByteCount<span class="token punctuation">;</span> p<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      sink<span class="token punctuation">.</span><span class="token function">writeByte</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>这段代码最麻烦的部分是格式需要填充。<code>BMP</code>格式期望一行以4个字节的边界开始，所以添加0值进行对齐非常重要。</p>
+<p>对其他二进制格式进行编码通常非常相似。下面是一些建议：</p>
+<ol>
+<li>使用<code>golden values</code>编写测试代码。确保程序发送期望的结果，可以让测试更加的简单。</li>
+<li>使用<code>Utf8.size()</code>计算一个编码的字符串的字节长度。这对长度前缀的格式非常有效。</li>
+<li>使用<code>Float.floatToIntBits()</code>和<code>Double.doubleToLongBits()</code>对浮点值进行编码。</li>
+</ol>
+<h3 id="通过Socket进行通信"><a href="#通过Socket进行通信" class="headerlink" title="通过Socket进行通信"></a>通过Socket进行通信</h3><p>通过网络发送和接受数据，和写入和读取文件非常相似，使用<code>BufferedSink</code>对输出值编码，使用<code>BufferedSource</code>对输入值编码。和文件一样，网络协议可以使用文本、二进制，或是两者的组合。但是网络和文件系统中也有很多的不同。</p>
+<p>你只能同时读、或者写入一个文件，但是通过网络，你两者可以同时进行。一些协议通过循环的方式完成：发送一个请求，读取结果，重复。你可以通过单线程来实现这种协议。另外有的协议可能就允许你同时进行读写。典型的，你想使用一个专门的线程进行读。对于写，你可以使用一个专门的线程进行写，或是在多线程中使用同一个<code>Sink</code>使用。<code>Okio</code>的流对于多线程使用是不安全的。</p>
+<p><code>Sink</code>对输出的数据进行缓冲以最大化地减少<code>IO</code>操作。这是非常有效的，但是这意味着你必须手动调用<code>flush()</code>方法发送数据。典型地面向消息协议在每个消息之后都会进行<code>flush</code>。当缓冲数据超过一定阈值时，<code>Okio</code>将自动进行<code>flush</code>。这是为了节省内存，但你也不应该依赖这个机制。</p>
+<p><code>Okio</code>基于<code>java.io.Socket</code>进行连接。一个服务器或是客户端构造一个<code>Socket</code>，然后使用<code>Okio.source(Socket)</code>读取，<code>Okio.sink(Socket)</code>进行写。这两个<code>API</code>也可以和<code>SSLSocket</code>使用。你也应该尽量使用<code>SSL</code>。</p>
+<p>在任何线程中调用<code>Socket.close()</code>取消<code>Socket</code>，这样会导致<code>Source</code>和<code>Sink</code>立即失败并抛出<code>IOException</code>。你也可以为所有的<code>Socket</code>操作配置超时。不需要为了配合超时去持有一个<code>Socket</code>的引用：<code>Source</code>和<code>Sink</code>直接暴露超时。即使流被装饰过，这个<code>API</code>也可以工作。</p>
+<p>作为使用<code>Okio</code>进行网络操作的一个完整的例子，我们写了一个基本的<code>SOCKS</code>代理服务器。下面是一些重点：</p>
+<pre class=" language-java"><code class="language-java">Socket fromSocket <span class="token operator">=</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+BufferedSource fromSource <span class="token operator">=</span> Okio<span class="token punctuation">.</span><span class="token function">buffer</span><span class="token punctuation">(</span>Okio<span class="token punctuation">.</span><span class="token function">source</span><span class="token punctuation">(</span>fromSocket<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+BufferedSink fromSink <span class="token operator">=</span> Okio<span class="token punctuation">.</span><span class="token function">buffer</span><span class="token punctuation">(</span>Okio<span class="token punctuation">.</span><span class="token function">sink</span><span class="token punctuation">(</span>fromSocket<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>为<code>Socket</code>构造<code>Source</code>和<code>Sink</code>和为文件构造它们是一样的。一旦构造得到<code>Source</code>和<code>Sink</code>，那么你将禁止在使用<code>InputStream</code>和<code>OutputStream</code>。</p>
+<pre class=" language-java"><code class="language-java">Buffer buffer <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Buffer</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">long</span> byteCount<span class="token punctuation">;</span> <span class="token punctuation">(</span>byteCount <span class="token operator">=</span> source<span class="token punctuation">.</span><span class="token function">read</span><span class="token punctuation">(</span>buffer<span class="token punctuation">,</span> 8192L<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span> <span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  sink<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span>buffer<span class="token punctuation">,</span> byteCount<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  sink<span class="token punctuation">.</span><span class="token function">flush</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>上面的代码循环复制<code>Source</code>中的数据到<code>Sink</code>中，在每次读取之后进行<code>flush</code>。如果我们不需要<code>flush</code>，我们可以使用一句代码替换这个循环，<code>BufferedSink.writeAll(Source)</code>。</p>
+<p>参数<code>8192</code>指的是在每次返回之前读取的最大的字节数。我们可以在其中传入任何的值。但是我们喜欢<code>8kb</code>，因为这是<code>Okio</code>在一次系统调用中的最大值。大多数时候，应用代码不需要处理这个限制。</p>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">int</span> addressType <span class="token operator">=</span> fromSource<span class="token punctuation">.</span><span class="token function">readByte</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token number">0xff</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> port <span class="token operator">=</span> fromSource<span class="token punctuation">.</span><span class="token function">readShort</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token number">0xffff</span><span class="token punctuation">;</span></code></pre>
+<p><code>Okio</code>使用有符号的类型如<code>byte</code>和<code>short</code>，但是部分协议协议使用的是无符号的值。使用位操作符<code>&amp;</code>将一个有无符号的值转换成一个无符号的值是<code>Java</code>的惯用方法。下面是<code>byte</code>、<code>short</code>、和<code>int</code>的一个转换备忘单（注意将<code>byte</code>和<code>short</code>转换成了<code>int</code>，<code>int</code>转换成了<code>long</code>）：</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Signed Range</th>
+<th>Unsigned Range</th>
+<th>Signed to Unsigned</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>byte</td>
+<td>-128..127</td>
+<td>0..255</td>
+<td>int u = s &amp; 0xff;</td>
+</tr>
+<tr>
+<td>short</td>
+<td>-32,768..32,767</td>
+<td>0..65,535</td>
+<td>int u = s &amp; 0xffff;</td>
+</tr>
+<tr>
+<td>int</td>
+<td>-2,147,483,648..2,147,483,647</td>
+<td>0..4,294,967,295</td>
+<td>long u = s &amp; 0xffffffffL;</td>
+</tr>
+</tbody></table>
+<p><code>Java</code>没有可替代无符号<code>long</code>类型的基础类型。</p>
+<h3 id="哈希"><a href="#哈希" class="headerlink" title="哈希"></a>哈希</h3><p>作为<code>Java</code>程序员，我们都受到过哈希的轰炸。早期，我们被介绍<code>hashCode()</code>方法，我们知道需要重写这个方法，否则可能会发生意想不到的事情。后来我们我们接触<code>LinkedHashMap</code>和与其相关的类。它们组织数据以快速取出的机制都建立在<code>hashCode()</code>方法上。</p>
+<p>在其他地方我们有用到加密哈希函数。这些都被广泛使用。如<code>HTTPS</code>证书、<code>git</code>提交，<code>BitTorrent</code>完整性检查和区块链分块，都使用了加密哈希。哈希使用得当可以提升性能、隐私、安全和应用的简洁性。</p>
+<p>每个加密哈希函数接受一个变长的字节输入流，产生一个固定长度字节字符串（称为<code>hash</code>）。哈希函数有以下几个重要特征：</p>
+<ul>
+<li>确定性：同一个输入总是产生同样的输出。</li>
+<li>统一性：每个输出字节字符串都容易进行对比。很难去找到不同的输入有同样输出的哈希。这被称为“意外”。</li>
+<li>不可逆：知道输出并不能帮助你找到输入。注意，如果你知道一些可能的输入，你可以对他们进行<code>hash</code>，看他们的结果是否匹配。</li>
+<li>知名：哈希在各种地方都有实现，并且严格。</li>
+</ul>
+<p>好的哈希函数计算消耗很低（大约10微秒），并且逆向消耗很高（以千年为单位）。计算稳定和数学性质使得一个好的哈希函数很难被逆向。当选择一个哈希函数时，一定注意不是所有的都是相等的。<code>Okio</code>支持以下几种知名的哈希加密算法：</p>
+<ul>
+<li><code>MD5</code>：一个128位（16字节）的哈希值。不安全并且已经过时了，因为逆向消耗并不是非常巨大。提供这种哈希算法是因为它非常流行，并且对于早期对安全不敏感的系统来说非常便捷。</li>
+<li><code>SHA-1</code>：一个160位（20字节）的哈希值。最近被证明是可能发生“意外”的。所以考虑从<code>SHA-1</code>升级到<code>SHA-256</code>。</li>
+<li><code>SHA-256</code>：256位（32字节）的哈希值。<code>SHA-256</code>被广泛的理解，并且逆向消耗巨大。大多数系统应该使用这个哈希函数。</li>
+<li><code>SHA-512</code>：512位（64字节）的哈希值。非常难以逆向。</li>
+</ul>
+<p>每一个哈希构造一个固定长度的<code>ByteString</code>。使用<code>hex()</code>方法获取方便的16进制字符串。或者保留为<code>ByteString</code>，因为<code>ByteString</code>是一个方便的数据类型。</p>
+<p><code>Okio</code>使用<code>ByteString</code>生成加密哈希值：</p>
+<pre class=" language-java"><code class="language-java">ByteString byteString <span class="token operator">=</span> <span class="token function">readByteString</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">File</span><span class="token punctuation">(</span><span class="token string">"README.md"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"   md5: "</span> <span class="token operator">+</span> byteString<span class="token punctuation">.</span><span class="token function">md5</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">hex</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"  sha1: "</span> <span class="token operator">+</span> byteString<span class="token punctuation">.</span><span class="token function">sha1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">hex</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"sha256: "</span> <span class="token operator">+</span> byteString<span class="token punctuation">.</span><span class="token function">sha256</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">hex</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"sha512: "</span> <span class="token operator">+</span> byteString<span class="token punctuation">.</span><span class="token function">sha512</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">hex</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>从<code>Buffer</code>中读取：</p>
+<pre class=" language-java"><code class="language-java">Buffer buffer <span class="token operator">=</span> <span class="token function">readBuffer</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">File</span><span class="token punctuation">(</span><span class="token string">"README.md"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"   md5: "</span> <span class="token operator">+</span> buffer<span class="token punctuation">.</span><span class="token function">md5</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">hex</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"  sha1: "</span> <span class="token operator">+</span> buffer<span class="token punctuation">.</span><span class="token function">sha1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">hex</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"sha256: "</span> <span class="token operator">+</span> buffer<span class="token punctuation">.</span><span class="token function">sha256</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">hex</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"sha512: "</span> <span class="token operator">+</span> buffer<span class="token punctuation">.</span><span class="token function">sha512</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">hex</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>从<code>Source</code>对应的输入流：</p>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">try</span> <span class="token punctuation">(</span>HashingSink hashingSink <span class="token operator">=</span> HashingSink<span class="token punctuation">.</span><span class="token function">sha256</span><span class="token punctuation">(</span>Okio<span class="token punctuation">.</span><span class="token function">blackhole</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+     BufferedSource source <span class="token operator">=</span> Okio<span class="token punctuation">.</span><span class="token function">buffer</span><span class="token punctuation">(</span>Okio<span class="token punctuation">.</span><span class="token function">source</span><span class="token punctuation">(</span>file<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  source<span class="token punctuation">.</span><span class="token function">readAll</span><span class="token punctuation">(</span>hashingSink<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"sha256: "</span> <span class="token operator">+</span> hashingSink<span class="token punctuation">.</span><span class="token function">hash</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">hex</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>从<code>Sink</code>对应的输出流：</p>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">try</span> <span class="token punctuation">(</span>HashingSink hashingSink <span class="token operator">=</span> HashingSink<span class="token punctuation">.</span><span class="token function">sha256</span><span class="token punctuation">(</span>Okio<span class="token punctuation">.</span><span class="token function">blackhole</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+     BufferedSink sink <span class="token operator">=</span> Okio<span class="token punctuation">.</span><span class="token function">buffer</span><span class="token punctuation">(</span>hashingSink<span class="token punctuation">)</span><span class="token punctuation">;</span>
+     Source source <span class="token operator">=</span> Okio<span class="token punctuation">.</span><span class="token function">source</span><span class="token punctuation">(</span>file<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  sink<span class="token punctuation">.</span><span class="token function">writeAll</span><span class="token punctuation">(</span>source<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  sink<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// Emit anything buffered.</span>
+  System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"sha256: "</span> <span class="token operator">+</span> hashingSink<span class="token punctuation">.</span><span class="token function">hash</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">hex</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p><code>Okio</code>也支持<code>HMAC</code>（），它组合密钥和一个哈希值。应用程序通常使用<code>HMAC</code>保证数据正确性和验证。</p>
+<pre class=" language-java"><code class="language-java">ByteString secret <span class="token operator">=</span> ByteString<span class="token punctuation">.</span><span class="token function">decodeHex</span><span class="token punctuation">(</span><span class="token string">"7065616e7574627574746572"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"hmacSha256: "</span> <span class="token operator">+</span> byteString<span class="token punctuation">.</span><span class="token function">hmacSha256</span><span class="token punctuation">(</span>secret<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">hex</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>通过哈希，你可以使用<code>ByteString</code>，<code>Buffer</code>，<code>HashingSource</code>和<code>HashingSink</code>生成<code>HMAC</code>。注意<code>Okio</code>没有实现<code>MD5</code>的<code>HMAC</code>。<code>Okio</code>利用<code>Java</code>的<code>java.security.MessageDigest</code>生成哈希，使用<code>javax.crypto.Mac</code>生成<code>HMAC</code>。</p>
+
+            </div>
+            <hr/>
+
+            
+            <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.88rem;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-large waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fa fa-close"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.png" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+            
+
+            <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    <div class="social-share" data-disabled="qzone" data-wechat-qrcode-helper="<p>微信里点“发现”->“扫一扫”二维码便可查看分享。</p>"></div>
+    
+</div>
+
+<script src="/libs/share/js/social-share.min.js"></script>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        <p class="reprint-tip">
+            <i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;
+            <span>转载规则</span>
+        </p>
+        
+            <div class="center-align">
+                <a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                    <img alt=""
+                         style="border-width:0"
+                         src="https://i.creativecommons.org/l/by/4.0/88x31.png"/>
+                </a>
+            </div>
+            <br/>
+            <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
+                  property="dct:title" rel="dct:type">
+                    《Okio官方文档翻译》
+                </span> 由
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2019/09/13/okio-guan-fang-wen-dang-fan-yi/" property="cc:attributionName"
+               rel="cc:attributionURL">
+                Mycroft Wong
+            </a> 采用
+            <a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                知识共享署名 4.0 国际许可协议
+            </a>进行许可。
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge badge-text-color">
+                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2019/09/21/okhttp-shi-xian-token-yan-zheng/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="okhttp实现token验证">
+                        
+                        <span class="card-title">okhttp实现token验证</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            okhttp实现token验证前言公司目前的项目使用了token来验证用户。登陆之后会返回最新的access token，后续在每次请求API时，服务端会返回最新的access token，客户端进行保存。若一段时间内（假定是7天）没有进行
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2019-09-21
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/开源库-okhttp/" class="post-category" target="_blank">
+                                    开源库 - okhttp
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/okhttp/" target="_blank">
+                        <span class="chip bg-color">okhttp</span>
+                    </a>
+                    
+                    <a href="/tags/http/" target="_blank">
+                        <span class="chip bg-color">http</span>
+                    </a>
+                    
+                    <a href="/tags/开源/" target="_blank">
+                        <span class="chip bg-color">开源</span>
+                    </a>
+                    
+                    <a href="/tags/token/" target="_blank">
+                        <span class="chip bg-color">token</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge badge-text-color">
+                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2019/09/05/fileprovider/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="FileProvider">
+                        
+                        <span class="card-title">FileProvider</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            FileProvider前言Android开发始终脱离不了图片处理，特别是Android 7.0开始，无法通过file:///的URI来进行在应用之间共享文件，取而代之的是content uri。这样必然增加了开发难度，如必须生成conte
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-09-05
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Android/" class="post-category" target="_blank">
+                                    Android
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Android/" target="_blank">
+                        <span class="chip bg-color">Android</span>
+                    </a>
+                    
+                    <a href="/tags/FileProvider/" target="_blank">
+                        <span class="chip bg-color">FileProvider</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: Mycroft<br />'
+            + '作者: Mycroft Wong<br />'
+            + '链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="fa fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fa fa-list"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            collapseDepth: 6,
+            headingSelector: 'h2, h3, h4, h5'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4, h5').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).slideUp(500);
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).slideDown(500);
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+    
+
+</main>
+
+
+<footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            本站由&copy;<a href="https://MycroftWong.github.io/" target="_blank">Mycroft Wong</a>基于
+            <a href="https://hexo.io/" target="_blank">Hexo</a>搭建.
+
+            
+                &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
+                <span class="white-color">44.8k</span>
+            
+
+            
+			
+                <br>
+                
+                <span id="busuanzi_container_site_pv">
+                    <i class="fa fa-heart-o"></i>
+                    本站总访问量 <span id="busuanzi_value_site_pv" class="white-color"></span>
+                </span>
+                
+                
+                <span id="busuanzi_container_site_uv">
+                    <i class="fa fa-users"></i>
+                    次,&nbsp;访客数 <span id="busuanzi_value_site_uv" class="white-color"></span> 人.
+                </span>
+                
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/MycroftWong" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fa fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:mycroftwong@gmail.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fa fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fa fa-rss"></i>
+    </a>
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+<!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fa fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+<!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fa fa-angle-up"></i>
+    </a>
+</div>
+
+
+<script src="/libs/materialize/materialize.min.js"></script>
+<script src="/libs/masonry/masonry.pkgd.min.js"></script>
+<script src="/libs/aos/aos.js"></script>
+<script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+<script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+<script src="/js/matery.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+
+
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+
+
+</body>
+</html>

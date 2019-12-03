@@ -1,0 +1,1554 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="二、View测量, blog,mycroft,android,spring,mycroftwong">
+    <meta name="description" content="View测量前言自定义View实际上是Android给我们定下了一些规则，我们需要遵循这些规则去定义一个View，符合这个规则的View才会更好的显示。实际上，它并没有如Java的强类型般的限制我们怎么做，我们在使用中可能时长在破坏这些规则">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>二、View测量 | Mycroft</title>
+    <link rel="icon" type="image/x-icon, image/vnd.microsoft.icon" href="https://www.mycroft.wang/images/favicon.ico">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    <style type="text/css">
+        
+        code[class*="language-"], pre[class*="language-"] {
+            white-space: pre !important;
+        }
+        
+    </style>
+
+    <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<body>
+
+<header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="https://image.mycroft.wang/default_avatar.jpg" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">Mycroft</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fa fa-navicon"></i></a>
+<ul class="right">
+    
+    <li class="hide-on-med-and-down">
+        <a href="/" class="waves-effect waves-light">
+            
+            <i class="fa fa-home"></i>
+            
+            <span>首页</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/tags" class="waves-effect waves-light">
+            
+            <i class="fa fa-tags"></i>
+            
+            <span>标签</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/categories" class="waves-effect waves-light">
+            
+            <i class="fa fa-bookmark"></i>
+            
+            <span>分类</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/archives" class="waves-effect waves-light">
+            
+            <i class="fa fa-archive"></i>
+            
+            <span>归档</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/about" class="waves-effect waves-light">
+            
+            <i class="fa fa-user-circle-o"></i>
+            
+            <span>关于</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/friends" class="waves-effect waves-light">
+            
+            <i class="fa fa-address-book"></i>
+            
+            <span>友情链接</span>
+        </a>
+    </li>
+    
+    <li>
+        <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+            <i id="searchIcon" class="fa fa-search" title="搜索"></i>
+        </a>
+    </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="https://image.mycroft.wang/default_avatar.jpg" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">Mycroft</div>
+        <div class="logo-desc">
+            
+            天道酬勤
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li>
+            <a href="/" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-home"></i>
+                
+                首页
+            </a>
+        </li>
+        
+        <li>
+            <a href="/tags" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-tags"></i>
+                
+                标签
+            </a>
+        </li>
+        
+        <li>
+            <a href="/categories" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-bookmark"></i>
+                
+                分类
+            </a>
+        </li>
+        
+        <li>
+            <a href="/archives" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-archive"></i>
+                
+                归档
+            </a>
+        </li>
+        
+        <li>
+            <a href="/about" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-user-circle-o"></i>
+                
+                关于
+            </a>
+        </li>
+        
+        <li>
+            <a href="/friends" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-address-book"></i>
+                
+                友情链接
+            </a>
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/MycroftWong" class="waves-effect waves-light" target="_blank">
+                <i class="fa fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/MycroftWong" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+
+<script src="/libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '/';
+            }
+        }
+    })();
+</script>
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/32.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        二、View测量
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 20px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/Android/" target="_blank">
+                                <span class="chip bg-color">Android</span>
+                            </a>
+                        
+                            <a href="/tags/面试/" target="_blank">
+                                <span class="chip bg-color">面试</span>
+                            </a>
+                        
+                            <a href="/tags/View/" target="_blank">
+                                <span class="chip bg-color">View</span>
+                            </a>
+                        
+                            <a href="/tags/measure/" target="_blank">
+                                <span class="chip bg-color">measure</span>
+                            </a>
+                        
+                            <a href="/tags/layout/" target="_blank">
+                                <span class="chip bg-color">layout</span>
+                            </a>
+                        
+                            <a href="/tags/draw/" target="_blank">
+                                <span class="chip bg-color">draw</span>
+                            </a>
+                        
+                            <a href="/tags/touch-event/" target="_blank">
+                                <span class="chip bg-color">touch event</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fa fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/Android-View/" class="post-category" target="_blank">
+                                Android - View
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                <div class="post-date info-break-policy">
+                    <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2019-08-24
+                </div>
+
+                
+                    
+                    <div class="info-break-policy">
+                        <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
+                        3.5k
+                    </div>
+                    
+
+                    
+                    <div class="info-break-policy">
+                        <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                        16 分
+                    </div>
+                    
+                
+				
+				
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="fa fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="View测量"><a href="#View测量" class="headerlink" title="View测量"></a>View测量</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>自定义<code>View</code>实际上是<code>Android</code>给我们定下了一些规则，我们需要遵循这些规则去定义一个<code>View</code>，符合这个规则的<code>View</code>才会更好的显示。实际上，它并没有如<code>Java</code>的强类型般的限制我们怎么做，我们在使用中可能时长在破坏这些规则。不了解规则就导致了我们定义的<code>View</code>却不是我们想要的。所以定义<code>View</code>之前，一定要清楚明白这些规则是什么。</p>
+<h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><p>先来说明一下一个<code>View</code>显示在屏幕上需要哪些属性：</p>
+<ol>
+<li><code>View</code>的大小（尺寸）</li>
+<li><code>View</code>在屏幕上的位置（通常是相对其<code>parent</code>的位置）</li>
+<li><code>View</code>显示内容，当然也可以没有内容</li>
+</ol>
+<p><code>Android</code>对于一个<code>View</code>如何显示在屏幕上确定了一个流程：<code>measure -&gt; layout -&gt; draw</code>，即：测量 -&gt; 布局 -&gt; 绘制。</p>
+<p>关于绘制的问题，我们后面再讨论，首先来看一下测量与布局。</p>
+<h2 id="MeasureSpec（重点）"><a href="#MeasureSpec（重点）" class="headerlink" title="MeasureSpec（重点）"></a>MeasureSpec（重点）</h2><p><code>MeasureSpec</code>是什么？这是一个非常重要，且难以理解的概念。</p>
+<p><code>MeasureSpec</code>是<code>View</code>的一个静态公开内部类，先看看的说明。</p>
+<blockquote>
+<p>A MeasureSpec encapsulates the layout requirements passed from parent to child. Each MeasureSpec represents a requirement for either the width or the height. A MeasureSpec is comprised of a size and a mode. There are three possible modes:<br>UNSPECIFIED: The parent has not imposed any constraint on the child. It can be whatever size it wants.<br>EXACTLY: The parent has determined an exact size for the child. The child is going to be given those bounds regardless of how big it wants to be.<br>AT_MOST: The child can be as large as it wants up to the specified size.<br>MeasureSpecs are implemented as ints to reduce object allocation. This class is provided to pack and unpack the &lt;size, mode&gt; tuple into the int.</p>
+</blockquote>
+<p>翻译：<code>MeasureSpec</code>封装了<code>parent</code>对<code>child</code>的布局（实际上是尺寸）要求。每个<code>MeasureSpec</code>代表宽或高的要求。一个<code>MeasureSpec</code>是一个<code>mode</code>和一个<code>size</code>的组合。有如下三种<code>mode</code>：</p>
+<ol>
+<li><code>UNSPECIFED</code>：<code>parent</code>对<code>child</code>的尺寸不做限制。<code>child</code>想显示多大都可以</li>
+<li><code>EXACTLY</code>：<code>parent</code>确定了<code>child</code>的尺寸。不管<code>child</code>想要多大，必须按照<code>parent</code>给的尺寸</li>
+<li><code>AT_MOST</code>：<code>parent</code>对<code>child</code>限制了一个最大尺寸，<code>child</code>应该不大于这个尺寸</li>
+</ol>
+<p>为了减少内存消耗，<code>MeasureSpec</code>使用的是<code>int</code>来实现。<code>MeasureSpec</code>类提供了封装和解封<code>&lt;size, mode&gt;</code>组合为<code>int</code>的方法。</p>
+<hr>
+<p>从这几句话当中，我们可以提取出几点：</p>
+<ol>
+<li><code>MeasureSpec</code>是<code>parent</code>对<code>child</code>的布局（实际上是尺寸）要求</li>
+<li><code>MeasureSpec</code>是由两部分组成：<code>mode</code>、<code>size</code></li>
+<li><code>MeasureSpec</code>实际上是<code>int</code>值</li>
+</ol>
+<h3 id="MeasureSpec的组成"><a href="#MeasureSpec的组成" class="headerlink" title="MeasureSpec的组成"></a>MeasureSpec的组成</h3><p><code>MeasureSpec</code>是由一个32位的<code>int</code>值表示。其中，前2位表示<code>mode</code>，后30位表示<code>size</code>（屏幕尺寸远远小于30位组成的<code>int</code>值<code>1,073,741,823</code>，所以不用担心屏幕大小超出值的问题）。</p>
+<p>我们知道，两位可以组成4个数，在这里<code>00</code>代表<code>UNSEPECIFIED</code>，<code>01</code>代表<code>EXACTLY</code>，<code>10</code>代表<code>AT_MOST</code>，<code>11</code>并没有用到。</p>
+<p>而关于这些值的获取，<code>MeasureSpec</code>提供了很多方法获取，所以不用自己去计算。如下：</p>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">int</span> <span class="token function">getMode</span><span class="token punctuation">(</span><span class="token keyword">int</span> measureSpec<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span>measureSpec <span class="token operator">&amp;</span> MODE_MASK<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">int</span> <span class="token function">getSize</span><span class="token punctuation">(</span><span class="token keyword">int</span> measureSpec<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span>measureSpec <span class="token operator">&amp;</span> <span class="token operator">~</span>MODE_MASK<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">int</span> <span class="token function">makeMeasureSpec</span><span class="token punctuation">(</span><span class="token keyword">int</span> size<span class="token punctuation">,</span><span class="token annotation punctuation">@MeasureSpecMode</span> <span class="token keyword">int</span> mode<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>sUseBrokenMakeMeasureSpec<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> size <span class="token operator">+</span> mode<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token punctuation">(</span>size <span class="token operator">&amp;</span> <span class="token operator">~</span>MODE_MASK<span class="token punctuation">)</span> <span class="token operator">|</span> <span class="token punctuation">(</span>mode <span class="token operator">&amp;</span> MODE_MASK<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">int</span> <span class="token function">makeSafeMeasureSpec</span><span class="token punctuation">(</span><span class="token keyword">int</span> size<span class="token punctuation">,</span> <span class="token keyword">int</span> mode<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>sUseZeroUnspecifiedMeasureSpec <span class="token operator">&amp;&amp;</span> mode <span class="token operator">==</span> UNSPECIFIED<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> <span class="token function">makeMeasureSpec</span><span class="token punctuation">(</span>size<span class="token punctuation">,</span> mode<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<h3 id="MeasureSpec的产生"><a href="#MeasureSpec的产生" class="headerlink" title="MeasureSpec的产生"></a>MeasureSpec的产生</h3><p>直接说结果：<code>child</code>的<code>MeasureSpec</code>是<code>parent</code>计算得到，传给<code>child</code>的。<code>child</code>的<code>MeasureSpec</code>是根据<code>parent</code>的<code>MeasureSpec</code>+<code>child</code>的<code>LayoutParams</code>得到的。如下图：</p>
+<p><img src="MeasureSpec%E7%9A%84%E4%BA%A7%E7%94%9F.jpg" alt="MeasureSpec的产生"></p>
+<p><code>ViewGroup</code>在<code>measureChild(View, int, int)</code>中调用了<code>getChildMeasureSpec(int, int, int)</code>。源码如下：</p>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
+ * Ask one of the children of this view to measure itself, taking into
+ * account both the MeasureSpec requirements for this view and its padding.
+ * The heavy lifting is done in getChildMeasureSpec.
+ *
+ * 让其中一个child开始计算自己的尺寸，同时考虑到自身的padding属性和MeasureSpec要求。
+ * 重要的工作在getChildMeasureSpec方法中。
+ */</span>
+<span class="token keyword">protected</span> <span class="token keyword">void</span> <span class="token function">measureChild</span><span class="token punctuation">(</span>View child<span class="token punctuation">,</span> <span class="token keyword">int</span> parentWidthMeasureSpec<span class="token punctuation">,</span>
+        <span class="token keyword">int</span> parentHeightMeasureSpec<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">final</span> LayoutParams lp <span class="token operator">=</span> child<span class="token punctuation">.</span><span class="token function">getLayoutParams</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">final</span> <span class="token keyword">int</span> childWidthMeasureSpec <span class="token operator">=</span> <span class="token function">getChildMeasureSpec</span><span class="token punctuation">(</span>parentWidthMeasureSpec<span class="token punctuation">,</span>
+            mPaddingLeft <span class="token operator">+</span> mPaddingRight<span class="token punctuation">,</span> lp<span class="token punctuation">.</span>width<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">final</span> <span class="token keyword">int</span> childHeightMeasureSpec <span class="token operator">=</span> <span class="token function">getChildMeasureSpec</span><span class="token punctuation">(</span>parentHeightMeasureSpec<span class="token punctuation">,</span>
+            mPaddingTop <span class="token operator">+</span> mPaddingBottom<span class="token punctuation">,</span> lp<span class="token punctuation">.</span>height<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    child<span class="token punctuation">.</span><span class="token function">measure</span><span class="token punctuation">(</span>childWidthMeasureSpec<span class="token punctuation">,</span> childHeightMeasureSpec<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">/**
+ * Does the hard part of measureChildren: figuring out the MeasureSpec to
+ * pass to a particular child. This method figures out the right MeasureSpec
+ * for one dimension (height or width) of one child view.
+ *
+ * The goal is to combine information from our MeasureSpec with the
+ * LayoutParams of the child to get the best possible results. For example,
+ * if the this view knows its size (because its MeasureSpec has a mode of
+ * EXACTLY), and the child has indicated in its LayoutParams that it wants
+ * to be the same size as the parent, the parent should ask the child to
+ * layout given an exact size.
+ *
+ * 处理measureChildren的难点部分：计算出传递个child的MeasureSpec。这个方法计算出正确child的MeasureSpec。
+ * 这个方法的目标是结合ViewGroup的MeasureSpec信息和child的LayoutParams，获取有可能最好的结果。
+ * 例如，如果我们知道View的尺寸（因为MeasureSpec属性是EXACTLY），
+ * child并且在LayoutParams指定为MATCH_PARENT，和parent一样的尺寸，那么parent应该给child一个确定的大小。
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">int</span> <span class="token function">getChildMeasureSpec</span><span class="token punctuation">(</span><span class="token keyword">int</span> spec<span class="token punctuation">,</span> <span class="token keyword">int</span> padding<span class="token punctuation">,</span> <span class="token keyword">int</span> childDimension<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">int</span> specMode <span class="token operator">=</span> MeasureSpec<span class="token punctuation">.</span><span class="token function">getMode</span><span class="token punctuation">(</span>spec<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> specSize <span class="token operator">=</span> MeasureSpec<span class="token punctuation">.</span><span class="token function">getSize</span><span class="token punctuation">(</span>spec<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">int</span> size <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">max</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> specSize <span class="token operator">-</span> padding<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">int</span> resultSize <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> resultMode <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">switch</span> <span class="token punctuation">(</span>specMode<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// Parent has imposed an exact size on us</span>
+    <span class="token keyword">case</span> MeasureSpec<span class="token punctuation">.</span>EXACTLY<span class="token operator">:</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>childDimension <span class="token operator">>=</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            resultSize <span class="token operator">=</span> childDimension<span class="token punctuation">;</span>
+            resultMode <span class="token operator">=</span> MeasureSpec<span class="token punctuation">.</span>EXACTLY<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>childDimension <span class="token operator">==</span> LayoutParams<span class="token punctuation">.</span>MATCH_PARENT<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token comment" spellcheck="true">// Child wants to be our size. So be it.</span>
+            resultSize <span class="token operator">=</span> size<span class="token punctuation">;</span>
+            resultMode <span class="token operator">=</span> MeasureSpec<span class="token punctuation">.</span>EXACTLY<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>childDimension <span class="token operator">==</span> LayoutParams<span class="token punctuation">.</span>WRAP_CONTENT<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token comment" spellcheck="true">// Child wants to determine its own size. It can't be</span>
+            <span class="token comment" spellcheck="true">// bigger than us.</span>
+            resultSize <span class="token operator">=</span> size<span class="token punctuation">;</span>
+            resultMode <span class="token operator">=</span> MeasureSpec<span class="token punctuation">.</span>AT_MOST<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">break</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">// Parent has imposed a maximum size on us</span>
+    <span class="token keyword">case</span> MeasureSpec<span class="token punctuation">.</span>AT_MOST<span class="token operator">:</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>childDimension <span class="token operator">>=</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token comment" spellcheck="true">// Child wants a specific size... so be it</span>
+            resultSize <span class="token operator">=</span> childDimension<span class="token punctuation">;</span>
+            resultMode <span class="token operator">=</span> MeasureSpec<span class="token punctuation">.</span>EXACTLY<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>childDimension <span class="token operator">==</span> LayoutParams<span class="token punctuation">.</span>MATCH_PARENT<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token comment" spellcheck="true">// Child wants to be our size, but our size is not fixed.</span>
+            <span class="token comment" spellcheck="true">// Constrain child to not be bigger than us.</span>
+            resultSize <span class="token operator">=</span> size<span class="token punctuation">;</span>
+            resultMode <span class="token operator">=</span> MeasureSpec<span class="token punctuation">.</span>AT_MOST<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>childDimension <span class="token operator">==</span> LayoutParams<span class="token punctuation">.</span>WRAP_CONTENT<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token comment" spellcheck="true">// Child wants to determine its own size. It can't be</span>
+            <span class="token comment" spellcheck="true">// bigger than us.</span>
+            resultSize <span class="token operator">=</span> size<span class="token punctuation">;</span>
+            resultMode <span class="token operator">=</span> MeasureSpec<span class="token punctuation">.</span>AT_MOST<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">break</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">// Parent asked to see how big we want to be</span>
+    <span class="token keyword">case</span> MeasureSpec<span class="token punctuation">.</span>UNSPECIFIED<span class="token operator">:</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>childDimension <span class="token operator">>=</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token comment" spellcheck="true">// Child wants a specific size... let him have it</span>
+            resultSize <span class="token operator">=</span> childDimension<span class="token punctuation">;</span>
+            resultMode <span class="token operator">=</span> MeasureSpec<span class="token punctuation">.</span>EXACTLY<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>childDimension <span class="token operator">==</span> LayoutParams<span class="token punctuation">.</span>MATCH_PARENT<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token comment" spellcheck="true">// Child wants to be our size... find out how big it should</span>
+            <span class="token comment" spellcheck="true">// be</span>
+            resultSize <span class="token operator">=</span> View<span class="token punctuation">.</span>sUseZeroUnspecifiedMeasureSpec <span class="token operator">?</span> <span class="token number">0</span> <span class="token operator">:</span> size<span class="token punctuation">;</span>
+            resultMode <span class="token operator">=</span> MeasureSpec<span class="token punctuation">.</span>UNSPECIFIED<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>childDimension <span class="token operator">==</span> LayoutParams<span class="token punctuation">.</span>WRAP_CONTENT<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token comment" spellcheck="true">// Child wants to determine its own size.... find out how</span>
+            <span class="token comment" spellcheck="true">// big it should be</span>
+            resultSize <span class="token operator">=</span> View<span class="token punctuation">.</span>sUseZeroUnspecifiedMeasureSpec <span class="token operator">?</span> <span class="token number">0</span> <span class="token operator">:</span> size<span class="token punctuation">;</span>
+            resultMode <span class="token operator">=</span> MeasureSpec<span class="token punctuation">.</span>UNSPECIFIED<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">break</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//noinspection ResourceType</span>
+    <span class="token keyword">return</span> MeasureSpec<span class="token punctuation">.</span><span class="token function">makeMeasureSpec</span><span class="token punctuation">(</span>resultSize<span class="token punctuation">,</span> resultMode<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>代码非常的长，但是还是比较容易理解。起决定因素的是<code>ViewGroup</code>自己的<code>MeasureSpec</code>，和<code>View</code>的<code>LayoutParams</code>属性。简化之后如下图所示：</p>
+<p><img src="MeasureSpec%E5%80%BC%E7%9A%84%E7%94%9F%E6%88%90.webp" alt="MeasureSpec值的生成"></p>
+<h3 id="MeasureSpec如何影响尺寸"><a href="#MeasureSpec如何影响尺寸" class="headerlink" title="MeasureSpec如何影响尺寸"></a>MeasureSpec如何影响尺寸</h3><p><code>MeasureSpec</code>决定了<code>View</code>的最终尺寸（宽高）。为什么呢，怎么做到的呢，对于这点，我们需要对<code>measure</code>的一些方法进行解释。</p>
+<h2 id="View的measure相关的方法说明"><a href="#View的measure相关的方法说明" class="headerlink" title="View的measure相关的方法说明"></a>View的measure相关的方法说明</h2><p>这里着重<code>View</code>而不是<code>ViewGroup</code>。</p>
+<h3 id="1-measure-int-widthMeasureSpec-int-heightMeasureSpec"><a href="#1-measure-int-widthMeasureSpec-int-heightMeasureSpec" class="headerlink" title="1. measure(int widthMeasureSpec, int heightMeasureSpec)"></a>1. <code>measure(int widthMeasureSpec, int heightMeasureSpec)</code></h3><blockquote>
+<p>This is called to find out how big a view should be. The parent supplies constraint information in the width and height parameters.</p>
+</blockquote>
+<p>翻译：这个方法被调用来确定一个<code>View</code>多大。<code>View</code>的<code>parent</code>提供在宽高上的约束信息。</p>
+<h3 id="谁使用"><a href="#谁使用" class="headerlink" title="谁使用"></a>谁使用</h3><p><code>View</code>的<code>parent</code>。<code>View</code>的<code>parent</code>通过自身的<code>MeasureSpec</code>和<code>View</code>的<code>LayoutParam</code>得到<code>View</code>的<code>MeasureSpec</code>.</p>
+<h4 id="做什么的"><a href="#做什么的" class="headerlink" title="做什么的"></a>做什么的</h4><p>使用<code>MeasureSpec</code>计算<code>View</code>的尺寸</p>
+<h3 id="2-onMeasure-int-widthMeasureSpec-int-heightMeasureSpec"><a href="#2-onMeasure-int-widthMeasureSpec-int-heightMeasureSpec" class="headerlink" title="2. onMeasure(int widthMeasureSpec, int heightMeasureSpec)"></a>2. <code>onMeasure(int widthMeasureSpec, int heightMeasureSpec)</code></h3><blockquote>
+<p>Measure the view and its content to determine the measured width and the measured height. This method is invoked by {@link #measure(int, int)} and should be overridden by subclasses to provide accurate and efficient measurement of their contents.</p>
+</blockquote>
+<p>翻译：测量<code>View</code>和它的内容，决定测量的宽高。这个方法被<code>measure(int, int)</code>调用，并且应该被子类重写，保证对<code>View</code>的内容有效、准确的测量。</p>
+<h3 id="谁使用-1"><a href="#谁使用-1" class="headerlink" title="谁使用"></a>谁使用</h3><p><code>View</code>自身的<code>measure(int, int)</code>调用的。重写其中的内容</p>
+<h4 id="做什么的-1"><a href="#做什么的-1" class="headerlink" title="做什么的"></a>做什么的</h4><p><code>View</code>在这个方法里面根据自身的逻辑确定自身的尺寸（宽高）</p>
+<h3 id="3-setMeasuredDimension-int-measuredWidth-int-measuredHeight"><a href="#3-setMeasuredDimension-int-measuredWidth-int-measuredHeight" class="headerlink" title="3. setMeasuredDimension(int measuredWidth, int measuredHeight)"></a>3. <code>setMeasuredDimension(int measuredWidth, int measuredHeight)</code></h3><blockquote>
+<p>This method must be called by {@link #onMeasure(int, int)} to store the measured width and measured height. Failing to do so will trigger an exception at measurement time.</p>
+</blockquote>
+<p>翻译：这个方法一定要在<code>onMeasure(int, int)</code>调用，来存储测量好的宽高。如果没有调用，将在测量时间触发异常。</p>
+<h3 id="谁使用-2"><a href="#谁使用-2" class="headerlink" title="谁使用"></a>谁使用</h3><p><code>View</code>在<code>onMeasure(int, int)</code>方法中调用，设置宽高值。</p>
+<h4 id="做什么"><a href="#做什么" class="headerlink" title="做什么"></a>做什么</h4><p><code>View</code>设置确切的宽高值。</p>
+<h3 id="4-getDefaultSize-int-size-int-measureSpec"><a href="#4-getDefaultSize-int-size-int-measureSpec" class="headerlink" title="4. getDefaultSize(int size, int measureSpec)"></a>4. <code>getDefaultSize(int size, int measureSpec)</code></h3><blockquote>
+<p>Utility to return a default size. Uses the supplied size if the MeasureSpec imposed no constraints. Will get larger if allowed by the MeasureSpec.</p>
+</blockquote>
+<p>翻译：帮助类，用于返回一个默认的尺寸值。如果<code>MeasureSpec</code>是<code>UNSPECIFIED</code>类型（即父类不约束），那么尺寸就是默认的尺寸（第一个参数<code>size</code>）。如果<code>MeasureSpec</code>是<code>EXACTLY</code>和<code>AT_MOST</code>（父类限制了尺寸），那么就将是限制的尺寸。</p>
+<h3 id="谁使用-3"><a href="#谁使用-3" class="headerlink" title="谁使用"></a>谁使用</h3><p><code>View</code>自身，通常是在根据<code>parent</code>给的<code>MeasureSpec</code>计算实际宽高值时调用</p>
+<h4 id="做什么-1"><a href="#做什么-1" class="headerlink" title="做什么"></a>做什么</h4><p>根据<code>parent</code>给的<code>MeasureSpec</code>，获得默认的一个尺寸，可以用来确认最终的尺寸值。</p>
+<h3 id="5-getSuggestedMinimumWidth-和getSuggestedMinimumHeight"><a href="#5-getSuggestedMinimumWidth-和getSuggestedMinimumHeight" class="headerlink" title="5. getSuggestedMinimumWidth()和getSuggestedMinimumHeight()"></a>5. <code>getSuggestedMinimumWidth()</code>和<code>getSuggestedMinimumHeight()</code></h3><blockquote>
+<p>Returns the suggested minimum height that the view should use. This returns the maximum of the view’s minimum height and the background’s minimum height</p>
+</blockquote>
+<p>翻译：返回<code>View</code>最小的宽/高。这个方法返回<code>View</code>自身设置的<code>minHeight</code>和背景的<code>minHeight</code>的较大值。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>这些都是一些<code>View</code>在根据其<code>parent</code>传过来的<code>MeasureSpec</code>用于计算真正尺寸时会用的一些方法。不仅仅是<code>MeasureSpec</code>，多数情况下是根据我们自定义<code>View</code>的逻辑，来决定<code>View</code>应该多大的。</p>
+<p>如我定义了一个时钟，如果时钟太小，那么它显示出来并没有任何意义，所以我希望它最小是<code>200dp*200dp</code>，所以这个时候，即是<code>parent</code>限制时钟的尺寸小于这个数，即是可能显示不全，那么我一定也要让它不小于我期望的尺寸。</p>
+<p>可以这样理解，<code>MeasureSpec</code>是<code>parent</code>对<code>child</code>期望的尺寸要求，但是<code>View</code>也需要根据自身情况，决定如何去满足这个尺寸要求。</p>
+<p>很多时候，使用者使用了我们不期望的属性，导致我们自定义的<code>View</code>显示不合理。这不是一个谁一定要遵守谁的规定，而是两者相互配合的结果。</p>
+<h2 id="View的尺寸"><a href="#View的尺寸" class="headerlink" title="View的尺寸"></a>View的尺寸</h2><p>前面，已经看到了真正设置<code>View</code>尺寸的是<code>setMeasuredDimension(int, int)</code>方法。而尺寸的来源，则是根据<code>parent</code>给的<code>MeasureSpec</code>加上一些限制条件的结果。这些限制条件有如背景的尺寸、设置的<code>minHeight</code>，业务逻辑等。</p>
+<h3 id="简单的自定义的View"><a href="#简单的自定义的View" class="headerlink" title="简单的自定义的View"></a>简单的自定义的View</h3><p>我自定义了一个简单的时钟，在<code>onMeasure</code>中根据<code>parent</code>给的<code>MeasureSpec</code>和自身的逻辑确定了尺寸，而大部分工作是在<code>onDraw</code>。所以需要明白的一点是，<code>View</code>的工作实际上是显示内容的，很多时候决定尺寸的恰恰是内容，如<code>TextView</code>通常设置了<code>wrap_content</code>，尺寸也随着内容的变化而变化。</p>
+<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">class</span> Clock <span class="token operator">:</span> View <span class="token punctuation">{</span>
+
+    <span class="token keyword">constructor</span><span class="token punctuation">(</span>context<span class="token operator">:</span> Context<span class="token operator">?</span><span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token keyword">super</span><span class="token punctuation">(</span>context<span class="token punctuation">)</span>
+    <span class="token keyword">constructor</span><span class="token punctuation">(</span>context<span class="token operator">:</span> Context<span class="token operator">?</span><span class="token punctuation">,</span> attrs<span class="token operator">:</span> AttributeSet<span class="token operator">?</span><span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token keyword">super</span><span class="token punctuation">(</span>context<span class="token punctuation">,</span> attrs<span class="token punctuation">)</span>
+    <span class="token keyword">constructor</span><span class="token punctuation">(</span>context<span class="token operator">:</span> Context<span class="token operator">?</span><span class="token punctuation">,</span> attrs<span class="token operator">:</span> AttributeSet<span class="token operator">?</span><span class="token punctuation">,</span> defStyleAttr<span class="token operator">:</span> Int<span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token keyword">super</span><span class="token punctuation">(</span>
+        context<span class="token punctuation">,</span>
+        attrs<span class="token punctuation">,</span>
+        defStyleAttr
+    <span class="token punctuation">)</span>
+
+    <span class="token keyword">constructor</span><span class="token punctuation">(</span>
+        context<span class="token operator">:</span> Context<span class="token operator">?</span><span class="token punctuation">,</span>
+        attrs<span class="token operator">:</span> AttributeSet<span class="token operator">?</span><span class="token punctuation">,</span>
+        defStyleAttr<span class="token operator">:</span> Int<span class="token punctuation">,</span>
+        defStyleRes<span class="token operator">:</span> Int
+    <span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token keyword">super</span><span class="token punctuation">(</span>context<span class="token punctuation">,</span> attrs<span class="token punctuation">,</span> defStyleAttr<span class="token punctuation">,</span> defStyleRes<span class="token punctuation">)</span>
+
+    <span class="token keyword">companion</span> <span class="token keyword">object</span> <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">// 最小边长</span>
+        <span class="token keyword">private</span> <span class="token keyword">const</span> <span class="token keyword">val</span> MIN_SLIDE <span class="token operator">=</span> <span class="token number">200f</span>
+        <span class="token comment" spellcheck="true">// 时钟圆半径</span>
+        <span class="token keyword">private</span> <span class="token keyword">const</span> <span class="token keyword">val</span> RADIUS <span class="token operator">=</span> <span class="token number">80f</span>
+        <span class="token comment" spellcheck="true">// 时钟圆线宽</span>
+        <span class="token keyword">private</span> <span class="token keyword">const</span> <span class="token keyword">val</span> CIRCLE_WIDTH <span class="token operator">=</span> <span class="token number">1.5f</span>
+        <span class="token comment" spellcheck="true">// 时钟圆心圆圈半径</span>
+        <span class="token keyword">private</span> <span class="token keyword">const</span> <span class="token keyword">val</span> CENTER_RADIUS <span class="token operator">=</span> <span class="token number">3f</span>
+        <span class="token comment" spellcheck="true">// 小时刻度长度</span>
+        <span class="token keyword">private</span> <span class="token keyword">const</span> <span class="token keyword">val</span> QUARTER_LENGTH <span class="token operator">=</span> <span class="token number">10f</span>
+        <span class="token comment" spellcheck="true">// 分钟刻度长度</span>
+        <span class="token keyword">private</span> <span class="token keyword">const</span> <span class="token keyword">val</span> TIME_LENGTH <span class="token operator">=</span> <span class="token number">5f</span>
+        <span class="token comment" spellcheck="true">// 小时刻度颜色</span>
+        <span class="token keyword">private</span> <span class="token keyword">const</span> <span class="token keyword">val</span> COLOR_HOUR <span class="token operator">=</span> Color<span class="token punctuation">.</span>RED
+        <span class="token comment" spellcheck="true">// 分钟刻度颜色</span>
+        <span class="token keyword">private</span> <span class="token keyword">const</span> <span class="token keyword">val</span> COLOR_MINUTE <span class="token operator">=</span> Color<span class="token punctuation">.</span>BLACK
+        <span class="token comment" spellcheck="true">// 小时文字大小</span>
+        <span class="token keyword">private</span> <span class="token keyword">const</span> <span class="token keyword">val</span> TEXT_SIZE_HOUR <span class="token operator">=</span> <span class="token number">14f</span>
+        <span class="token comment" spellcheck="true">// 小时文字与小时刻度的间距</span>
+        <span class="token keyword">private</span> <span class="token keyword">const</span> <span class="token keyword">val</span> TEXT_DIVIDER <span class="token operator">=</span> <span class="token number">5f</span>
+        <span class="token comment" spellcheck="true">// 时针宽度</span>
+        <span class="token keyword">private</span> <span class="token keyword">const</span> <span class="token keyword">val</span> WIDTH_HOUR <span class="token operator">=</span> <span class="token number">6f</span>
+        <span class="token comment" spellcheck="true">// 分针宽度</span>
+        <span class="token keyword">private</span> <span class="token keyword">const</span> <span class="token keyword">val</span> WIDTH_MINUTE <span class="token operator">=</span> <span class="token number">4f</span>
+        <span class="token comment" spellcheck="true">// 秒针宽度</span>
+        <span class="token keyword">private</span> <span class="token keyword">const</span> <span class="token keyword">val</span> WIDTH_SECOND <span class="token operator">=</span> <span class="token number">2f</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">val</span> paint <span class="token operator">=</span> <span class="token function">Paint</span><span class="token punctuation">(</span>Paint<span class="token punctuation">.</span>ANTI_ALIAS_FLAG<span class="token punctuation">)</span>
+
+    <span class="token keyword">override</span> <span class="token keyword">fun</span> <span class="token function">onMeasure</span><span class="token punctuation">(</span>widthMeasureSpec<span class="token operator">:</span> Int<span class="token punctuation">,</span> heightMeasureSpec<span class="token operator">:</span> Int<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">super</span><span class="token punctuation">.</span><span class="token function">onMeasure</span><span class="token punctuation">(</span>widthMeasureSpec<span class="token punctuation">,</span> heightMeasureSpec<span class="token punctuation">)</span>
+
+        <span class="token keyword">val</span> minSlide <span class="token operator">=</span> <span class="token function">dp2px</span><span class="token punctuation">(</span>MIN_SLIDE<span class="token punctuation">)</span>
+
+        <span class="token comment" spellcheck="true">// 计算尺寸，保证边长不能小于MIN_SLIDE</span>
+        <span class="token keyword">var</span> width <span class="token operator">=</span> <span class="token function">getSize</span><span class="token punctuation">(</span>suggestedMinimumWidth<span class="token punctuation">,</span> widthMeasureSpec<span class="token punctuation">)</span>
+        <span class="token keyword">var</span> height <span class="token operator">=</span> <span class="token function">getSize</span><span class="token punctuation">(</span>suggestedMinimumHeight<span class="token punctuation">,</span> heightMeasureSpec<span class="token punctuation">)</span>
+
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>width <span class="token operator">&lt;</span> minSlide<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            width <span class="token operator">=</span> minSlide<span class="token punctuation">.</span><span class="token function">toInt</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>height <span class="token operator">&lt;</span> minSlide<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            height <span class="token operator">=</span> minSlide<span class="token punctuation">.</span><span class="token function">toInt</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token comment" spellcheck="true">// 设置最终的尺寸</span>
+        <span class="token function">setMeasuredDimension</span><span class="token punctuation">(</span>width<span class="token punctuation">,</span> height<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * 根据MeasureSpec得到理想的尺寸
+     *
+     * @param size 尺寸默认值
+     * @param measureSpec parent给的MeasureSpec
+     * @return
+     */</span>
+    <span class="token keyword">private</span> <span class="token keyword">fun</span> <span class="token function">getSize</span><span class="token punctuation">(</span>size<span class="token operator">:</span> Int<span class="token punctuation">,</span> measureSpec<span class="token operator">:</span> Int<span class="token punctuation">)</span><span class="token operator">:</span> Int <span class="token punctuation">{</span>
+        <span class="token keyword">var</span> result <span class="token operator">=</span> size
+        <span class="token keyword">val</span> specMode <span class="token operator">=</span> MeasureSpec<span class="token punctuation">.</span><span class="token function">getMode</span><span class="token punctuation">(</span>measureSpec<span class="token punctuation">)</span>
+        <span class="token keyword">val</span> specSize <span class="token operator">=</span> MeasureSpec<span class="token punctuation">.</span><span class="token function">getSize</span><span class="token punctuation">(</span>measureSpec<span class="token punctuation">)</span>
+
+        <span class="token keyword">when</span> <span class="token punctuation">(</span>specMode<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            MeasureSpec<span class="token punctuation">.</span>AT_MOST<span class="token punctuation">,</span> MeasureSpec<span class="token punctuation">.</span>UNSPECIFIED <span class="token operator">-></span> result <span class="token operator">=</span> size
+            MeasureSpec<span class="token punctuation">.</span>EXACTLY <span class="token operator">-></span> result <span class="token operator">=</span> specSize
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> result
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * 存放文字的尺寸
+     */</span>
+    <span class="token keyword">private</span> <span class="token keyword">val</span> textBounds <span class="token operator">=</span> <span class="token function">Rect</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">override</span> <span class="token keyword">fun</span> <span class="token function">onDraw</span><span class="token punctuation">(</span>canvas<span class="token operator">:</span> Canvas<span class="token operator">?</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">super</span><span class="token punctuation">.</span><span class="token function">onDraw</span><span class="token punctuation">(</span>canvas<span class="token punctuation">)</span>
+
+        <span class="token comment" spellcheck="true">// 获取尺寸</span>
+        <span class="token keyword">val</span> width <span class="token operator">=</span> measuredWidth
+        <span class="token keyword">val</span> height <span class="token operator">=</span> measuredHeight
+
+        <span class="token keyword">val</span> radius <span class="token operator">=</span> <span class="token function">dp2px</span><span class="token punctuation">(</span>RADIUS<span class="token punctuation">)</span>
+
+        <span class="token keyword">val</span> circleWidth <span class="token operator">=</span> <span class="token function">dp2px</span><span class="token punctuation">(</span>CIRCLE_WIDTH<span class="token punctuation">)</span>
+        <span class="token keyword">val</span> centerRadius <span class="token operator">=</span> <span class="token function">dp2px</span><span class="token punctuation">(</span>CENTER_RADIUS<span class="token punctuation">)</span>
+
+        <span class="token keyword">val</span> c <span class="token operator">=</span> canvas<span class="token operator">!!</span>
+        c<span class="token punctuation">.</span><span class="token function">save</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+        <span class="token comment" spellcheck="true">// 将坐标轴移动到View中心</span>
+        c<span class="token punctuation">.</span><span class="token function">translate</span><span class="token punctuation">(</span>width<span class="token punctuation">.</span><span class="token function">shr</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toFloat</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> height<span class="token punctuation">.</span><span class="token function">shr</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toFloat</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+        <span class="token comment" spellcheck="true">// 画刻度</span>
+        <span class="token function">drawScale</span><span class="token punctuation">(</span>c<span class="token punctuation">,</span> radius<span class="token punctuation">,</span> circleWidth<span class="token punctuation">)</span>
+        <span class="token comment" spellcheck="true">// 画时钟外圆</span>
+        <span class="token function">drawCircle</span><span class="token punctuation">(</span>c<span class="token punctuation">,</span> radius<span class="token punctuation">,</span> circleWidth<span class="token punctuation">)</span>
+
+        <span class="token comment" spellcheck="true">// 画时针、分针、秒针</span>
+        <span class="token function">drawTimeHand</span><span class="token punctuation">(</span>c<span class="token punctuation">,</span> radius<span class="token punctuation">)</span>
+
+        <span class="token comment" spellcheck="true">// 画中心圆</span>
+        <span class="token function">drawCenterCircle</span><span class="token punctuation">(</span>c<span class="token punctuation">,</span> centerRadius<span class="token punctuation">)</span>
+        c<span class="token punctuation">.</span><span class="token function">restore</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+        <span class="token comment" spellcheck="true">// 保证实时更新</span>
+        <span class="token function">invalidate</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * 画刻度
+     *
+     * @param c canvas
+     * @param radius 半径
+     * @param circleWidth 外圆的宽度
+     */</span>
+    <span class="token keyword">private</span> <span class="token keyword">fun</span> <span class="token function">drawScale</span><span class="token punctuation">(</span>c<span class="token operator">:</span> Canvas<span class="token punctuation">,</span> radius<span class="token operator">:</span> Float<span class="token punctuation">,</span> circleWidth<span class="token operator">:</span> Float<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+        <span class="token keyword">val</span> quarterLength <span class="token operator">=</span> <span class="token function">dp2px</span><span class="token punctuation">(</span>QUARTER_LENGTH<span class="token punctuation">)</span>
+        <span class="token keyword">val</span> timeLength <span class="token operator">=</span> <span class="token function">dp2px</span><span class="token punctuation">(</span>TIME_LENGTH<span class="token punctuation">)</span>
+
+        <span class="token keyword">val</span> hourTextSize <span class="token operator">=</span> <span class="token function">dp2px</span><span class="token punctuation">(</span>TEXT_SIZE_HOUR<span class="token punctuation">)</span>
+
+        <span class="token keyword">val</span> textDivider <span class="token operator">=</span> <span class="token function">dp2px</span><span class="token punctuation">(</span>TEXT_DIVIDER<span class="token punctuation">)</span>
+
+        <span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token keyword">in</span> <span class="token number">0</span><span class="token operator">..</span><span class="token number">59</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>i <span class="token operator">%</span> <span class="token number">5</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                paint<span class="token punctuation">.</span>color <span class="token operator">=</span> COLOR_HOUR
+                c<span class="token punctuation">.</span><span class="token function">drawLine</span><span class="token punctuation">(</span>radius <span class="token operator">-</span> quarterLength<span class="token punctuation">,</span> <span class="token number">0f</span><span class="token punctuation">,</span> radius <span class="token operator">-</span> circleWidth<span class="token punctuation">,</span> <span class="token number">0f</span><span class="token punctuation">,</span> paint<span class="token punctuation">)</span>
+
+                <span class="token keyword">val</span> hour <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>i <span class="token operator">/</span> <span class="token number">5</span> <span class="token operator">+</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">%</span> <span class="token number">12</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+                paint<span class="token punctuation">.</span>textSize <span class="token operator">=</span> hourTextSize
+                paint<span class="token punctuation">.</span><span class="token function">getTextBounds</span><span class="token punctuation">(</span>hour<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> hour<span class="token punctuation">.</span>length<span class="token punctuation">,</span> textBounds<span class="token punctuation">)</span>
+
+                c<span class="token punctuation">.</span><span class="token function">save</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+                c<span class="token punctuation">.</span><span class="token function">translate</span><span class="token punctuation">(</span>radius <span class="token operator">-</span> quarterLength <span class="token operator">-</span> textBounds<span class="token punctuation">.</span><span class="token function">width</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">2f</span> <span class="token operator">-</span> textDivider<span class="token punctuation">,</span> <span class="token number">0f</span><span class="token punctuation">)</span>
+
+                c<span class="token punctuation">.</span><span class="token function">rotate</span><span class="token punctuation">(</span><span class="token operator">-</span>i <span class="token operator">*</span> <span class="token number">6f</span><span class="token punctuation">)</span>
+                c<span class="token punctuation">.</span><span class="token function">drawText</span><span class="token punctuation">(</span>
+                    hour<span class="token punctuation">,</span>
+                    <span class="token number">0</span><span class="token punctuation">,</span>
+                    hour<span class="token punctuation">.</span>length<span class="token punctuation">,</span>
+                    <span class="token operator">-</span>textBounds<span class="token punctuation">.</span><span class="token function">exactCenterX</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+                    <span class="token operator">-</span>textBounds<span class="token punctuation">.</span><span class="token function">exactCenterY</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+                    paint
+                <span class="token punctuation">)</span>
+
+                c<span class="token punctuation">.</span><span class="token function">restore</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+            <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+                paint<span class="token punctuation">.</span>color <span class="token operator">=</span> COLOR_MINUTE
+                c<span class="token punctuation">.</span><span class="token function">drawLine</span><span class="token punctuation">(</span>radius <span class="token operator">-</span> timeLength<span class="token punctuation">,</span> <span class="token number">0f</span><span class="token punctuation">,</span> radius <span class="token operator">-</span> circleWidth<span class="token punctuation">,</span> <span class="token number">0f</span><span class="token punctuation">,</span> paint<span class="token punctuation">)</span>
+            <span class="token punctuation">}</span>
+            c<span class="token punctuation">.</span><span class="token function">rotate</span><span class="token punctuation">(</span><span class="token number">6f</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * 画时钟外圆
+     *
+     * @param c canvas
+     * @param radius 半径
+     * @param circleWidth 外圆的宽度
+     */</span>
+    <span class="token keyword">private</span> <span class="token keyword">fun</span> <span class="token function">drawCircle</span><span class="token punctuation">(</span>c<span class="token operator">:</span> Canvas<span class="token punctuation">,</span> radius<span class="token operator">:</span> Float<span class="token punctuation">,</span> circleWidth<span class="token operator">:</span> Float<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+        c<span class="token punctuation">.</span><span class="token function">save</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        paint<span class="token punctuation">.</span>style <span class="token operator">=</span> Paint<span class="token punctuation">.</span>Style<span class="token punctuation">.</span>STROKE
+        paint<span class="token punctuation">.</span>strokeWidth <span class="token operator">=</span> circleWidth
+
+        c<span class="token punctuation">.</span><span class="token function">drawCircle</span><span class="token punctuation">(</span><span class="token number">0f</span><span class="token punctuation">,</span> <span class="token number">0f</span><span class="token punctuation">,</span> radius <span class="token operator">-</span> circleWidth<span class="token punctuation">,</span> paint<span class="token punctuation">)</span>
+        c<span class="token punctuation">.</span><span class="token function">restore</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * 画时针、分针、秒针
+     *
+     * @param c canvas
+     * @param radius 外圆半径
+     */</span>
+    <span class="token keyword">private</span> <span class="token keyword">fun</span> <span class="token function">drawTimeHand</span><span class="token punctuation">(</span>c<span class="token operator">:</span> Canvas<span class="token punctuation">,</span> radius<span class="token operator">:</span> Float<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+        <span class="token keyword">val</span> now <span class="token operator">=</span> Calendar<span class="token punctuation">.</span><span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        now<span class="token punctuation">.</span>time <span class="token operator">=</span> <span class="token function">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+        <span class="token keyword">val</span> hour <span class="token operator">=</span> now<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>Calendar<span class="token punctuation">.</span>HOUR<span class="token punctuation">)</span>
+        <span class="token keyword">val</span> minute <span class="token operator">=</span> now<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>Calendar<span class="token punctuation">.</span>MINUTE<span class="token punctuation">)</span>
+        <span class="token keyword">val</span> second <span class="token operator">=</span> now<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>Calendar<span class="token punctuation">.</span>SECOND<span class="token punctuation">)</span>
+        <span class="token keyword">val</span> millis <span class="token operator">=</span> now<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>Calendar<span class="token punctuation">.</span>MILLISECOND<span class="token punctuation">)</span>
+
+        <span class="token keyword">val</span> hourWidth <span class="token operator">=</span> <span class="token function">dp2px</span><span class="token punctuation">(</span>WIDTH_HOUR<span class="token punctuation">)</span>
+        <span class="token keyword">val</span> minuteWidth <span class="token operator">=</span> <span class="token function">dp2px</span><span class="token punctuation">(</span>WIDTH_MINUTE<span class="token punctuation">)</span>
+        <span class="token keyword">val</span> secondWidth <span class="token operator">=</span> <span class="token function">dp2px</span><span class="token punctuation">(</span>WIDTH_SECOND<span class="token punctuation">)</span>
+
+        <span class="token keyword">val</span> hourLength <span class="token operator">=</span> radius <span class="token operator">/</span> <span class="token number">2</span>
+
+        paint<span class="token punctuation">.</span>style <span class="token operator">=</span> Paint<span class="token punctuation">.</span>Style<span class="token punctuation">.</span>FILL
+
+        <span class="token comment" spellcheck="true">// draw hour hand</span>
+        c<span class="token punctuation">.</span><span class="token function">save</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        c<span class="token punctuation">.</span><span class="token function">rotate</span><span class="token punctuation">(</span><span class="token punctuation">(</span>hour <span class="token operator">-</span> <span class="token number">3</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">30f</span><span class="token punctuation">)</span>
+        c<span class="token punctuation">.</span><span class="token function">drawRoundRect</span><span class="token punctuation">(</span>
+            <span class="token operator">-</span>hourLength <span class="token operator">/</span> <span class="token number">4f</span><span class="token punctuation">,</span>
+            <span class="token operator">-</span>hourWidth <span class="token operator">/</span> <span class="token number">2f</span><span class="token punctuation">,</span>
+            hourLength<span class="token punctuation">,</span>
+            hourWidth <span class="token operator">/</span> <span class="token number">2f</span><span class="token punctuation">,</span>
+            hourWidth <span class="token operator">/</span> <span class="token number">2f</span><span class="token punctuation">,</span>
+            hourWidth <span class="token operator">/</span> <span class="token number">2f</span><span class="token punctuation">,</span>
+            paint
+        <span class="token punctuation">)</span>
+
+        c<span class="token punctuation">.</span><span class="token function">restore</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+        <span class="token comment" spellcheck="true">// draw minute hand</span>
+        <span class="token keyword">val</span> minuteLength <span class="token operator">=</span> radius <span class="token operator">/</span> <span class="token number">3</span> <span class="token operator">*</span> <span class="token number">2</span>
+        c<span class="token punctuation">.</span><span class="token function">save</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        c<span class="token punctuation">.</span><span class="token function">rotate</span><span class="token punctuation">(</span><span class="token punctuation">(</span>minute <span class="token operator">-</span> <span class="token number">15</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">6f</span><span class="token punctuation">)</span>
+        c<span class="token punctuation">.</span><span class="token function">drawRoundRect</span><span class="token punctuation">(</span>
+            <span class="token operator">-</span>minuteLength <span class="token operator">/</span> <span class="token number">4f</span><span class="token punctuation">,</span>
+            <span class="token operator">-</span>minuteWidth <span class="token operator">/</span> <span class="token number">2f</span><span class="token punctuation">,</span>
+            minuteLength<span class="token punctuation">,</span>
+            minuteWidth <span class="token operator">/</span> <span class="token number">2f</span><span class="token punctuation">,</span>
+            minuteWidth <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">,</span>
+            minuteWidth <span class="token operator">/</span> <span class="token number">2f</span><span class="token punctuation">,</span>
+            paint
+        <span class="token punctuation">)</span>
+        c<span class="token punctuation">.</span><span class="token function">restore</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+        <span class="token comment" spellcheck="true">// draw second hand</span>
+        <span class="token keyword">val</span> secondLength <span class="token operator">=</span> radius <span class="token operator">/</span> <span class="token number">3</span> <span class="token operator">*</span> <span class="token number">2</span>
+        c<span class="token punctuation">.</span><span class="token function">save</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        paint<span class="token punctuation">.</span>color <span class="token operator">=</span> COLOR_HOUR
+        c<span class="token punctuation">.</span><span class="token function">rotate</span><span class="token punctuation">(</span><span class="token punctuation">(</span>second <span class="token operator">-</span> <span class="token number">15</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">6f</span> <span class="token operator">+</span> millis <span class="token operator">*</span> <span class="token number">0.006f</span><span class="token punctuation">)</span>
+        c<span class="token punctuation">.</span><span class="token function">drawRoundRect</span><span class="token punctuation">(</span>
+            <span class="token operator">-</span>secondLength <span class="token operator">/</span> <span class="token number">4f</span><span class="token punctuation">,</span>
+            <span class="token operator">-</span>secondWidth <span class="token operator">/</span> <span class="token number">2f</span><span class="token punctuation">,</span>
+            secondLength<span class="token punctuation">,</span>
+            secondWidth <span class="token operator">/</span> <span class="token number">2f</span><span class="token punctuation">,</span>
+            secondWidth <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">,</span>
+            secondWidth <span class="token operator">/</span> <span class="token number">2f</span><span class="token punctuation">,</span>
+            paint
+        <span class="token punctuation">)</span>
+        c<span class="token punctuation">.</span><span class="token function">restore</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * 画中心圆
+     *
+     * @param c canvas
+     * @param centerRadius 中心圆半径
+     */</span>
+    <span class="token keyword">private</span> <span class="token keyword">fun</span> <span class="token function">drawCenterCircle</span><span class="token punctuation">(</span>c<span class="token operator">:</span> Canvas<span class="token punctuation">,</span> centerRadius<span class="token operator">:</span> Float<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+        c<span class="token punctuation">.</span><span class="token function">save</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+        paint<span class="token punctuation">.</span>color <span class="token operator">=</span> COLOR_HOUR
+        paint<span class="token punctuation">.</span>style <span class="token operator">=</span> Paint<span class="token punctuation">.</span>Style<span class="token punctuation">.</span>FILL
+
+        c<span class="token punctuation">.</span><span class="token function">drawCircle</span><span class="token punctuation">(</span><span class="token number">0f</span><span class="token punctuation">,</span> <span class="token number">0f</span><span class="token punctuation">,</span> centerRadius<span class="token punctuation">,</span> paint<span class="token punctuation">)</span>
+        c<span class="token punctuation">.</span><span class="token function">restore</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * dp to px
+     *
+     * @param dp dp
+     * @return px
+     */</span>
+    <span class="token keyword">private</span> <span class="token keyword">fun</span> <span class="token function">dp2px</span><span class="token punctuation">(</span>dp<span class="token operator">:</span> Float<span class="token punctuation">)</span><span class="token operator">:</span> Float <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> TypedValue<span class="token punctuation">.</span><span class="token function">applyDimension</span><span class="token punctuation">(</span>TypedValue<span class="token punctuation">.</span>COMPLEX_UNIT_DIP<span class="token punctuation">,</span> dp<span class="token punctuation">,</span> resources<span class="token punctuation">.</span>displayMetrics<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>在<code>onMeasure</code>中的逻辑：</p>
+<ol>
+<li>根据<code>parent</code>给的<code>MeasureSpec</code>，并结合<code>background</code>、<code>minWidth/minHeight</code>计算出理想的尺寸</li>
+<li>但是为了符合业务逻辑，如果得到的尺寸太小，则强制使用我期望的最小值。</li>
+<li>确定计算得到的宽高</li>
+</ol>
+<h2 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h2><p><code>View</code>的尺寸计算非常简单，因为它只是对它本身的计算，并没有<code>child</code>，大部分工作在<code>onDraw</code>里。所以，我们在定义<code>View</code>时，知道在<code>onMeasure</code>中如何计算得到想要的尺寸，再更多的学习<code>Canvas</code>相关的<code>API</code>就可以了。</p>
+
+            </div>
+            <hr/>
+
+            
+            <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.88rem;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-large waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fa fa-close"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.png" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+            
+
+            <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    <div class="social-share" data-disabled="qzone" data-wechat-qrcode-helper="<p>微信里点“发现”->“扫一扫”二维码便可查看分享。</p>"></div>
+    
+</div>
+
+<script src="/libs/share/js/social-share.min.js"></script>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        <p class="reprint-tip">
+            <i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;
+            <span>转载规则</span>
+        </p>
+        
+            <div class="center-align">
+                <a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                    <img alt=""
+                         style="border-width:0"
+                         src="https://i.creativecommons.org/l/by/4.0/88x31.png"/>
+                </a>
+            </div>
+            <br/>
+            <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
+                  property="dct:title" rel="dct:type">
+                    《二、View测量》
+                </span> 由
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2019/08/24/er-view-ce-liang/" property="cc:attributionName"
+               rel="cc:attributionURL">
+                Mycroft Wong
+            </a> 采用
+            <a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                知识共享署名 4.0 国际许可协议
+            </a>进行许可。
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge badge-text-color">
+                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2019/08/24/san-view-bu-ju/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="三、View布局">
+                        
+                        <span class="card-title">三、View布局</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            View布局前言什么是layout布局？前面，我们通过measure测量得到了View的尺寸，那么View到底是放在哪个位置上的呢？这就是layout的功能，确定View在屏幕上的位置（通常是相对于其parent的位置）。
+谁来布局不同于m
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2019-08-24
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Android-View/" class="post-category" target="_blank">
+                                    Android - View
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Android/" target="_blank">
+                        <span class="chip bg-color">Android</span>
+                    </a>
+                    
+                    <a href="/tags/面试/" target="_blank">
+                        <span class="chip bg-color">面试</span>
+                    </a>
+                    
+                    <a href="/tags/View/" target="_blank">
+                        <span class="chip bg-color">View</span>
+                    </a>
+                    
+                    <a href="/tags/measure/" target="_blank">
+                        <span class="chip bg-color">measure</span>
+                    </a>
+                    
+                    <a href="/tags/layout/" target="_blank">
+                        <span class="chip bg-color">layout</span>
+                    </a>
+                    
+                    <a href="/tags/draw/" target="_blank">
+                        <span class="chip bg-color">draw</span>
+                    </a>
+                    
+                    <a href="/tags/touch-event/" target="_blank">
+                        <span class="chip bg-color">touch event</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge badge-text-color">
+                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2019/08/24/yi-view-ji-chu-zhi-shi/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="一、View基础知识">
+                        
+                        <span class="card-title">一、View基础知识</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            View基础知识前言View基础知识点，完全可以参考文章自定义View基础 - 最易懂的自定义View原理系列（1），这篇文章已经非常的详细。
+我这里将我理解的东西总结一下。
+View与ViewGroupViewView的代码有近3万行，文
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-08-24
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Android-View/" class="post-category" target="_blank">
+                                    Android - View
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Android/" target="_blank">
+                        <span class="chip bg-color">Android</span>
+                    </a>
+                    
+                    <a href="/tags/面试/" target="_blank">
+                        <span class="chip bg-color">面试</span>
+                    </a>
+                    
+                    <a href="/tags/View/" target="_blank">
+                        <span class="chip bg-color">View</span>
+                    </a>
+                    
+                    <a href="/tags/measure/" target="_blank">
+                        <span class="chip bg-color">measure</span>
+                    </a>
+                    
+                    <a href="/tags/layout/" target="_blank">
+                        <span class="chip bg-color">layout</span>
+                    </a>
+                    
+                    <a href="/tags/draw/" target="_blank">
+                        <span class="chip bg-color">draw</span>
+                    </a>
+                    
+                    <a href="/tags/touch-event/" target="_blank">
+                        <span class="chip bg-color">touch event</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: Mycroft<br />'
+            + '作者: Mycroft Wong<br />'
+            + '链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="fa fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fa fa-list"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            collapseDepth: 6,
+            headingSelector: 'h2, h3, h4, h5'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4, h5').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).slideUp(500);
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).slideDown(500);
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+    
+
+</main>
+
+
+<footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            本站由&copy;<a href="https://MycroftWong.github.io/" target="_blank">Mycroft Wong</a>基于
+            <a href="https://hexo.io/" target="_blank">Hexo</a>搭建.
+
+            
+                &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
+                <span class="white-color">44.8k</span>
+            
+
+            
+			
+                <br>
+                
+                <span id="busuanzi_container_site_pv">
+                    <i class="fa fa-heart-o"></i>
+                    本站总访问量 <span id="busuanzi_value_site_pv" class="white-color"></span>
+                </span>
+                
+                
+                <span id="busuanzi_container_site_uv">
+                    <i class="fa fa-users"></i>
+                    次,&nbsp;访客数 <span id="busuanzi_value_site_uv" class="white-color"></span> 人.
+                </span>
+                
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/MycroftWong" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fa fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:mycroftwong@gmail.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fa fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fa fa-rss"></i>
+    </a>
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+<!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fa fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+<!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fa fa-angle-up"></i>
+    </a>
+</div>
+
+
+<script src="/libs/materialize/materialize.min.js"></script>
+<script src="/libs/masonry/masonry.pkgd.min.js"></script>
+<script src="/libs/aos/aos.js"></script>
+<script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+<script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+<script src="/js/matery.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+
+
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+
+
+</body>
+</html>

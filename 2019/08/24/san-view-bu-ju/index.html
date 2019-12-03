@@ -1,0 +1,1531 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="三、View布局, blog,mycroft,android,spring,mycroftwong">
+    <meta name="description" content="View布局前言什么是layout布局？前面，我们通过measure测量得到了View的尺寸，那么View到底是放在哪个位置上的呢？这就是layout的功能，确定View在屏幕上的位置（通常是相对于其parent的位置）。
+谁来布局不同于m">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>三、View布局 | Mycroft</title>
+    <link rel="icon" type="image/x-icon, image/vnd.microsoft.icon" href="https://www.mycroft.wang/images/favicon.ico">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    <style type="text/css">
+        
+        code[class*="language-"], pre[class*="language-"] {
+            white-space: pre !important;
+        }
+        
+    </style>
+
+    <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<body>
+
+<header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="https://image.mycroft.wang/default_avatar.jpg" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">Mycroft</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fa fa-navicon"></i></a>
+<ul class="right">
+    
+    <li class="hide-on-med-and-down">
+        <a href="/" class="waves-effect waves-light">
+            
+            <i class="fa fa-home"></i>
+            
+            <span>首页</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/tags" class="waves-effect waves-light">
+            
+            <i class="fa fa-tags"></i>
+            
+            <span>标签</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/categories" class="waves-effect waves-light">
+            
+            <i class="fa fa-bookmark"></i>
+            
+            <span>分类</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/archives" class="waves-effect waves-light">
+            
+            <i class="fa fa-archive"></i>
+            
+            <span>归档</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/about" class="waves-effect waves-light">
+            
+            <i class="fa fa-user-circle-o"></i>
+            
+            <span>关于</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/friends" class="waves-effect waves-light">
+            
+            <i class="fa fa-address-book"></i>
+            
+            <span>友情链接</span>
+        </a>
+    </li>
+    
+    <li>
+        <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+            <i id="searchIcon" class="fa fa-search" title="搜索"></i>
+        </a>
+    </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="https://image.mycroft.wang/default_avatar.jpg" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">Mycroft</div>
+        <div class="logo-desc">
+            
+            天道酬勤
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li>
+            <a href="/" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-home"></i>
+                
+                首页
+            </a>
+        </li>
+        
+        <li>
+            <a href="/tags" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-tags"></i>
+                
+                标签
+            </a>
+        </li>
+        
+        <li>
+            <a href="/categories" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-bookmark"></i>
+                
+                分类
+            </a>
+        </li>
+        
+        <li>
+            <a href="/archives" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-archive"></i>
+                
+                归档
+            </a>
+        </li>
+        
+        <li>
+            <a href="/about" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-user-circle-o"></i>
+                
+                关于
+            </a>
+        </li>
+        
+        <li>
+            <a href="/friends" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-address-book"></i>
+                
+                友情链接
+            </a>
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/MycroftWong" class="waves-effect waves-light" target="_blank">
+                <i class="fa fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/MycroftWong" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+
+<script src="/libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '/';
+            }
+        }
+    })();
+</script>
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/22.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        三、View布局
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 20px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/Android/" target="_blank">
+                                <span class="chip bg-color">Android</span>
+                            </a>
+                        
+                            <a href="/tags/面试/" target="_blank">
+                                <span class="chip bg-color">面试</span>
+                            </a>
+                        
+                            <a href="/tags/View/" target="_blank">
+                                <span class="chip bg-color">View</span>
+                            </a>
+                        
+                            <a href="/tags/measure/" target="_blank">
+                                <span class="chip bg-color">measure</span>
+                            </a>
+                        
+                            <a href="/tags/layout/" target="_blank">
+                                <span class="chip bg-color">layout</span>
+                            </a>
+                        
+                            <a href="/tags/draw/" target="_blank">
+                                <span class="chip bg-color">draw</span>
+                            </a>
+                        
+                            <a href="/tags/touch-event/" target="_blank">
+                                <span class="chip bg-color">touch event</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fa fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/Android-View/" class="post-category" target="_blank">
+                                Android - View
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                <div class="post-date info-break-policy">
+                    <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2019-08-24
+                </div>
+
+                
+                    
+                    <div class="info-break-policy">
+                        <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
+                        3.5k
+                    </div>
+                    
+
+                    
+                    <div class="info-break-policy">
+                        <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                        16 分
+                    </div>
+                    
+                
+				
+				
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="fa fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="View布局"><a href="#View布局" class="headerlink" title="View布局"></a>View布局</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>什么是<code>layout</code>布局？前面，我们通过<code>measure</code>测量得到了<code>View</code>的尺寸，那么<code>View</code>到底是放在哪个位置上的呢？这就是<code>layout</code>的功能，确定<code>View</code>在屏幕上的位置（通常是相对于其<code>parent</code>的位置）。</p>
+<h2 id="谁来布局"><a href="#谁来布局" class="headerlink" title="谁来布局"></a>谁来布局</h2><p>不同于<code>measure</code>，<code>View</code>的布局并不是在<code>View</code>内部设置，而是在其<code>parent</code>内确定。这也是合理的，因为<code>ViewGroup</code>的作用就是管理<code>View</code>在其内部的布局。</p>
+<p>明白了这个概念，下面我们来看看<code>layout</code>的一些相关方法。</p>
+<h2 id="layout相关的方法说明"><a href="#layout相关的方法说明" class="headerlink" title="layout相关的方法说明"></a>layout相关的方法说明</h2><h3 id="1-layout-int-l-int-t-int-r-int-b"><a href="#1-layout-int-l-int-t-int-r-int-b" class="headerlink" title="1. layout(int l, int t, int r, int b)"></a>1. <code>layout(int l, int t, int r, int b)</code></h3><blockquote>
+<p>Assign a size and position to a view and all of its descendants.</p>
+</blockquote>
+<p>翻译：为<code>View</code>及其<code>children</code>指定尺寸和位置。</p>
+<blockquote>
+<p>This is the second phase of the layout mechanism. (The first is measuring). In this phase, each parent calls layout on all of its children to position them. This is typically done using the child measurements that were stored in the measure pass().</p>
+</blockquote>
+<p>翻译：这是布局机制的第二阶段（第一阶段是测量）。在这个阶段中，每个<code>parent</code>调用它所有<code>children</code>的<code>layout</code>方法，设置这些<code>children</code>的位置。</p>
+<blockquote>
+<p>Derived classes should not override this method. Derived classes with children should override onLayout. In that method, they should call layout on each of their children.</p>
+</blockquote>
+<p>翻译：子类不应该重写<code>layout</code>方法，而是重写<code>onLayout</code>方法。在<code>onLayout</code>方法中，它应该调用它所有的<code>children</code>的<code>layout(int l, int t, int r, int b)</code>方法</p>
+<h4 id="谁使用"><a href="#谁使用" class="headerlink" title="谁使用"></a>谁使用</h4><p><code>View</code>的<code>parent</code>用来设置这个<code>View</code>在<code>parent</code>中的位置。</p>
+<h4 id="用来做什么"><a href="#用来做什么" class="headerlink" title="用来做什么"></a>用来做什么</h4><p><code>parent</code>设置<code>View</code>在<code>parent</code>的位置。</p>
+<h3 id="2-onLayout-boolean-changed-int-left-int-top-int-right-int-bottom"><a href="#2-onLayout-boolean-changed-int-left-int-top-int-right-int-bottom" class="headerlink" title="2. onLayout(boolean changed, int left, int top, int right, int bottom)"></a>2. <code>onLayout(boolean changed, int left, int top, int right, int bottom)</code></h3><blockquote>
+<p>Called from layout when this view should assign a size and position to each of its children.</p>
+</blockquote>
+<p>翻译：在<code>View</code>的<code>layout(int, int, int, int)</code>中被调用，用于指定每个<code>children</code>的尺寸和位置。</p>
+<h4 id="谁使用-1"><a href="#谁使用-1" class="headerlink" title="谁使用"></a>谁使用</h4><p><code>View</code>自身的<code>layout</code>调用时，自动会被调用</p>
+<h4 id="用来做什么-1"><a href="#用来做什么-1" class="headerlink" title="用来做什么"></a>用来做什么</h4><p>通常是<code>parent</code>用来确定它的<code>children</code>在它里面的位置（相对位置）。</p>
+<h4 id="特别注意"><a href="#特别注意" class="headerlink" title="特别注意"></a>特别注意</h4><p>第一个参数<code>changed</code>指的是：这个<code>View</code>的尺寸或（和）位置改变了，这通常表明可能进行了多次无意义的<code>layout</code></p>
+<p>其他参数都是<code>child</code>相对于<code>parent</code>的位置（相对位置）。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ol>
+<li><code>layout(int, int, int, int)</code>是<code>parent</code>调用，<code>child</code>在<code>parent</code>中的位置</li>
+<li><code>parent</code>则应该在<code>onLayout(boolean, int, int, int, int)</code>中调用其<code>child.layout(int, int, int, int)</code></li>
+</ol>
+<h2 id="FrameLayout源码分析"><a href="#FrameLayout源码分析" class="headerlink" title="FrameLayout源码分析"></a>FrameLayout源码分析</h2><p>自定义一个<code>ViewGroup</code>我也暂时没有好的想法，这里来分析一下<code>Android</code>自带的布局中最简单的<code>FrameLayout</code>。</p>
+<blockquote>
+<p>FrameLayout is designed to block out an area on the screen to display a single item. Generally, FrameLayout should be used to hold a single child view, because it can be difficult to organize child views in a way that’s scalable to different screen sizes without the children overlapping each other. You can, however, add multiple children to a FrameLayout and control their position within the FrameLayout by assigning gravity to each child, using the <code>android:layout_gravity</code> attribute.</p>
+</blockquote>
+<p>翻译：<code>FrameLayout</code>被设计用来为单独的一个<code>View</code>划分出一个区域。通常<code>FrameLayout</code>应该用于包含单独的一个<code>View</code>，因为对于扩展到多个不同的屏幕尺寸来说，<code>FrameLayout</code>则很难组织它的<code>child views</code>以保证相互不重叠。当然一页可以添加多个<code>children</code>到<code>FrameLayout</code>中，并且为每个<code>child</code>指定<code>gravity</code>属性来控制他们的位置。</p>
+<blockquote>
+<p>Child views are drawn in a stack, with the most recently added child on top. The size of the FrameLayout is the size of its largest child (plus padding), visible or not (if the FrameLayout’s parent permits). Views that are <code>android.view.View#GONE</code> are used for sizing only if <code>setMeasureAllChildren(boolean) setConsiderGoneChildrenWhenMeasuring()</code> is set to true.</p>
+</blockquote>
+<p>翻译：<code>child views</code>以栈形式绘制，最后添加的在最上层。<code>FrameLayout</code>和它尺寸最大的<code>child</code>尺寸相同（加上<code>padding</code>属性）。只有当<code>setMeasureAllChildren(boolean) setConsiderGoneChildrenWhenMeasuring()</code>被设置为<code>true</code>时，设置为<code>GONE</code>的<code>child</code>才会进行测量。</p>
+<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@RemoteView</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">FrameLayout</span> <span class="token keyword">extends</span> <span class="token class-name">ViewGroup</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// 默认的gravity</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">int</span> DEFAULT_CHILD_GRAVITY <span class="token operator">=</span> Gravity<span class="token punctuation">.</span>TOP <span class="token operator">|</span> Gravity<span class="token punctuation">.</span>START<span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">// 是否强制测量所有的children，可以在xml中指定measureAllChildren</span>
+    <span class="token keyword">boolean</span> mMeasureAllChildren <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">// 下面四个属性，指的是foreground的padding，若foreground有padding，那么将影响最后的尺寸</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> mForegroundPaddingLeft <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> mForegroundPaddingTop <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> mForegroundPaddingRight <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> mForegroundPaddingBottom <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">// 所有layout_width或layout_height指定了match_parent属性的children，用于2次计算尺寸</span>
+    <span class="token keyword">private</span> <span class="token keyword">final</span> ArrayList<span class="token operator">&lt;</span>View<span class="token operator">></span> mMatchParentChildren <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">// 下面四个构造器</span>
+    <span class="token keyword">public</span> <span class="token function">FrameLayout</span><span class="token punctuation">(</span><span class="token annotation punctuation">@NonNull</span> Context context<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">super</span><span class="token punctuation">(</span>context<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token function">FrameLayout</span><span class="token punctuation">(</span><span class="token annotation punctuation">@NonNull</span> Context context<span class="token punctuation">,</span> <span class="token annotation punctuation">@Nullable</span> AttributeSet attrs<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">(</span>context<span class="token punctuation">,</span> attrs<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token function">FrameLayout</span><span class="token punctuation">(</span><span class="token annotation punctuation">@NonNull</span> Context context<span class="token punctuation">,</span> <span class="token annotation punctuation">@Nullable</span> AttributeSet attrs<span class="token punctuation">,</span>
+            <span class="token annotation punctuation">@AttrRes</span> <span class="token keyword">int</span> defStyleAttr<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">(</span>context<span class="token punctuation">,</span> attrs<span class="token punctuation">,</span> defStyleAttr<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token function">FrameLayout</span><span class="token punctuation">(</span><span class="token annotation punctuation">@NonNull</span> Context context<span class="token punctuation">,</span> <span class="token annotation punctuation">@Nullable</span> AttributeSet attrs<span class="token punctuation">,</span>
+            <span class="token annotation punctuation">@AttrRes</span> <span class="token keyword">int</span> defStyleAttr<span class="token punctuation">,</span> <span class="token annotation punctuation">@StyleRes</span> <span class="token keyword">int</span> defStyleRes<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">super</span><span class="token punctuation">(</span>context<span class="token punctuation">,</span> attrs<span class="token punctuation">,</span> defStyleAttr<span class="token punctuation">,</span> defStyleRes<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">final</span> TypedArray a <span class="token operator">=</span> context<span class="token punctuation">.</span><span class="token function">obtainStyledAttributes</span><span class="token punctuation">(</span>
+                attrs<span class="token punctuation">,</span> R<span class="token punctuation">.</span>styleable<span class="token punctuation">.</span>FrameLayout<span class="token punctuation">,</span> defStyleAttr<span class="token punctuation">,</span> defStyleRes<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 获取并设置measureAllChildren属性</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>a<span class="token punctuation">.</span><span class="token function">getBoolean</span><span class="token punctuation">(</span>R<span class="token punctuation">.</span>styleable<span class="token punctuation">.</span>FrameLayout_measureAllChildren<span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token function">setMeasureAllChildren</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        a<span class="token punctuation">.</span><span class="token function">recycle</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * 描述前景色的gravity，默认是START|TOP，可以通过foregroundGravity属性设置
+     */</span>
+    <span class="token annotation punctuation">@android</span><span class="token punctuation">.</span>view<span class="token punctuation">.</span>RemotableViewMethod
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setForegroundGravity</span><span class="token punctuation">(</span><span class="token keyword">int</span> foregroundGravity<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">getForegroundGravity</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!=</span> foregroundGravity<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">super</span><span class="token punctuation">.</span><span class="token function">setForegroundGravity</span><span class="token punctuation">(</span>foregroundGravity<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+            <span class="token comment" spellcheck="true">// 获取foreground的padding属性，用于布局</span>
+            <span class="token keyword">final</span> Drawable foreground <span class="token operator">=</span> <span class="token function">getForeground</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">getForegroundGravity</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> Gravity<span class="token punctuation">.</span>FILL <span class="token operator">&amp;&amp;</span> foreground <span class="token operator">!=</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                Rect padding <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Rect</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>foreground<span class="token punctuation">.</span><span class="token function">getPadding</span><span class="token punctuation">(</span>padding<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    mForegroundPaddingLeft <span class="token operator">=</span> padding<span class="token punctuation">.</span>left<span class="token punctuation">;</span>
+                    mForegroundPaddingTop <span class="token operator">=</span> padding<span class="token punctuation">.</span>top<span class="token punctuation">;</span>
+                    mForegroundPaddingRight <span class="token operator">=</span> padding<span class="token punctuation">.</span>right<span class="token punctuation">;</span>
+                    mForegroundPaddingBottom <span class="token operator">=</span> padding<span class="token punctuation">.</span>bottom<span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+                mForegroundPaddingLeft <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+                mForegroundPaddingTop <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+                mForegroundPaddingRight <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+                mForegroundPaddingBottom <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+
+            <span class="token comment" spellcheck="true">// 重新布局</span>
+            <span class="token function">requestLayout</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * 返回一个默认MATCH_PARENT的FrameLayout.LayoutParams
+     * child没有LayoutParams时使用这个
+     */</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">protected</span> LayoutParams <span class="token function">generateDefaultLayoutParams</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">LayoutParams</span><span class="token punctuation">(</span>LayoutParams<span class="token punctuation">.</span>MATCH_PARENT<span class="token punctuation">,</span> LayoutParams<span class="token punctuation">.</span>MATCH_PARENT<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * 下面四个是获取FrameLayout的padding，将foreground计算在内
+     * Android内部使用，只用于FrameLayout和内部的屏幕layout
+     */</span>
+    <span class="token keyword">int</span> <span class="token function">getPaddingLeftWithForeground</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token function">isForegroundInsidePadding</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">?</span> Math<span class="token punctuation">.</span><span class="token function">max</span><span class="token punctuation">(</span>mPaddingLeft<span class="token punctuation">,</span> mForegroundPaddingLeft<span class="token punctuation">)</span> <span class="token operator">:</span>
+            mPaddingLeft <span class="token operator">+</span> mForegroundPaddingLeft<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">int</span> <span class="token function">getPaddingRightWithForeground</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token function">isForegroundInsidePadding</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">?</span> Math<span class="token punctuation">.</span><span class="token function">max</span><span class="token punctuation">(</span>mPaddingRight<span class="token punctuation">,</span> mForegroundPaddingRight<span class="token punctuation">)</span> <span class="token operator">:</span>
+            mPaddingRight <span class="token operator">+</span> mForegroundPaddingRight<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">int</span> <span class="token function">getPaddingTopWithForeground</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token function">isForegroundInsidePadding</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">?</span> Math<span class="token punctuation">.</span><span class="token function">max</span><span class="token punctuation">(</span>mPaddingTop<span class="token punctuation">,</span> mForegroundPaddingTop<span class="token punctuation">)</span> <span class="token operator">:</span>
+            mPaddingTop <span class="token operator">+</span> mForegroundPaddingTop<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">int</span> <span class="token function">getPaddingBottomWithForeground</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token function">isForegroundInsidePadding</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">?</span> Math<span class="token punctuation">.</span><span class="token function">max</span><span class="token punctuation">(</span>mPaddingBottom<span class="token punctuation">,</span> mForegroundPaddingBottom<span class="token punctuation">)</span> <span class="token operator">:</span>
+            mPaddingBottom <span class="token operator">+</span> mForegroundPaddingBottom<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * 真正的measure过程
+     */</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">protected</span> <span class="token keyword">void</span> <span class="token function">onMeasure</span><span class="token punctuation">(</span><span class="token keyword">int</span> widthMeasureSpec<span class="token punctuation">,</span> <span class="token keyword">int</span> heightMeasureSpec<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">int</span> count <span class="token operator">=</span> <span class="token function">getChildCount</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment" spellcheck="true">// 这句话的意思是：FrameLayout的尺寸需要根据children的尺寸确定（长或宽不是确定的）</span>
+        <span class="token comment" spellcheck="true">// 那么就需要测量两次：</span>
+        <span class="token comment" spellcheck="true">// 1. 找出最大的child，FrameLayout尺寸根据最大的child得出</span>
+        <span class="token comment" spellcheck="true">// 2. 重新测量所有match_parent的children</span>
+        <span class="token keyword">final</span> <span class="token keyword">boolean</span> measureMatchParentChildren <span class="token operator">=</span>
+                MeasureSpec<span class="token punctuation">.</span><span class="token function">getMode</span><span class="token punctuation">(</span>widthMeasureSpec<span class="token punctuation">)</span> <span class="token operator">!=</span> MeasureSpec<span class="token punctuation">.</span>EXACTLY <span class="token operator">||</span>
+                MeasureSpec<span class="token punctuation">.</span><span class="token function">getMode</span><span class="token punctuation">(</span>heightMeasureSpec<span class="token punctuation">)</span> <span class="token operator">!=</span> MeasureSpec<span class="token punctuation">.</span>EXACTLY<span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 用于存储需要重新测量的children(match_parent)</span>
+        mMatchParentChildren<span class="token punctuation">.</span><span class="token function">clear</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">int</span> maxHeight <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> maxWidth <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> childState <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> count<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">final</span> View child <span class="token operator">=</span> <span class="token function">getChildAt</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">// View不是GONE，或者强制测量所有的children时才进行测量</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>mMeasureAllChildren <span class="token operator">||</span> child<span class="token punctuation">.</span><span class="token function">getVisibility</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!=</span> GONE<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token comment" spellcheck="true">// 测量一个child</span>
+                <span class="token function">measureChildWithMargins</span><span class="token punctuation">(</span>child<span class="token punctuation">,</span> widthMeasureSpec<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> heightMeasureSpec<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token comment" spellcheck="true">// 获取LayoutParams</span>
+                <span class="token keyword">final</span> LayoutParams lp <span class="token operator">=</span> <span class="token punctuation">(</span>LayoutParams<span class="token punctuation">)</span> child<span class="token punctuation">.</span><span class="token function">getLayoutParams</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token comment" spellcheck="true">// 计算得到maxWidth</span>
+                maxWidth <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">max</span><span class="token punctuation">(</span>maxWidth<span class="token punctuation">,</span>
+                        child<span class="token punctuation">.</span><span class="token function">getMeasuredWidth</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> lp<span class="token punctuation">.</span>leftMargin <span class="token operator">+</span> lp<span class="token punctuation">.</span>rightMargin<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token comment" spellcheck="true">// 计算得到maxHeight</span>
+                maxHeight <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">max</span><span class="token punctuation">(</span>maxHeight<span class="token punctuation">,</span>
+                        child<span class="token punctuation">.</span><span class="token function">getMeasuredHeight</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> lp<span class="token punctuation">.</span>topMargin <span class="token operator">+</span> lp<span class="token punctuation">.</span>bottomMargin<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token comment" spellcheck="true">// 计算childState</span>
+                childState <span class="token operator">=</span> <span class="token function">combineMeasuredStates</span><span class="token punctuation">(</span>childState<span class="token punctuation">,</span> child<span class="token punctuation">.</span><span class="token function">getMeasuredState</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token comment" spellcheck="true">// 找出需要测量两次的children</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>measureMatchParentChildren<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    <span class="token keyword">if</span> <span class="token punctuation">(</span>lp<span class="token punctuation">.</span>width <span class="token operator">==</span> LayoutParams<span class="token punctuation">.</span>MATCH_PARENT <span class="token operator">||</span>
+                            lp<span class="token punctuation">.</span>height <span class="token operator">==</span> LayoutParams<span class="token punctuation">.</span>MATCH_PARENT<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                        mMatchParentChildren<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>child<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token punctuation">}</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token comment" spellcheck="true">// 在宽高上加上FrameLayout本身的padding</span>
+        maxWidth <span class="token operator">+=</span> <span class="token function">getPaddingLeftWithForeground</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token function">getPaddingRightWithForeground</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        maxHeight <span class="token operator">+=</span> <span class="token function">getPaddingTopWithForeground</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token function">getPaddingBottomWithForeground</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment" spellcheck="true">// 宽高不能小于最小值（background和minHeight检测）</span>
+        maxHeight <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">max</span><span class="token punctuation">(</span>maxHeight<span class="token punctuation">,</span> <span class="token function">getSuggestedMinimumHeight</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        maxWidth <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">max</span><span class="token punctuation">(</span>maxWidth<span class="token punctuation">,</span> <span class="token function">getSuggestedMinimumWidth</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment" spellcheck="true">// 宽高不能小于最小值（foreground检测）</span>
+        <span class="token keyword">final</span> Drawable drawable <span class="token operator">=</span> <span class="token function">getForeground</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>drawable <span class="token operator">!=</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            maxHeight <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">max</span><span class="token punctuation">(</span>maxHeight<span class="token punctuation">,</span> drawable<span class="token punctuation">.</span><span class="token function">getMinimumHeight</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            maxWidth <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">max</span><span class="token punctuation">(</span>maxWidth<span class="token punctuation">,</span> drawable<span class="token punctuation">.</span><span class="token function">getMinimumWidth</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token comment" spellcheck="true">// 确定FrameLayout的尺寸</span>
+        <span class="token function">setMeasuredDimension</span><span class="token punctuation">(</span><span class="token function">resolveSizeAndState</span><span class="token punctuation">(</span>maxWidth<span class="token punctuation">,</span> widthMeasureSpec<span class="token punctuation">,</span> childState<span class="token punctuation">)</span><span class="token punctuation">,</span>
+                <span class="token function">resolveSizeAndState</span><span class="token punctuation">(</span>maxHeight<span class="token punctuation">,</span> heightMeasureSpec<span class="token punctuation">,</span>
+                        childState <span class="token operator">&lt;&lt;</span> MEASURED_HEIGHT_STATE_SHIFT<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment" spellcheck="true">// 二次测量match_parent的children，下面的一些就不说了，说一下这个count</span>
+        count <span class="token operator">=</span> mMatchParentChildren<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 这里判断count>1并不是count>0，是因为</span>
+        <span class="token comment" spellcheck="true">// 1.如果没有MATCH_PARENT，那么count==0</span>
+        <span class="token comment" spellcheck="true">// 2.如果有MATCH_PARENT，那么count=1的话，那么child就是尺寸最大的，不需要再次测量</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>count <span class="token operator">></span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> count<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token keyword">final</span> View child <span class="token operator">=</span> mMatchParentChildren<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token keyword">final</span> MarginLayoutParams lp <span class="token operator">=</span> <span class="token punctuation">(</span>MarginLayoutParams<span class="token punctuation">)</span> child<span class="token punctuation">.</span><span class="token function">getLayoutParams</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+                <span class="token keyword">final</span> <span class="token keyword">int</span> childWidthMeasureSpec<span class="token punctuation">;</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>lp<span class="token punctuation">.</span>width <span class="token operator">==</span> LayoutParams<span class="token punctuation">.</span>MATCH_PARENT<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    <span class="token keyword">final</span> <span class="token keyword">int</span> width <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">max</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token function">getMeasuredWidth</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+                            <span class="token operator">-</span> <span class="token function">getPaddingLeftWithForeground</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token function">getPaddingRightWithForeground</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+                            <span class="token operator">-</span> lp<span class="token punctuation">.</span>leftMargin <span class="token operator">-</span> lp<span class="token punctuation">.</span>rightMargin<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    childWidthMeasureSpec <span class="token operator">=</span> MeasureSpec<span class="token punctuation">.</span><span class="token function">makeMeasureSpec</span><span class="token punctuation">(</span>
+                            width<span class="token punctuation">,</span> MeasureSpec<span class="token punctuation">.</span>EXACTLY<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+                    childWidthMeasureSpec <span class="token operator">=</span> <span class="token function">getChildMeasureSpec</span><span class="token punctuation">(</span>widthMeasureSpec<span class="token punctuation">,</span>
+                            <span class="token function">getPaddingLeftWithForeground</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token function">getPaddingRightWithForeground</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span>
+                            lp<span class="token punctuation">.</span>leftMargin <span class="token operator">+</span> lp<span class="token punctuation">.</span>rightMargin<span class="token punctuation">,</span>
+                            lp<span class="token punctuation">.</span>width<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+
+                <span class="token keyword">final</span> <span class="token keyword">int</span> childHeightMeasureSpec<span class="token punctuation">;</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>lp<span class="token punctuation">.</span>height <span class="token operator">==</span> LayoutParams<span class="token punctuation">.</span>MATCH_PARENT<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    <span class="token keyword">final</span> <span class="token keyword">int</span> height <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">max</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token function">getMeasuredHeight</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+                            <span class="token operator">-</span> <span class="token function">getPaddingTopWithForeground</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token function">getPaddingBottomWithForeground</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+                            <span class="token operator">-</span> lp<span class="token punctuation">.</span>topMargin <span class="token operator">-</span> lp<span class="token punctuation">.</span>bottomMargin<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    childHeightMeasureSpec <span class="token operator">=</span> MeasureSpec<span class="token punctuation">.</span><span class="token function">makeMeasureSpec</span><span class="token punctuation">(</span>
+                            height<span class="token punctuation">,</span> MeasureSpec<span class="token punctuation">.</span>EXACTLY<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+                    childHeightMeasureSpec <span class="token operator">=</span> <span class="token function">getChildMeasureSpec</span><span class="token punctuation">(</span>heightMeasureSpec<span class="token punctuation">,</span>
+                            <span class="token function">getPaddingTopWithForeground</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token function">getPaddingBottomWithForeground</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span>
+                            lp<span class="token punctuation">.</span>topMargin <span class="token operator">+</span> lp<span class="token punctuation">.</span>bottomMargin<span class="token punctuation">,</span>
+                            lp<span class="token punctuation">.</span>height<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+
+                child<span class="token punctuation">.</span><span class="token function">measure</span><span class="token punctuation">(</span>childWidthMeasureSpec<span class="token punctuation">,</span> childHeightMeasureSpec<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * 我们真正关心的地方
+     */</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">protected</span> <span class="token keyword">void</span> <span class="token function">onLayout</span><span class="token punctuation">(</span><span class="token keyword">boolean</span> changed<span class="token punctuation">,</span> <span class="token keyword">int</span> left<span class="token punctuation">,</span> <span class="token keyword">int</span> top<span class="token punctuation">,</span> <span class="token keyword">int</span> right<span class="token punctuation">,</span> <span class="token keyword">int</span> bottom<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">layoutChildren</span><span class="token punctuation">(</span>left<span class="token punctuation">,</span> top<span class="token punctuation">,</span> right<span class="token punctuation">,</span> bottom<span class="token punctuation">,</span> <span class="token boolean">false</span> <span class="token comment" spellcheck="true">/* no force left gravity */</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">// 真正的逻辑执行地方</span>
+    <span class="token keyword">void</span> <span class="token function">layoutChildren</span><span class="token punctuation">(</span><span class="token keyword">int</span> left<span class="token punctuation">,</span> <span class="token keyword">int</span> top<span class="token punctuation">,</span> <span class="token keyword">int</span> right<span class="token punctuation">,</span> <span class="token keyword">int</span> bottom<span class="token punctuation">,</span> <span class="token keyword">boolean</span> forceLeftGravity<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">final</span> <span class="token keyword">int</span> count <span class="token operator">=</span> <span class="token function">getChildCount</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment" spellcheck="true">// 获取padding用于layout</span>
+        <span class="token keyword">final</span> <span class="token keyword">int</span> parentLeft <span class="token operator">=</span> <span class="token function">getPaddingLeftWithForeground</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">final</span> <span class="token keyword">int</span> parentRight <span class="token operator">=</span> right <span class="token operator">-</span> left <span class="token operator">-</span> <span class="token function">getPaddingRightWithForeground</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">final</span> <span class="token keyword">int</span> parentTop <span class="token operator">=</span> <span class="token function">getPaddingTopWithForeground</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">final</span> <span class="token keyword">int</span> parentBottom <span class="token operator">=</span> bottom <span class="token operator">-</span> top <span class="token operator">-</span> <span class="token function">getPaddingBottomWithForeground</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> count<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">final</span> View child <span class="token operator">=</span> <span class="token function">getChildAt</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">// 只layout非GONE的View</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>child<span class="token punctuation">.</span><span class="token function">getVisibility</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!=</span> GONE<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token keyword">final</span> LayoutParams lp <span class="token operator">=</span> <span class="token punctuation">(</span>LayoutParams<span class="token punctuation">)</span> child<span class="token punctuation">.</span><span class="token function">getLayoutParams</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+                <span class="token keyword">final</span> <span class="token keyword">int</span> width <span class="token operator">=</span> child<span class="token punctuation">.</span><span class="token function">getMeasuredWidth</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token keyword">final</span> <span class="token keyword">int</span> height <span class="token operator">=</span> child<span class="token punctuation">.</span><span class="token function">getMeasuredHeight</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+                <span class="token keyword">int</span> childLeft<span class="token punctuation">;</span>
+                <span class="token keyword">int</span> childTop<span class="token punctuation">;</span>
+
+                <span class="token keyword">int</span> gravity <span class="token operator">=</span> lp<span class="token punctuation">.</span>gravity<span class="token punctuation">;</span>
+                <span class="token comment" spellcheck="true">// 若无gravity，则设置默认的gravity</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>gravity <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    gravity <span class="token operator">=</span> DEFAULT_CHILD_GRAVITY<span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+
+                <span class="token comment" spellcheck="true">// 布局方向，一般是从左至右</span>
+                <span class="token keyword">final</span> <span class="token keyword">int</span> layoutDirection <span class="token operator">=</span> <span class="token function">getLayoutDirection</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token comment" spellcheck="true">// absoluteGravity，忽略布局方向，可以认为是horizontalGravity</span>
+                <span class="token keyword">final</span> <span class="token keyword">int</span> absoluteGravity <span class="token operator">=</span> Gravity<span class="token punctuation">.</span><span class="token function">getAbsoluteGravity</span><span class="token punctuation">(</span>gravity<span class="token punctuation">,</span> layoutDirection<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token keyword">final</span> <span class="token keyword">int</span> verticalGravity <span class="token operator">=</span> gravity <span class="token operator">&amp;</span> Gravity<span class="token punctuation">.</span>VERTICAL_GRAVITY_MASK<span class="token punctuation">;</span>
+
+                <span class="token comment" spellcheck="true">// 计算horizontal方向，即childLeft</span>
+                <span class="token keyword">switch</span> <span class="token punctuation">(</span>absoluteGravity <span class="token operator">&amp;</span> Gravity<span class="token punctuation">.</span>HORIZONTAL_GRAVITY_MASK<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    <span class="token comment" spellcheck="true">// centerHorizontal，计算出在中间位置是的childLeft</span>
+                    <span class="token keyword">case</span> Gravity<span class="token punctuation">.</span>CENTER_HORIZONTAL<span class="token operator">:</span>
+                        childLeft <span class="token operator">=</span> parentLeft <span class="token operator">+</span> <span class="token punctuation">(</span>parentRight <span class="token operator">-</span> parentLeft <span class="token operator">-</span> width<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">2</span> <span class="token operator">+</span>
+                        lp<span class="token punctuation">.</span>leftMargin <span class="token operator">-</span> lp<span class="token punctuation">.</span>rightMargin<span class="token punctuation">;</span>
+                        <span class="token keyword">break</span><span class="token punctuation">;</span>
+                    <span class="token comment" spellcheck="true">// right/end，注意，实际上一定会执行下面的if</span>
+                    <span class="token keyword">case</span> Gravity<span class="token punctuation">.</span>RIGHT<span class="token operator">:</span>
+                        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>forceLeftGravity<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                            childLeft <span class="token operator">=</span> parentRight <span class="token operator">-</span> width <span class="token operator">-</span> lp<span class="token punctuation">.</span>rightMargin<span class="token punctuation">;</span>
+                            <span class="token keyword">break</span><span class="token punctuation">;</span>
+                        <span class="token punctuation">}</span>
+                    <span class="token comment" spellcheck="true">// 默认是start|top</span>
+                    <span class="token keyword">case</span> Gravity<span class="token punctuation">.</span>LEFT<span class="token operator">:</span>
+                    <span class="token keyword">default</span><span class="token operator">:</span>
+                        childLeft <span class="token operator">=</span> parentLeft <span class="token operator">+</span> lp<span class="token punctuation">.</span>leftMargin<span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+
+                <span class="token comment" spellcheck="true">// 计算vertical方向，即childTop</span>
+                <span class="token keyword">switch</span> <span class="token punctuation">(</span>verticalGravity<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    <span class="token keyword">case</span> Gravity<span class="token punctuation">.</span>TOP<span class="token operator">:</span>
+                        childTop <span class="token operator">=</span> parentTop <span class="token operator">+</span> lp<span class="token punctuation">.</span>topMargin<span class="token punctuation">;</span>
+                        <span class="token keyword">break</span><span class="token punctuation">;</span>
+                    <span class="token keyword">case</span> Gravity<span class="token punctuation">.</span>CENTER_VERTICAL<span class="token operator">:</span>
+                        childTop <span class="token operator">=</span> parentTop <span class="token operator">+</span> <span class="token punctuation">(</span>parentBottom <span class="token operator">-</span> parentTop <span class="token operator">-</span> height<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">2</span> <span class="token operator">+</span>
+                        lp<span class="token punctuation">.</span>topMargin <span class="token operator">-</span> lp<span class="token punctuation">.</span>bottomMargin<span class="token punctuation">;</span>
+                        <span class="token keyword">break</span><span class="token punctuation">;</span>
+                    <span class="token keyword">case</span> Gravity<span class="token punctuation">.</span>BOTTOM<span class="token operator">:</span>
+                        childTop <span class="token operator">=</span> parentBottom <span class="token operator">-</span> height <span class="token operator">-</span> lp<span class="token punctuation">.</span>bottomMargin<span class="token punctuation">;</span>
+                        <span class="token keyword">break</span><span class="token punctuation">;</span>
+                    <span class="token keyword">default</span><span class="token operator">:</span>
+                        childTop <span class="token operator">=</span> parentTop <span class="token operator">+</span> lp<span class="token punctuation">.</span>topMargin<span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+
+                <span class="token comment" spellcheck="true">// 进行layout</span>
+                child<span class="token punctuation">.</span><span class="token function">layout</span><span class="token punctuation">(</span>childLeft<span class="token punctuation">,</span> childTop<span class="token punctuation">,</span> childLeft <span class="token operator">+</span> width<span class="token punctuation">,</span> childTop <span class="token operator">+</span> height<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * 设置是否measure所有的children，默认false，不measure设置GONE的View
+     */</span>
+    <span class="token annotation punctuation">@android</span><span class="token punctuation">.</span>view<span class="token punctuation">.</span>RemotableViewMethod
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setMeasureAllChildren</span><span class="token punctuation">(</span><span class="token keyword">boolean</span> measureAll<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        mMeasureAllChildren <span class="token operator">=</span> measureAll<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * 返回是否measure所有的children，deprecated
+     */</span>
+    <span class="token annotation punctuation">@Deprecated</span>
+    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">getConsiderGoneChildrenWhenMeasuring</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token function">getMeasureAllChildren</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * 返回是否measure所有的children
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">getMeasureAllChildren</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> mMeasureAllChildren<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * 根据xml配置，获取LayoutParams
+     */</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> LayoutParams <span class="token function">generateLayoutParams</span><span class="token punctuation">(</span>AttributeSet attrs<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">FrameLayout<span class="token punctuation">.</span>LayoutParams</span><span class="token punctuation">(</span><span class="token function">getContext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> attrs<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * 不应该拦截press显示状态
+     */</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">shouldDelayChildPressedState</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">// 检查LayoutParams是否是FrameLayout.LayoutParams</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">protected</span> <span class="token keyword">boolean</span> <span class="token function">checkLayoutParams</span><span class="token punctuation">(</span>ViewGroup<span class="token punctuation">.</span>LayoutParams p<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> p <span class="token keyword">instanceof</span> <span class="token class-name">LayoutParams</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">// 转换LayoutParams</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">protected</span> ViewGroup<span class="token punctuation">.</span>LayoutParams <span class="token function">generateLayoutParams</span><span class="token punctuation">(</span>ViewGroup<span class="token punctuation">.</span>LayoutParams lp<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>sPreserveMarginParamsInLayoutParamConversion<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>lp <span class="token keyword">instanceof</span> <span class="token class-name">LayoutParams</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">LayoutParams</span><span class="token punctuation">(</span><span class="token punctuation">(</span>LayoutParams<span class="token punctuation">)</span> lp<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>lp <span class="token keyword">instanceof</span> <span class="token class-name">MarginLayoutParams</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">LayoutParams</span><span class="token punctuation">(</span><span class="token punctuation">(</span>MarginLayoutParams<span class="token punctuation">)</span> lp<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">LayoutParams</span><span class="token punctuation">(</span>lp<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">// 用于accessibility</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> CharSequence <span class="token function">getAccessibilityClassName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> FrameLayout<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">// 内部的方法</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">protected</span> <span class="token keyword">void</span> <span class="token function">encodeProperties</span><span class="token punctuation">(</span><span class="token annotation punctuation">@NonNull</span> ViewHierarchyEncoder encoder<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">super</span><span class="token punctuation">.</span><span class="token function">encodeProperties</span><span class="token punctuation">(</span>encoder<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        encoder<span class="token punctuation">.</span><span class="token function">addProperty</span><span class="token punctuation">(</span><span class="token string">"measurement:measureAllChildren"</span><span class="token punctuation">,</span> mMeasureAllChildren<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        encoder<span class="token punctuation">.</span><span class="token function">addProperty</span><span class="token punctuation">(</span><span class="token string">"padding:foregroundPaddingLeft"</span><span class="token punctuation">,</span> mForegroundPaddingLeft<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        encoder<span class="token punctuation">.</span><span class="token function">addProperty</span><span class="token punctuation">(</span><span class="token string">"padding:foregroundPaddingTop"</span><span class="token punctuation">,</span> mForegroundPaddingTop<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        encoder<span class="token punctuation">.</span><span class="token function">addProperty</span><span class="token punctuation">(</span><span class="token string">"padding:foregroundPaddingRight"</span><span class="token punctuation">,</span> mForegroundPaddingRight<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        encoder<span class="token punctuation">.</span><span class="token function">addProperty</span><span class="token punctuation">(</span><span class="token string">"padding:foregroundPaddingBottom"</span><span class="token punctuation">,</span> mForegroundPaddingBottom<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * children的LayoutParams，包含了布局属性margin和layout_gravity
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">class</span> <span class="token class-name">LayoutParams</span> <span class="token keyword">extends</span> <span class="token class-name">MarginLayoutParams</span> <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">/**
+         * Value for {@link #gravity} indicating that a gravity has not been
+         * explicitly specified.
+         */</span>
+        <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">int</span> UNSPECIFIED_GRAVITY <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">public</span> <span class="token keyword">int</span> gravity <span class="token operator">=</span> UNSPECIFIED_GRAVITY<span class="token punctuation">;</span>
+
+        <span class="token keyword">public</span> <span class="token function">LayoutParams</span><span class="token punctuation">(</span><span class="token annotation punctuation">@NonNull</span> Context c<span class="token punctuation">,</span> <span class="token annotation punctuation">@Nullable</span> AttributeSet attrs<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">super</span><span class="token punctuation">(</span>c<span class="token punctuation">,</span> attrs<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+            <span class="token keyword">final</span> TypedArray a <span class="token operator">=</span> c<span class="token punctuation">.</span><span class="token function">obtainStyledAttributes</span><span class="token punctuation">(</span>attrs<span class="token punctuation">,</span> R<span class="token punctuation">.</span>styleable<span class="token punctuation">.</span>FrameLayout_Layout<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            gravity <span class="token operator">=</span> a<span class="token punctuation">.</span><span class="token function">getInt</span><span class="token punctuation">(</span>R<span class="token punctuation">.</span>styleable<span class="token punctuation">.</span>FrameLayout_Layout_layout_gravity<span class="token punctuation">,</span> UNSPECIFIED_GRAVITY<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            a<span class="token punctuation">.</span><span class="token function">recycle</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">public</span> <span class="token function">LayoutParams</span><span class="token punctuation">(</span><span class="token keyword">int</span> width<span class="token punctuation">,</span> <span class="token keyword">int</span> height<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">super</span><span class="token punctuation">(</span>width<span class="token punctuation">,</span> height<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">public</span> <span class="token function">LayoutParams</span><span class="token punctuation">(</span><span class="token keyword">int</span> width<span class="token punctuation">,</span> <span class="token keyword">int</span> height<span class="token punctuation">,</span> <span class="token keyword">int</span> gravity<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">super</span><span class="token punctuation">(</span>width<span class="token punctuation">,</span> height<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">this</span><span class="token punctuation">.</span>gravity <span class="token operator">=</span> gravity<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">public</span> <span class="token function">LayoutParams</span><span class="token punctuation">(</span><span class="token annotation punctuation">@NonNull</span> ViewGroup<span class="token punctuation">.</span>LayoutParams source<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">super</span><span class="token punctuation">(</span>source<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">public</span> <span class="token function">LayoutParams</span><span class="token punctuation">(</span><span class="token annotation punctuation">@NonNull</span> ViewGroup<span class="token punctuation">.</span>MarginLayoutParams source<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">super</span><span class="token punctuation">(</span>source<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">public</span> <span class="token function">LayoutParams</span><span class="token punctuation">(</span><span class="token annotation punctuation">@NonNull</span> LayoutParams source<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">super</span><span class="token punctuation">(</span>source<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+            <span class="token keyword">this</span><span class="token punctuation">.</span>gravity <span class="token operator">=</span> source<span class="token punctuation">.</span>gravity<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p><code>FrameLayout</code>代码分析完了，其实非常简单，需要注意的是，<code>FrameLayout</code>可能会对<code>match_parent</code>的<code>children</code>进行两次测量。</p>
+<p>我们这里着重需要关心的还是<code>layout</code>：</p>
+<ol>
+<li>考虑到了<code>padding</code>，所以我们在定义<code>View</code>时，注意<code>padding</code>是我们在定义时决定的，所以不要忘记</li>
+<li>考虑<code>margin</code>，<code>margin</code>是<code>child</code>相对于在<code>parent</code>的，需要在<code>ViewGroup</code>控制</li>
+<li>考虑<code>child</code>的<code>visibility</code>属性，如果是<code>GONE</code>，那么<code>ViewGroup</code>则不应该显示</li>
+<li>计算出<code>child</code>的左上角的位置，自然就可以得到右下角的位置，调用<code>child.layout(int, int, int, int)</code>，如此循环</li>
+</ol>
+<h2 id="自定义View需要注意的点"><a href="#自定义View需要注意的点" class="headerlink" title="自定义View需要注意的点"></a>自定义View需要注意的点</h2><p><code>FrameLayout</code>除了实现<code>onMeasure(int, int)</code>和<code>onLayout(boolean, int, int, int, int)</code>之外，还重写了一些方法。<code>FrameLayout</code>本身是一个非常简单的<code>ViewGroup</code>，所以它的实现可以作为定义初级<code>ViewGroup</code>的参考。</p>
+<h3 id="LayoutParams-generateDefaultLayoutParams"><a href="#LayoutParams-generateDefaultLayoutParams" class="headerlink" title="LayoutParams generateDefaultLayoutParams()"></a>LayoutParams generateDefaultLayoutParams()</h3><blockquote>
+<p>Returns a set of default layout parameters. These parameters are requested when the View passed to {@link #addView(View)} has no layout parameters already set. If null is returned, an exception is thrown from addView.</p>
+</blockquote>
+<p>翻译：返回默认的<code>LayoutParams</code>。其中的属性要求在<code>addView(View)</code>时传递，因为这时没有指定<code>LayoutParams</code>。如果为<code>null</code>，那么在调用<code>addView(View)</code>时会抛出异常。</p>
+<h3 id="LayoutParams-generateLayoutParams-AttributeSet-attrs"><a href="#LayoutParams-generateLayoutParams-AttributeSet-attrs" class="headerlink" title="LayoutParams generateLayoutParams(AttributeSet attrs)"></a>LayoutParams generateLayoutParams(AttributeSet attrs)</h3><blockquote>
+<p>Returns a new set of layout parameters based on the supplied attributes set.</p>
+</blockquote>
+<p>翻译：返回读取<code>AttributeSet</code>属性的<code>LayoutParams</code>。</p>
+<p>这样可以在<code>xml</code>配置一些布局相关的属性，这些属性封装在自定义的<code>LayoutParams</code>中。</p>
+<h3 id="boolean-shouldDelayChildPressedState"><a href="#boolean-shouldDelayChildPressedState" class="headerlink" title="boolean shouldDelayChildPressedState()"></a>boolean shouldDelayChildPressedState()</h3><blockquote>
+<p>Return true if the pressed state should be delayed for children or descendants of this ViewGroup. Generally, this should be done for containers that can scroll, such as a List. This prevents the pressed state from appearing when the user is actually trying to scroll the content.</p>
+</blockquote>
+<p>翻译：如果<code>ViewGroup</code>的<code>children</code>或子代（可能<code>child</code>是一个<code>ViewGroup</code>，其内又有<code>View</code>），如果返回<code>true</code>，表示自身将优先处理<code>press</code>状态。通常，这应该是在可以滑动的容器中返回<code>true</code>，例如一个<code>ListView</code>。这避免了<code>press</code>状态在用户实际上想滑动内容时提前出现。</p>
+<h3 id="boolean-checkLayoutParams-ViewGroup-LayoutParams-p"><a href="#boolean-checkLayoutParams-ViewGroup-LayoutParams-p" class="headerlink" title="boolean checkLayoutParams(ViewGroup.LayoutParams p)"></a>boolean checkLayoutParams(ViewGroup.LayoutParams p)</h3><p>检查<code>LayoutParams</code>是否是我们需要的类型。如果我们自定义了一个<code>LayoutParams</code>，那么我们应该应该实现这个方法，保证会配合<code>generateLayoutParams(LayoutParams)</code>生成我们自定义的<code>LayoutParams</code>。</p>
+<h3 id="ViewGroup-LayoutParams-generateLayoutParams-ViewGroup-LayoutParams-lp"><a href="#ViewGroup-LayoutParams-generateLayoutParams-ViewGroup-LayoutParams-lp" class="headerlink" title="ViewGroup.LayoutParams generateLayoutParams(ViewGroup.LayoutParams lp)"></a>ViewGroup.LayoutParams generateLayoutParams(ViewGroup.LayoutParams lp)</h3><blockquote>
+<p>Returns a safe set of layout parameters based on the supplied layout params. When a ViewGroup is passed a View whose layout params do not pass the test of {@link #checkLayoutParams(android.view.ViewGroup.LayoutParams)}, this method is invoked. This method should return a new set of layout params suitable for this ViewGroup, possibly by copying the appropriate attributes from the specified set of layout params.</p>
+</blockquote>
+<p>翻译：基于提供的<code>ViewGroup.LayoutParams</code>返回一个类型安全的<code>LayoutParams</code>。当一个<code>View</code>添加到<code>ViewGroup</code>中，但是<code>View</code>的<code>LayoutParams</code>并不能通过<code>checkLayoutParams(ViewGroup.LayoutParams)</code>检查，那么这个方法将会被调用。这个方法返回了一个新的<code>LayoutParams</code>（通常是自定义的），并且可能会从提供的<code>ViewGroup.LayoutParams</code>中复制一些合适的属性。</p>
+<h3 id="CharSequence-getAccessibilityClassName"><a href="#CharSequence-getAccessibilityClassName" class="headerlink" title="CharSequence getAccessibilityClassName()"></a>CharSequence getAccessibilityClassName()</h3><blockquote>
+<p>Return the class name of this object to be used for accessibility purposes. Subclasses should only override this if they are implementing something that should be seen as a completely new class of view when used by accessibility, unrelated to the class it is deriving from.  This is used to fill in <code>AccessibilityNodeInfo#setClassName AccessibilityNodeInfo.setClassName</code>.</p>
+</blockquote>
+<p>大致翻译：返回用于<code>accessibility</code>目的当前的类名。如果需要提供这样的功能，那么子类应该实现这个方法。</p>
+<h3 id="LayoutParams"><a href="#LayoutParams" class="headerlink" title="LayoutParams"></a>LayoutParams</h3><blockquote>
+<p>LayoutParams are used by views to tell their parents how they want to be laid out.</p>
+</blockquote>
+<p>翻译：<code>LayoutParams</code>被<code>view</code>用于告诉他们的<code>parent</code>他们想要的布局信息。</p>
+<p>我们知道<code>LayoutParams</code>包含了很多布局信息，在<code>xml</code>中通常是以<code>android:layout_xxx</code>的形式存在，如<code>android:layout_gravity:start|top</code>。在<code>Android</code>读取<code>xml</code>生成对应的<code>View</code>对象时，将一些属性赋予<code>LayoutParams</code>，那么<code>View</code>的<code>parent</code>就可以根据<code>LayoutParams</code>来对它进行布局。</p>
+<h2 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h2><p>其实<code>layout</code>是一个相对而言比较繁琐的工作。因为要考虑到各个方面，<code>padding</code>，<code>margin</code>，<code>gravity</code>等等。更重要的是，通常<code>Layout</code>如<code>LinearLayout</code>，<code>ConstraintLayout</code>会有自己的一套布局逻辑，这个逻辑可能非常的繁琐，如<code>ConstraintLayout</code>。逻辑相对简单的<code>LinearLayout</code>也有2000多行的代码。</p>
+<p><code>layout</code>的相关方法使用很简单，难的是需要实现自己的逻辑。这篇文章分析了简单的<code>FrameLayout</code>，我们在定义时，可以参考<code>FrameLayout</code>的实现，同时如果想要更好的定义<code>ViewGroup</code>，建议多阅读其他优秀实现的源码。</p>
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><p><a href="https://www.jianshu.com/p/b5ecd39ed494" target="_blank" rel="noopener">小Demo小知识-android:foreground与android:background</a></p>
+
+            </div>
+            <hr/>
+
+            
+            <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.88rem;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-large waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fa fa-close"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.png" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+            
+
+            <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    <div class="social-share" data-disabled="qzone" data-wechat-qrcode-helper="<p>微信里点“发现”->“扫一扫”二维码便可查看分享。</p>"></div>
+    
+</div>
+
+<script src="/libs/share/js/social-share.min.js"></script>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        <p class="reprint-tip">
+            <i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;
+            <span>转载规则</span>
+        </p>
+        
+            <div class="center-align">
+                <a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                    <img alt=""
+                         style="border-width:0"
+                         src="https://i.creativecommons.org/l/by/4.0/88x31.png"/>
+                </a>
+            </div>
+            <br/>
+            <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
+                  property="dct:title" rel="dct:type">
+                    《三、View布局》
+                </span> 由
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2019/08/24/san-view-bu-ju/" property="cc:attributionName"
+               rel="cc:attributionURL">
+                Mycroft Wong
+            </a> 采用
+            <a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                知识共享署名 4.0 国际许可协议
+            </a>进行许可。
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge badge-text-color">
+                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2019/09/05/fileprovider/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="FileProvider">
+                        
+                        <span class="card-title">FileProvider</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            FileProvider前言Android开发始终脱离不了图片处理，特别是Android 7.0开始，无法通过file:///的URI来进行在应用之间共享文件，取而代之的是content uri。这样必然增加了开发难度，如必须生成conte
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2019-09-05
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Android/" class="post-category" target="_blank">
+                                    Android
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Android/" target="_blank">
+                        <span class="chip bg-color">Android</span>
+                    </a>
+                    
+                    <a href="/tags/FileProvider/" target="_blank">
+                        <span class="chip bg-color">FileProvider</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge badge-text-color">
+                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2019/08/24/er-view-ce-liang/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/32.jpg" class="responsive-img" alt="二、View测量">
+                        
+                        <span class="card-title">二、View测量</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            View测量前言自定义View实际上是Android给我们定下了一些规则，我们需要遵循这些规则去定义一个View，符合这个规则的View才会更好的显示。实际上，它并没有如Java的强类型般的限制我们怎么做，我们在使用中可能时长在破坏这些规则
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-08-24
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Android-View/" class="post-category" target="_blank">
+                                    Android - View
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Android/" target="_blank">
+                        <span class="chip bg-color">Android</span>
+                    </a>
+                    
+                    <a href="/tags/面试/" target="_blank">
+                        <span class="chip bg-color">面试</span>
+                    </a>
+                    
+                    <a href="/tags/View/" target="_blank">
+                        <span class="chip bg-color">View</span>
+                    </a>
+                    
+                    <a href="/tags/measure/" target="_blank">
+                        <span class="chip bg-color">measure</span>
+                    </a>
+                    
+                    <a href="/tags/layout/" target="_blank">
+                        <span class="chip bg-color">layout</span>
+                    </a>
+                    
+                    <a href="/tags/draw/" target="_blank">
+                        <span class="chip bg-color">draw</span>
+                    </a>
+                    
+                    <a href="/tags/touch-event/" target="_blank">
+                        <span class="chip bg-color">touch event</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: Mycroft<br />'
+            + '作者: Mycroft Wong<br />'
+            + '链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="fa fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fa fa-list"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            collapseDepth: 6,
+            headingSelector: 'h2, h3, h4, h5'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4, h5').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).slideUp(500);
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).slideDown(500);
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+    
+
+</main>
+
+
+<footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            本站由&copy;<a href="https://MycroftWong.github.io/" target="_blank">Mycroft Wong</a>基于
+            <a href="https://hexo.io/" target="_blank">Hexo</a>搭建.
+
+            
+                &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
+                <span class="white-color">44.8k</span>
+            
+
+            
+			
+                <br>
+                
+                <span id="busuanzi_container_site_pv">
+                    <i class="fa fa-heart-o"></i>
+                    本站总访问量 <span id="busuanzi_value_site_pv" class="white-color"></span>
+                </span>
+                
+                
+                <span id="busuanzi_container_site_uv">
+                    <i class="fa fa-users"></i>
+                    次,&nbsp;访客数 <span id="busuanzi_value_site_uv" class="white-color"></span> 人.
+                </span>
+                
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/MycroftWong" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fa fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:mycroftwong@gmail.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fa fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fa fa-rss"></i>
+    </a>
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+<!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fa fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+<!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fa fa-angle-up"></i>
+    </a>
+</div>
+
+
+<script src="/libs/materialize/materialize.min.js"></script>
+<script src="/libs/masonry/masonry.pkgd.min.js"></script>
+<script src="/libs/aos/aos.js"></script>
+<script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+<script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+<script src="/js/matery.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+
+
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+
+
+</body>
+</html>
