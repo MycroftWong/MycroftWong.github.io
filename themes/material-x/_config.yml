@@ -136,7 +136,7 @@ body: [article, comments]
 # 侧边栏小部件，默认按下面给定的顺序全部显示，文章中还可以自定义显示一部分以及顺序
 sidebar:
   - widget: author
-    avatar: https://image.mycroft.wang/default_avatar.jpg
+    avatar: https://www.mycroft.wang/images/default_avatar.jpg
     social: true
   - widget: toc
   - widget: grid

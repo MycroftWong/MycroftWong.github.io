@@ -100,7 +100,6 @@ pagination_dir: page
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
 # theme: next
-# theme: next
 theme: hexo-theme-matery
 # theme: inside
 # theme: material-x
