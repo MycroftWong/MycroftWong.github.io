@@ -1,6 +1,7 @@
 ---
 title: Ubuntu使用Docker安装gitlab和gitlab-runner
 date: 2021-09-15 20:24:37
+categories: CI/CD
 tags:
 - Ubuntu
 - Docker

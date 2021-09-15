@@ -137,6 +137,7 @@ Exchange newExchange(Interceptor.Chain chain, boolean doExtensiveHealthChecks) {
 > If there's no existing connection, make a list of routes (which may require blocking DNS lookups) and attempt a new connection them. When failures occur, retries iterate the list of available routes.
 
 翻译：尝试为一系列的`Exchange`找到`Connection`连接。使用下列的策略：
+
 1. 如果当前有`Connection`能够满足请求`Request`，那么使用初始时的`Exchange`构造的`Connection`。
 2. 如果连接池中有`Connection`能够满足请求`Request`。注意，共享同一`Connection`的`Exchange`可能向不同的主机名发送请求。
 3. 如果没有存在的`Connection`，创建一个路由列表（获取需要使用阻塞`DNS`查询），并且尝试建立一个新的连接。如果发生错误，那么将根据路由列表重试。
@@ -214,8 +215,8 @@ private RealConnection findConnection(int connectTimeout, int readTimeout, int w
 1. `ExchangeFinder.find(Interceptor.Chain, boolean)`得到`IO`操作的`ExchangeCodec`
 2. 在其中调用了`RealConnection ExchangeFinder.findHealthyConnection(int, int, int, int, boolean, boolean)`
 3. 继续调用`RealConnection ExchangeFinder.findConnection(int, int, int, int, boolean)`得到了一个`RealConnection`
-3. 然后调用`RealConnection.connect(int, int, int, int, boolean, Call, EventListener)`建立了真正的连接
-4. 最后通过这个`RealConnection`返回了的`ExchangeCodec`。
+4. 然后调用`RealConnection.connect(int, int, int, int, boolean, Call, EventListener)`建立了真正的连接
+5. 最后通过这个`RealConnection`返回了的`ExchangeCodec`。
 
 ## RealConnection
 
@@ -226,7 +227,6 @@ private RealConnection findConnection(int connectTimeout, int readTimeout, int w
 1. 两处进行了连接，`Platform.connectSocket(Socket, InetSocketAddress, int)`和`AndroidPlatform.connectSocket(Socket, InetSocketAddress, int)`，`AndroidPlatform`继承了`Platform`
 2. 查看`Platform.connectSocket(Socket, InetSocketAddress, int)`的使用，就发现是`RealConnection.connectSocket(int, int, Call, EventListener)`
 3. 最后直接或间接都被`RealConnection.connect(int, int, int, int, boolean, Call, EventListener)`调用
-
 
 终于，我们来看一下，一个完整的连接过程
 

@@ -16,6 +16,7 @@ tags:
 新建了这个`blog`，同时上传了`github`和`gitee`，另外想发布到个人阿里云服务器，在阿里云服务器上直接拉取`github`仓库。
 
 ## 目标
+
 在不更改原来请求的情况下，添加二级域名`blog`，转发请求到博客文件夹。
 
 ## nginx配置解析
@@ -80,11 +81,13 @@ server {
 转发`www`二级域名到`443`端口，然后在`443`端口上转发，静态文件转发到`/home/www`文件夹，动态请求转发到`8080`端口。
 
 ### 需要的工作
+
 1. 新建一个`server`监听`80`端口，指定监听的域名`blog.mycroft.wang`，然后转发到`443`端口
 2. 新建一个`server`监听`443`端口，指定监听的域名`blog.mycroft.wang`，转发到文件夹`/home/blog`
 3. 过滤掉`git`相关文件夹
 
 下面是添加的`server`，注意没有包括之前的配置
+
 ```txt
 server {
     listen 80;
@@ -121,8 +124,8 @@ server {
 ```
 
 ## 说明
-并没有说明`nginx`使用的原理，因为我也不懂，这是之前学了一点，依葫芦画瓢弄的，关于`nginx`的使用，后面再认真学学。
 
+并没有说明`nginx`使用的原理，因为我也不懂，这是之前学了一点，依葫芦画瓢弄的，关于`nginx`的使用，后面再认真学学。
 
 ## 参考文章
 
@@ -131,4 +134,3 @@ server {
 [在Nginx上配置多个站点](https://www.cnblogs.com/Erick-L/p/7066564.html)
 
 [nginx忽略.svn和.git](http://linux.it.net.cn/e/server/nginx/2016/0409/21095.html)
-

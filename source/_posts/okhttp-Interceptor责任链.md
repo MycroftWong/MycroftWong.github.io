@@ -19,11 +19,13 @@ tags:
 > 责任链模式将处理用户请求的对象形成一个链，责任链上的每个处理者要么处理用户的请求，要么把请求传递给责任链上的下一个处理者
 
 实例：
+
 1. 请求
 2. 处理者：处理请求的对象
 3. 链：处理者形成的链表
 
 说明：
+
 1. 一个请求交给链表上第一个处理者处理
 2. 第一个处理者处理不了，交由下一个处理者
 3. 如果链上某一处理者能够处理，则直接返回处理结果，不再交由后面的处理者处理
@@ -98,6 +100,7 @@ Response getResponseWithInterceptorChain() throws IOException {
 翻译：这个`Interceptor`用于失败重试和必要时重定向。如果`Call`被取消，可能会抛出`IOException`。
 
 具体我就不深入代码了，这更多的涉及`HTTP`协议的相关内容，其实知道这个类的作用就行了。可以简单的了解几点：
+
 1. 重定向最大次数为20次，`Chrome`是21次，`Firefox`，`curl`，`wget`是20次，`Safari`是16次，`HTTP/1.0`推荐是5次。
 2. 不能重试的情况
     * 应用层禁止重试
@@ -114,6 +117,7 @@ Response getResponseWithInterceptorChain() throws IOException {
 这段话很直接，实际上，它处理传送过来的应用`Request`，添加一些参数，然后对交由网络层处理得到的`Response`再进一步处理，返回给应用层。
 
 `BridgeInterceptor`对`Request`的处理：
+
 1. 如果有请求体`RequestBody`，则根据请求体内容，添加`header`：`Content-Type`、`Content-Length`、`Transfer-Encoding`
 2. `header`中添加`Host`
 3. 若`header`中没有`Connection`，则设置为`Keep-Alive`
@@ -122,6 +126,7 @@ Response getResponseWithInterceptorChain() throws IOException {
 6. 添加`User-Agent`
 
 `BridgeInterceptor`对`Response`的处理：
+
 1. 复制网络层的`Response`内容，得到新的`Response`
 2. 处理`cookie`
 3. 处理`gzip`响应结果
@@ -156,6 +161,7 @@ Response getResponseWithInterceptorChain() throws IOException {
 翻译：这是链中最后一个`Interceptor`。它向服务器发送一个网络请求。
 
 它实际完成的工作：
+
 1. 写入请求头
 2. 写入请求体
 3. 读取请求头

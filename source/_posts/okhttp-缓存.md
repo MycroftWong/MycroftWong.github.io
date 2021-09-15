@@ -294,7 +294,6 @@ Cache(File directory, long maxSize, FileSystem fileSystem) {
 1. `InternalCache`定义了`CacheInterceptor`操作缓存的接口，不提供额外的功能
 2. `Cache`则是向应用层提供了操作接口，隐藏了代理`InternalCache`的方法
 
-
 ## 特别感谢
 
 [OKHttp源码解析(六)--中阶之缓存基础](https://www.jianshu.com/p/b32d13655be7)

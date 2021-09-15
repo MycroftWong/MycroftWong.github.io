@@ -13,6 +13,7 @@ tags:
 ## Intent的用途
 
 `Intent`是一个消息传递对象。使用`Intent`向系统请求操作，主要包括：
+
 1. 启动`Activity`
 2. 启动`Service`
 3. 发送`Broadcast`
@@ -64,7 +65,6 @@ tags:
 4. 声明了`URI`和`MIME`的`Activity`，只能接受`URI`和`MIME`同时匹配的`Intent`
 
 注意其中有点差异的是，之声明了`MIME`部分的`Activity`，可以接受`content`或`file`类型`URI`数据的`Intent`。
-
 
 ## 一个可接受隐式Intent的Activity的过滤器的友好设计
 
