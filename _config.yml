@@ -110,4 +110,3 @@ deploy:
   type: git
   repo: 
     github: git@github.com:MycroftWong/MycroftWong.github.io.git,master
-    aliyun: git@code.aliyun.com:mycroftwong/blog.git,master
