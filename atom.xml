@@ -1,0 +1,622 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Mycroft</title>
+  
+  <subtitle>Mycroft的个人微博</subtitle>
+  <link href="https://mycroftwong.gitee.io/atom.xml" rel="self"/>
+  
+  <link href="https://mycroftwong.gitee.io/"/>
+  <updated>2023-06-13T07:16:01.814Z</updated>
+  <id>https://mycroftwong.gitee.io/</id>
+  
+  <author>
+    <name>Mycroft Wong</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Install CMake</title>
+    <link href="https://mycroftwong.gitee.io/2023/06/13/install-cmake/"/>
+    <id>https://mycroftwong.gitee.io/2023/06/13/install-cmake/</id>
+    <published>2023-06-13T07:08:01.000Z</published>
+    <updated>2023-06-13T07:16:01.814Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;Install-CMake&quot;&gt;&lt;a href=&quot;#Install-CMake&quot; class=&quot;headerlink&quot; title=&quot;Install CMake&quot;&gt;&lt;/a&gt;Install CMake&lt;/h1&gt;&lt;p&gt;&lt;code&gt;Ubuntu 22.04&lt;/code&gt;</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Install zsh</title>
+    <link href="https://mycroftwong.gitee.io/2022/11/22/install-zsh/"/>
+    <id>https://mycroftwong.gitee.io/2022/11/22/install-zsh/</id>
+    <published>2022-11-22T13:02:32.000Z</published>
+    <updated>2023-06-13T07:06:11.716Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;Install-zsh&quot;&gt;&lt;a href=&quot;#Install-zsh&quot; class=&quot;headerlink&quot; title=&quot;Install zsh&quot;&gt;&lt;/a&gt;Install zsh&lt;/h1&gt;&lt;pre class=&quot; language-shell&quot;&gt;&lt;code</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>DNF on CentOS 7</title>
+    <link href="https://mycroftwong.gitee.io/2022/11/16/dnf-on-centos-7/"/>
+    <id>https://mycroftwong.gitee.io/2022/11/16/dnf-on-centos-7/</id>
+    <published>2022-11-16T09:24:52.000Z</published>
+    <updated>2023-06-13T07:01:29.478Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;DNF-on-CentOS-7&quot;&gt;&lt;a href=&quot;#DNF-on-CentOS-7&quot; class=&quot;headerlink&quot; title=&quot;DNF on CentOS 7&quot;&gt;&lt;/a&gt;DNF on CentOS 7&lt;/h1&gt;&lt;p&gt;在 &lt;code&gt;CentOS</summary>
+        
+      
+    
+    
+    
+    
+    <category term="CentOS" scheme="https://mycroftwong.gitee.io/tags/CentOS/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Socks 5 in Java</title>
+    <link href="https://mycroftwong.gitee.io/2022/09/10/socks-5-in-java/"/>
+    <id>https://mycroftwong.gitee.io/2022/09/10/socks-5-in-java/</id>
+    <published>2022-09-10T04:05:20.000Z</published>
+    <updated>2023-06-13T07:01:29.482Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;Socks-5-in-Java&quot;&gt;&lt;a href=&quot;#Socks-5-in-Java&quot; class=&quot;headerlink&quot; title=&quot;Socks 5 in Java&quot;&gt;&lt;/a&gt;Socks 5 in Java&lt;/h1&gt;&lt;p&gt;通过梳理 Socks 5 在</summary>
+        
+      
+    
+    
+    
+    <category term="Socks 5" scheme="https://mycroftwong.gitee.io/categories/Socks-5/"/>
+    
+    
+    <category term="Socks 5" scheme="https://mycroftwong.gitee.io/tags/Socks-5/"/>
+    
+    <category term="Proxy" scheme="https://mycroftwong.gitee.io/tags/Proxy/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>gitlab配置SMTP总结</title>
+    <link href="https://mycroftwong.gitee.io/2021/09/17/gitlab-pei-zhi-smtp-zong-jie/"/>
+    <id>https://mycroftwong.gitee.io/2021/09/17/gitlab-pei-zhi-smtp-zong-jie/</id>
+    <published>2021-09-17T06:28:33.000Z</published>
+    <updated>2023-06-13T07:01:29.482Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;gitlab配置SMTP总结&quot;&gt;&lt;a href=&quot;#gitlab配置SMTP总结&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="CI/CD" scheme="https://mycroftwong.gitee.io/categories/CI-CD/"/>
+    
+    
+    <category term="Docker" scheme="https://mycroftwong.gitee.io/tags/Docker/"/>
+    
+    <category term="gitlab" scheme="https://mycroftwong.gitee.io/tags/gitlab/"/>
+    
+    <category term="CI/CD" scheme="https://mycroftwong.gitee.io/tags/CI-CD/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Ubuntu安装OpenVPN服务器</title>
+    <link href="https://mycroftwong.gitee.io/2021/09/16/ubuntu-an-zhuang-openvpn-fu-wu-qi/"/>
+    <id>https://mycroftwong.gitee.io/2021/09/16/ubuntu-an-zhuang-openvpn-fu-wu-qi/</id>
+    <published>2021-09-15T16:09:36.000Z</published>
+    <updated>2023-06-13T07:01:29.482Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;Ubuntu安装OpenVPN服务器&quot;&gt;&lt;a href=&quot;#Ubuntu安装OpenVPN服务器&quot; class=&quot;headerlink&quot; title=&quot;Ubuntu安装OpenVPN服务器&quot;&gt;&lt;/a&gt;Ubuntu安装OpenVPN服务器&lt;/h1&gt;&lt;h2</summary>
+        
+      
+    
+    
+    
+    
+    <category term="Ubuntu" scheme="https://mycroftwong.gitee.io/tags/Ubuntu/"/>
+    
+    <category term="OpenVPN" scheme="https://mycroftwong.gitee.io/tags/OpenVPN/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Ubuntu使用Docker安装gitlab和gitlab-runner</title>
+    <link href="https://mycroftwong.gitee.io/2021/09/15/ubuntu-shi-yong-docker-an-zhuang-gitlab-he-gitlab-runner/"/>
+    <id>https://mycroftwong.gitee.io/2021/09/15/ubuntu-shi-yong-docker-an-zhuang-gitlab-he-gitlab-runner/</id>
+    <published>2021-09-15T12:24:37.000Z</published>
+    <updated>2023-06-13T07:01:29.482Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;&lt;code&gt;Ubuntu 20.04&lt;/code&gt;使用&lt;code&gt;Docker&lt;/code&gt;安装&lt;code&gt;gitlab&lt;/code&gt;和&lt;code&gt;gitlab runner&lt;/code&gt;实现&lt;code&gt;CI/CD&lt;/code&gt;&lt;/p&gt;
+&lt;h2</summary>
+        
+      
+    
+    
+    
+    <category term="CI/CD" scheme="https://mycroftwong.gitee.io/categories/CI-CD/"/>
+    
+    
+    <category term="Ubuntu" scheme="https://mycroftwong.gitee.io/tags/Ubuntu/"/>
+    
+    <category term="Docker" scheme="https://mycroftwong.gitee.io/tags/Docker/"/>
+    
+    <category term="gitlab" scheme="https://mycroftwong.gitee.io/tags/gitlab/"/>
+    
+    <category term="gitlab-runner" scheme="https://mycroftwong.gitee.io/tags/gitlab-runner/"/>
+    
+    <category term="CI/CD" scheme="https://mycroftwong.gitee.io/tags/CI-CD/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Intent的一些知识点</title>
+    <link href="https://mycroftwong.gitee.io/2019/12/03/intent-de-yi-xie-zhi-shi-dian/"/>
+    <id>https://mycroftwong.gitee.io/2019/12/03/intent-de-yi-xie-zhi-shi-dian/</id>
+    <published>2019-12-03T07:47:06.000Z</published>
+    <updated>2023-06-13T07:01:29.478Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;Intent的一些知识点&quot;&gt;&lt;a href=&quot;#Intent的一些知识点&quot; class=&quot;headerlink&quot; title=&quot;Intent的一些知识点&quot;&gt;&lt;/a&gt;Intent的一些知识点&lt;/h1&gt;&lt;h2 id=&quot;Intent的用途&quot;&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="Android" scheme="https://mycroftwong.gitee.io/categories/Android/"/>
+    
+    
+    <category term="Android" scheme="https://mycroftwong.gitee.io/tags/Android/"/>
+    
+    <category term="Intent" scheme="https://mycroftwong.gitee.io/tags/Intent/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Permission 权限</title>
+    <link href="https://mycroftwong.gitee.io/2019/10/14/permission-quan-xian/"/>
+    <id>https://mycroftwong.gitee.io/2019/10/14/permission-quan-xian/</id>
+    <published>2019-10-14T01:30:30.000Z</published>
+    <updated>2023-06-13T07:01:29.480Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;Permission-权限&quot;&gt;&lt;a href=&quot;#Permission-权限&quot; class=&quot;headerlink&quot; title=&quot;Permission 权限&quot;&gt;&lt;/a&gt;Permission</summary>
+        
+      
+    
+    
+    
+    <category term="Android - 基础" scheme="https://mycroftwong.gitee.io/categories/Android-%E5%9F%BA%E7%A1%80/"/>
+    
+    
+    <category term="Permission" scheme="https://mycroftwong.gitee.io/tags/Permission/"/>
+    
+    <category term="权限" scheme="https://mycroftwong.gitee.io/tags/%E6%9D%83%E9%99%90/"/>
+    
+    <category term="ContentProvider" scheme="https://mycroftwong.gitee.io/tags/ContentProvider/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>okhttp实现token验证</title>
+    <link href="https://mycroftwong.gitee.io/2019/09/21/okhttp-shi-xian-token-yan-zheng/"/>
+    <id>https://mycroftwong.gitee.io/2019/09/21/okhttp-shi-xian-token-yan-zheng/</id>
+    <published>2019-09-21T08:51:47.000Z</published>
+    <updated>2023-06-13T07:01:29.490Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;okhttp实现token验证&quot;&gt;&lt;a href=&quot;#okhttp实现token验证&quot; class=&quot;headerlink&quot; title=&quot;okhttp实现token验证&quot;&gt;&lt;/a&gt;okhttp实现token验证&lt;/h1&gt;&lt;h2 id=&quot;前言&quot;&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="开源库 - okhttp" scheme="https://mycroftwong.gitee.io/categories/%E5%BC%80%E6%BA%90%E5%BA%93-okhttp/"/>
+    
+    
+    <category term="okhttp" scheme="https://mycroftwong.gitee.io/tags/okhttp/"/>
+    
+    <category term="开源" scheme="https://mycroftwong.gitee.io/tags/%E5%BC%80%E6%BA%90/"/>
+    
+    <category term="http" scheme="https://mycroftwong.gitee.io/tags/http/"/>
+    
+    <category term="token" scheme="https://mycroftwong.gitee.io/tags/token/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Okio官方文档翻译</title>
+    <link href="https://mycroftwong.gitee.io/2019/09/13/okio-guan-fang-wen-dang-fan-yi/"/>
+    <id>https://mycroftwong.gitee.io/2019/09/13/okio-guan-fang-wen-dang-fan-yi/</id>
+    <published>2019-09-12T16:27:40.000Z</published>
+    <updated>2023-06-13T07:01:29.480Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;Okio官方文档翻译&quot;&gt;&lt;a href=&quot;#Okio官方文档翻译&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="开源库 - okio" scheme="https://mycroftwong.gitee.io/categories/%E5%BC%80%E6%BA%90%E5%BA%93-okio/"/>
+    
+    
+    <category term="okio" scheme="https://mycroftwong.gitee.io/tags/okio/"/>
+    
+    <category term="okhttp" scheme="https://mycroftwong.gitee.io/tags/okhttp/"/>
+    
+    <category term="源码" scheme="https://mycroftwong.gitee.io/tags/%E6%BA%90%E7%A0%81/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>FileProvider</title>
+    <link href="https://mycroftwong.gitee.io/2019/09/05/fileprovider/"/>
+    <id>https://mycroftwong.gitee.io/2019/09/05/fileprovider/</id>
+    <published>2019-09-05T06:42:41.000Z</published>
+    <updated>2023-06-13T07:01:29.478Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;FileProvider&quot;&gt;&lt;a href=&quot;#FileProvider&quot; class=&quot;headerlink&quot; title=&quot;FileProvider&quot;&gt;&lt;/a&gt;FileProvider&lt;/h1&gt;&lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="Android" scheme="https://mycroftwong.gitee.io/categories/Android/"/>
+    
+    
+    <category term="Android" scheme="https://mycroftwong.gitee.io/tags/Android/"/>
+    
+    <category term="FileProvider" scheme="https://mycroftwong.gitee.io/tags/FileProvider/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>三、View布局</title>
+    <link href="https://mycroftwong.gitee.io/2019/08/24/san-view-bu-ju/"/>
+    <id>https://mycroftwong.gitee.io/2019/08/24/san-view-bu-ju/</id>
+    <published>2019-08-24T13:51:24.000Z</published>
+    <updated>2023-06-13T07:01:29.492Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;View布局&quot;&gt;&lt;a href=&quot;#View布局&quot; class=&quot;headerlink&quot; title=&quot;View布局&quot;&gt;&lt;/a&gt;View布局&lt;/h1&gt;&lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="Android - View" scheme="https://mycroftwong.gitee.io/categories/Android-View/"/>
+    
+    
+    <category term="Android" scheme="https://mycroftwong.gitee.io/tags/Android/"/>
+    
+    <category term="面试" scheme="https://mycroftwong.gitee.io/tags/%E9%9D%A2%E8%AF%95/"/>
+    
+    <category term="View" scheme="https://mycroftwong.gitee.io/tags/View/"/>
+    
+    <category term="measure" scheme="https://mycroftwong.gitee.io/tags/measure/"/>
+    
+    <category term="layout" scheme="https://mycroftwong.gitee.io/tags/layout/"/>
+    
+    <category term="draw" scheme="https://mycroftwong.gitee.io/tags/draw/"/>
+    
+    <category term="touch event" scheme="https://mycroftwong.gitee.io/tags/touch-event/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>二、View测量</title>
+    <link href="https://mycroftwong.gitee.io/2019/08/24/er-view-ce-liang/"/>
+    <id>https://mycroftwong.gitee.io/2019/08/24/er-view-ce-liang/</id>
+    <published>2019-08-24T06:34:31.000Z</published>
+    <updated>2023-06-13T07:01:29.493Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;View测量&quot;&gt;&lt;a href=&quot;#View测量&quot; class=&quot;headerlink&quot; title=&quot;View测量&quot;&gt;&lt;/a&gt;View测量&lt;/h1&gt;&lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="Android - View" scheme="https://mycroftwong.gitee.io/categories/Android-View/"/>
+    
+    
+    <category term="Android" scheme="https://mycroftwong.gitee.io/tags/Android/"/>
+    
+    <category term="面试" scheme="https://mycroftwong.gitee.io/tags/%E9%9D%A2%E8%AF%95/"/>
+    
+    <category term="View" scheme="https://mycroftwong.gitee.io/tags/View/"/>
+    
+    <category term="measure" scheme="https://mycroftwong.gitee.io/tags/measure/"/>
+    
+    <category term="layout" scheme="https://mycroftwong.gitee.io/tags/layout/"/>
+    
+    <category term="draw" scheme="https://mycroftwong.gitee.io/tags/draw/"/>
+    
+    <category term="touch event" scheme="https://mycroftwong.gitee.io/tags/touch-event/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>一、View基础知识</title>
+    <link href="https://mycroftwong.gitee.io/2019/08/24/yi-view-ji-chu-zhi-shi/"/>
+    <id>https://mycroftwong.gitee.io/2019/08/24/yi-view-ji-chu-zhi-shi/</id>
+    <published>2019-08-24T03:41:12.000Z</published>
+    <updated>2023-06-13T07:01:29.491Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;View基础知识&quot;&gt;&lt;a href=&quot;#View基础知识&quot; class=&quot;headerlink&quot; title=&quot;View基础知识&quot;&gt;&lt;/a&gt;View基础知识&lt;/h1&gt;&lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="Android - View" scheme="https://mycroftwong.gitee.io/categories/Android-View/"/>
+    
+    
+    <category term="Android" scheme="https://mycroftwong.gitee.io/tags/Android/"/>
+    
+    <category term="面试" scheme="https://mycroftwong.gitee.io/tags/%E9%9D%A2%E8%AF%95/"/>
+    
+    <category term="View" scheme="https://mycroftwong.gitee.io/tags/View/"/>
+    
+    <category term="measure" scheme="https://mycroftwong.gitee.io/tags/measure/"/>
+    
+    <category term="layout" scheme="https://mycroftwong.gitee.io/tags/layout/"/>
+    
+    <category term="draw" scheme="https://mycroftwong.gitee.io/tags/draw/"/>
+    
+    <category term="touch event" scheme="https://mycroftwong.gitee.io/tags/touch-event/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>自定义View系列</title>
+    <link href="https://mycroftwong.gitee.io/2019/08/24/zi-ding-yi-view-xi-lie/"/>
+    <id>https://mycroftwong.gitee.io/2019/08/24/zi-ding-yi-view-xi-lie/</id>
+    <published>2019-08-24T03:22:37.000Z</published>
+    <updated>2023-06-13T07:01:29.494Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;自定义View系列&quot;&gt;&lt;a href=&quot;#自定义View系列&quot; class=&quot;headerlink&quot; title=&quot;自定义View系列&quot;&gt;&lt;/a&gt;自定义View系列&lt;/h1&gt;&lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="Android - View" scheme="https://mycroftwong.gitee.io/categories/Android-View/"/>
+    
+    
+    <category term="Android" scheme="https://mycroftwong.gitee.io/tags/Android/"/>
+    
+    <category term="面试" scheme="https://mycroftwong.gitee.io/tags/%E9%9D%A2%E8%AF%95/"/>
+    
+    <category term="View" scheme="https://mycroftwong.gitee.io/tags/View/"/>
+    
+    <category term="measure" scheme="https://mycroftwong.gitee.io/tags/measure/"/>
+    
+    <category term="layout" scheme="https://mycroftwong.gitee.io/tags/layout/"/>
+    
+    <category term="draw" scheme="https://mycroftwong.gitee.io/tags/draw/"/>
+    
+    <category term="touch event" scheme="https://mycroftwong.gitee.io/tags/touch-event/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>学习计划</title>
+    <link href="https://mycroftwong.gitee.io/2019/08/22/xue-xi-ji-hua/"/>
+    <id>https://mycroftwong.gitee.io/2019/08/22/xue-xi-ji-hua/</id>
+    <published>2019-08-22T03:03:27.000Z</published>
+    <updated>2023-06-13T07:01:29.494Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;2019年8月22日&quot;&gt;&lt;a href=&quot;#2019年8月22日&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="学习计划" scheme="https://mycroftwong.gitee.io/categories/%E5%AD%A6%E4%B9%A0%E8%AE%A1%E5%88%92/"/>
+    
+    
+    <category term="Android" scheme="https://mycroftwong.gitee.io/tags/Android/"/>
+    
+    <category term="View" scheme="https://mycroftwong.gitee.io/tags/View/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Parcelable为什么效率高于Serializable</title>
+    <link href="https://mycroftwong.gitee.io/2019/08/22/parcelable-wei-shi-me-xiao-lu-gao-yu-serializable/"/>
+    <id>https://mycroftwong.gitee.io/2019/08/22/parcelable-wei-shi-me-xiao-lu-gao-yu-serializable/</id>
+    <published>2019-08-22T02:15:23.000Z</published>
+    <updated>2023-06-13T07:01:29.480Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;Parcelable为什么效率高于Serializable&quot;&gt;&lt;a href=&quot;#Parcelable为什么效率高于Serializable&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="Android - 序列化" scheme="https://mycroftwong.gitee.io/categories/Android-%E5%BA%8F%E5%88%97%E5%8C%96/"/>
+    
+    
+    <category term="Android" scheme="https://mycroftwong.gitee.io/tags/Android/"/>
+    
+    <category term="Parcelable" scheme="https://mycroftwong.gitee.io/tags/Parcelable/"/>
+    
+    <category term="Serializable" scheme="https://mycroftwong.gitee.io/tags/Serializable/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>面试总结</title>
+    <link href="https://mycroftwong.gitee.io/2019/08/21/mian-shi-zong-jie/"/>
+    <id>https://mycroftwong.gitee.io/2019/08/21/mian-shi-zong-jie/</id>
+    <published>2019-08-21T13:26:24.000Z</published>
+    <updated>2023-06-13T07:01:29.495Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;面试总结&quot;&gt;&lt;a href=&quot;#面试总结&quot; class=&quot;headerlink&quot; title=&quot;面试总结&quot;&gt;&lt;/a&gt;面试总结&lt;/h1&gt;&lt;h2 id=&quot;2019年8月21日&quot;&gt;&lt;a href=&quot;#2019年8月21日&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="面试" scheme="https://mycroftwong.gitee.io/categories/%E9%9D%A2%E8%AF%95/"/>
+    
+    
+    <category term="面试" scheme="https://mycroftwong.gitee.io/tags/%E9%9D%A2%E8%AF%95/"/>
+    
+    <category term="View" scheme="https://mycroftwong.gitee.io/tags/View/"/>
+    
+    <category term="Activity" scheme="https://mycroftwong.gitee.io/tags/Activity/"/>
+    
+    <category term="图片压缩" scheme="https://mycroftwong.gitee.io/tags/%E5%9B%BE%E7%89%87%E5%8E%8B%E7%BC%A9/"/>
+    
+    <category term="HTTP" scheme="https://mycroftwong.gitee.io/tags/HTTP/"/>
+    
+    <category term="Socket" scheme="https://mycroftwong.gitee.io/tags/Socket/"/>
+    
+    <category term="蓝牙" scheme="https://mycroftwong.gitee.io/tags/%E8%93%9D%E7%89%99/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>okhttp RealConnectionPool</title>
+    <link href="https://mycroftwong.gitee.io/2019/08/19/okhttp-realconnectionpool/"/>
+    <id>https://mycroftwong.gitee.io/2019/08/19/okhttp-realconnectionpool/</id>
+    <published>2019-08-19T02:32:18.000Z</published>
+    <updated>2023-06-13T07:01:29.487Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;okhttp-RealConnectionPool&quot;&gt;&lt;a href=&quot;#okhttp-RealConnectionPool&quot; class=&quot;headerlink&quot; title=&quot;okhttp RealConnectionPool&quot;&gt;&lt;/a&gt;okhttp</summary>
+        
+      
+    
+    
+    
+    <category term="开源库 - okhttp" scheme="https://mycroftwong.gitee.io/categories/%E5%BC%80%E6%BA%90%E5%BA%93-okhttp/"/>
+    
+    
+    <category term="okhttp" scheme="https://mycroftwong.gitee.io/tags/okhttp/"/>
+    
+    <category term="开源" scheme="https://mycroftwong.gitee.io/tags/%E5%BC%80%E6%BA%90/"/>
+    
+    <category term="http" scheme="https://mycroftwong.gitee.io/tags/http/"/>
+    
+    <category term="https" scheme="https://mycroftwong.gitee.io/tags/https/"/>
+    
+    <category term="面试" scheme="https://mycroftwong.gitee.io/tags/%E9%9D%A2%E8%AF%95/"/>
+    
+    <category term="责任链模式" scheme="https://mycroftwong.gitee.io/tags/%E8%B4%A3%E4%BB%BB%E9%93%BE%E6%A8%A1%E5%BC%8F/"/>
+    
+    <category term="ConnectInterceptor" scheme="https://mycroftwong.gitee.io/tags/ConnectInterceptor/"/>
+    
+    <category term="RealConnectionPool" scheme="https://mycroftwong.gitee.io/tags/RealConnectionPool/"/>
+    
+  </entry>
+  
+</feed>

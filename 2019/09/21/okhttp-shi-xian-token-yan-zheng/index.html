@@ -1,0 +1,1124 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="okhttp实现token验证, blog,mycroft,android,spring,mycroftwong">
+    <meta name="description" content="okhttp实现token验证前言公司目前的项目使用了token来验证用户。登陆之后会返回最新的access token，后续在每次请求API时，服务端会返回最新的access token，客户端进行保存。若一段时间内（假定是7天）没有进行">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>okhttp实现token验证 | Mycroft</title>
+    <link rel="icon" type="image/x-icon, image/vnd.microsoft.icon" href="https://www.mycroft.wang/images/favicon.ico">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    <style type="text/css">
+        
+        code[class*="language-"], pre[class*="language-"] {
+            white-space: pre !important;
+        }
+        
+    </style>
+
+    <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Mycroft" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<body>
+
+<header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="https://www.mycroft.wang/images/default_avatar.jpg" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">Mycroft</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fa fa-navicon"></i></a>
+<ul class="right">
+    
+    <li class="hide-on-med-and-down">
+        <a href="/" class="waves-effect waves-light">
+            
+            <i class="fa fa-home"></i>
+            
+            <span>首页</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/tags" class="waves-effect waves-light">
+            
+            <i class="fa fa-tags"></i>
+            
+            <span>标签</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/categories" class="waves-effect waves-light">
+            
+            <i class="fa fa-bookmark"></i>
+            
+            <span>分类</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/archives" class="waves-effect waves-light">
+            
+            <i class="fa fa-archive"></i>
+            
+            <span>归档</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/about" class="waves-effect waves-light">
+            
+            <i class="fa fa-user-circle-o"></i>
+            
+            <span>关于</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/friends" class="waves-effect waves-light">
+            
+            <i class="fa fa-address-book"></i>
+            
+            <span>友情链接</span>
+        </a>
+    </li>
+    
+    <li>
+        <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+            <i id="searchIcon" class="fa fa-search" title="搜索"></i>
+        </a>
+    </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="https://www.mycroft.wang/images/default_avatar.jpg" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">Mycroft</div>
+        <div class="logo-desc">
+            
+            天道酬勤
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li>
+            <a href="/" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-home"></i>
+                
+                首页
+            </a>
+        </li>
+        
+        <li>
+            <a href="/tags" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-tags"></i>
+                
+                标签
+            </a>
+        </li>
+        
+        <li>
+            <a href="/categories" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-bookmark"></i>
+                
+                分类
+            </a>
+        </li>
+        
+        <li>
+            <a href="/archives" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-archive"></i>
+                
+                归档
+            </a>
+        </li>
+        
+        <li>
+            <a href="/about" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-user-circle-o"></i>
+                
+                关于
+            </a>
+        </li>
+        
+        <li>
+            <a href="/friends" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-address-book"></i>
+                
+                友情链接
+            </a>
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/MycroftWong" class="waves-effect waves-light" target="_blank">
+                <i class="fa fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/MycroftWong" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+
+<script src="/libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '/';
+            }
+        }
+    })();
+</script>
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/20.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        okhttp实现token验证
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 20px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/okhttp/" target="_blank">
+                                <span class="chip bg-color">okhttp</span>
+                            </a>
+                        
+                            <a href="/tags/%E5%BC%80%E6%BA%90/" target="_blank">
+                                <span class="chip bg-color">开源</span>
+                            </a>
+                        
+                            <a href="/tags/http/" target="_blank">
+                                <span class="chip bg-color">http</span>
+                            </a>
+                        
+                            <a href="/tags/token/" target="_blank">
+                                <span class="chip bg-color">token</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fa fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E5%BC%80%E6%BA%90%E5%BA%93-okhttp/" class="post-category" target="_blank">
+                                开源库 - okhttp
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                <div class="post-date info-break-policy">
+                    <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2019-09-21
+                </div>
+
+                
+                    
+                    <div class="info-break-policy">
+                        <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
+                        1.3k
+                    </div>
+                    
+
+                    
+                    <div class="info-break-policy">
+                        <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                        5 分
+                    </div>
+                    
+                
+				
+				
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="fa fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="okhttp实现token验证"><a href="#okhttp实现token验证" class="headerlink" title="okhttp实现token验证"></a>okhttp实现token验证</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>公司目前的项目使用了<code>token</code>来验证用户。登陆之后会返回最新的<code>access token</code>，后续在每次请求<code>API</code>时，服务端会返回最新的<code>access token</code>，客户端进行保存。若一段时间内（假定是7天）没有进行操作，则需要重新登陆。</p>
+<h2 id="验证流程"><a href="#验证流程" class="headerlink" title="验证流程"></a>验证流程</h2><p><img src="/token%E9%AA%8C%E8%AF%81%E6%B5%81%E7%A8%8B.png" alt="token验证流程"></p>
+<p>在登陆成功之后，后续的<code>token</code>验证流流程如下：</p>
+<ol>
+<li>服务端返回<code>access token</code>，客户端保存</li>
+<li>客户端发起<code>HTTP</code>请求，携带<code>token</code>，添加<code>header</code> <code>Authorization: Bearer &#123;access token&#125;</code></li>
+<li>服务端验证<code>access token</code>，若过期，则返回状态码<code>401</code>，若未过期，会添加<code>header</code> <code>NewToken: &#123;new access token&#125;</code>。</li>
+<li>若返回<code>401</code>，客户端需显示登陆页面，提示用户登陆，若验证通过，正常处理请求，并保存最新的<code>access token</code>，在后续请求中使用。</li>
+</ol>
+<h2 id="客户端的处理"><a href="#客户端的处理" class="headerlink" title="客户端的处理"></a>客户端的处理</h2><h3 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h3><p>需要考虑的点：</p>
+<ol>
+<li>因为我们的<code>APP</code>是必须登陆之后才能使用，后续的接口必须依赖<code>access token</code>，故可以认为（除登录页和闪屏页部分页面的）所有界面都需要验证<code>access token</code>是否有效。</li>
+<li>若是在后续所有页面都进行<code>access token</code>验证的判断，侵入性较强，故<code>access token</code>验证肯定是需要进行同意处理的。</li>
+<li>在<code>okhttp</code>中，处理<code>access token</code>验证有两种方式：最常用的<code>Interceptor</code>和较少使用的<code>Authenticator</code>。另外，我们也可以统一<code>HTTP</code>请求和响应，不过这和<code>Interceptor</code>的功能重合，所以只需要考虑<code>Interceptor</code>和<code>Authenticator</code>。</li>
+<li>实际使用中，会发现<code>Authenticator</code>的调用是在<code>HTTP</code>响应之后（<code>RetryAndFollowUpInterceptor</code>的功能），若是使用<code>Authenticator</code>，则是在一次<code>HTTP</code>相应之后，添加<code>access token</code>再进行一次请求，不可取，所以最后的结论是在<code>Interceptor</code>中添加<code>access token</code>。</li>
+<li>在<code>okhttp</code>中，有两种添加<code>Interceptor</code>的方式，一种是在添加在<code>RetryAndFollowUpInterceptor</code>之前，一种是在<code>CallServerInterceptor</code>之前（即<code>networkInterceptors</code>），后一种是一定需要网络请求时才会调用，前者则是可能在缓存中就得到了值，对于一些静态资源，是不需要<code>access token</code>验证的，所以自然添加到<code>networkInterceptors</code>中。</li>
+</ol>
+<h3 id="Interceptor"><a href="#Interceptor" class="headerlink" title="Interceptor"></a>Interceptor</h3><p>实现的代码：</p>
+<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">object</span> TokenInterceptor <span class="token operator">:</span> Interceptor &amp;#<span class="token number">123</span><span class="token punctuation">;</span>
+    <span class="token keyword">override</span> <span class="token keyword">fun</span> <span class="token function">intercept</span><span class="token punctuation">(</span>chain<span class="token operator">:</span> Interceptor<span class="token punctuation">.</span>Chain<span class="token punctuation">)</span><span class="token operator">:</span> Response &amp;#<span class="token number">123</span><span class="token punctuation">;</span>
+        <span class="token keyword">val</span> oldRequest <span class="token operator">=</span> chain<span class="token punctuation">.</span><span class="token function">request</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+        <span class="token keyword">val</span> newRequestBuilder <span class="token operator">=</span> oldRequest<span class="token punctuation">.</span><span class="token function">newBuilder</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token function">header</span><span class="token punctuation">(</span><span class="token string">"User-Agent"</span><span class="token punctuation">,</span> <span class="token string">"android/"</span> <span class="token operator">+</span> AppUtils<span class="token punctuation">.</span><span class="token function">getAppVersionName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+        <span class="token comment" spellcheck="true">// 判断是否请求的我们公司的服务端</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isNeedToken</span><span class="token punctuation">(</span>oldRequest<span class="token punctuation">)</span><span class="token punctuation">)</span> &amp;#<span class="token number">123</span><span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">// 若存在token，添加token</span>
+            DataService<span class="token punctuation">.</span>accessToken<span class="token operator">?</span><span class="token punctuation">.</span>let &amp;#<span class="token number">123</span><span class="token punctuation">;</span>
+                newRequestBuilder<span class="token punctuation">.</span><span class="token function">header</span><span class="token punctuation">(</span><span class="token string">"Authorization"</span><span class="token punctuation">,</span> <span class="token string">"Bearer <span class="token interpolation variable">$it</span>"</span><span class="token punctuation">)</span>
+            &amp;#<span class="token number">125</span><span class="token punctuation">;</span>
+
+            <span class="token keyword">val</span> response <span class="token operator">=</span> chain<span class="token punctuation">.</span><span class="token function">proceed</span><span class="token punctuation">(</span>newRequestBuilder<span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+            <span class="token comment" spellcheck="true">// 若是401，表示验证失败</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>HttpURLConnection<span class="token punctuation">.</span>HTTP_UNAUTHORIZED <span class="token operator">==</span> response<span class="token punctuation">.</span>code<span class="token punctuation">)</span> &amp;#<span class="token number">123</span><span class="token punctuation">;</span>
+                <span class="token comment" spellcheck="true">// 启动登陆界面</span>
+                ActivityUtils<span class="token punctuation">.</span><span class="token function">startActivity</span><span class="token punctuation">(</span>LoginActivity<span class="token punctuation">.</span><span class="token function">getIntent</span><span class="token punctuation">(</span>ActivityUtils<span class="token punctuation">.</span><span class="token function">getTopActivity</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+            &amp;#<span class="token number">125</span><span class="token punctuation">;</span>
+
+            <span class="token comment" spellcheck="true">// 若是返回新的token，则保存</span>
+            response<span class="token punctuation">.</span><span class="token function">header</span><span class="token punctuation">(</span><span class="token string">"NewToken"</span><span class="token punctuation">)</span><span class="token operator">?</span><span class="token punctuation">.</span>let &amp;#<span class="token number">123</span><span class="token punctuation">;</span>
+                DataService<span class="token punctuation">.</span>accessToken <span class="token operator">=</span> it
+            &amp;#<span class="token number">125</span><span class="token punctuation">;</span>
+
+            <span class="token keyword">return</span> response
+        &amp;#<span class="token number">125</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">return</span> chain<span class="token punctuation">.</span><span class="token function">proceed</span><span class="token punctuation">(</span>newRequestBuilder<span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    &amp;#<span class="token number">125</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">fun</span> <span class="token function">isNeedToken</span><span class="token punctuation">(</span>request<span class="token operator">:</span> Request<span class="token punctuation">)</span><span class="token operator">:</span> Boolean &amp;#<span class="token number">123</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 匹配...</span>
+    &amp;#<span class="token number">125</span><span class="token punctuation">;</span>
+&amp;#<span class="token number">125</span><span class="token punctuation">;</span>
+</code></pre>
+<p>若同时发起多个<code>HTTP</code>请求，上面的实现则会出现问题，并且这样的情况不可避免。通常在主页会有比较复杂的逻辑，会同时发起多个<code>HTTP</code>请求。下面是可能存在的问题：</p>
+<ol>
+<li>若同时发起多个<code>HTTP</code>请求，则会出现多个请求同时返回<code>401</code>的问题，同时启动多个登陆页面，当然这样的错误也可以避免，如设置登陆页面<code>Activity</code>的<code>launchMode</code>为<code>singleTask</code>。</li>
+<li>多个<code>HTTP</code>响应也会造成页面上可能会同时弹出多个<code>Toast</code>的情况。</li>
+<li>多个<code>HTTP</code>请求携带同样的<code>access token</code>，返回新的<code>access token</code>则不同，可能会因为网络延时，造成服务端最新的<code>access token</code>反而会被前一个<code>access token</code>覆盖。</li>
+</ol>
+<p>综上，我给出的解决方案是进行同步：</p>
+<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">object</span> TokenInterceptor <span class="token operator">:</span> Interceptor &amp;#<span class="token number">123</span><span class="token punctuation">;</span>
+    <span class="token keyword">override</span> <span class="token keyword">fun</span> <span class="token function">intercept</span><span class="token punctuation">(</span>chain<span class="token operator">:</span> Interceptor<span class="token punctuation">.</span>Chain<span class="token punctuation">)</span><span class="token operator">:</span> Response &amp;#<span class="token number">123</span><span class="token punctuation">;</span>
+        <span class="token keyword">val</span> oldRequest <span class="token operator">=</span> chain<span class="token punctuation">.</span><span class="token function">request</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+        <span class="token keyword">val</span> newRequestBuilder <span class="token operator">=</span> oldRequest<span class="token punctuation">.</span><span class="token function">newBuilder</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token function">header</span><span class="token punctuation">(</span><span class="token string">"User-Agent"</span><span class="token punctuation">,</span> <span class="token string">"android/"</span> <span class="token operator">+</span> AppUtils<span class="token punctuation">.</span><span class="token function">getAppVersionName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+        <span class="token comment" spellcheck="true">// 判断是否请求的我们公司的服务端</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isNeedToken</span><span class="token punctuation">(</span>oldRequest<span class="token punctuation">)</span><span class="token punctuation">)</span> &amp;#<span class="token number">123</span><span class="token punctuation">;</span>
+            <span class="token function">synchronized</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span> &amp;#<span class="token number">123</span><span class="token punctuation">;</span>
+                <span class="token comment" spellcheck="true">// 若存在token，添加token</span>
+                DataService<span class="token punctuation">.</span>accessToken<span class="token operator">?</span><span class="token punctuation">.</span>let &amp;#<span class="token number">123</span><span class="token punctuation">;</span>
+                    newRequestBuilder<span class="token punctuation">.</span><span class="token function">header</span><span class="token punctuation">(</span><span class="token string">"Authorization"</span><span class="token punctuation">,</span> <span class="token string">"Bearer <span class="token interpolation variable">$it</span>"</span><span class="token punctuation">)</span>
+                &amp;#<span class="token number">125</span><span class="token punctuation">;</span>
+
+                <span class="token keyword">val</span> response <span class="token operator">=</span> chain<span class="token punctuation">.</span><span class="token function">proceed</span><span class="token punctuation">(</span>newRequestBuilder<span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+                <span class="token comment" spellcheck="true">// 若是401，表示验证失败</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>HttpURLConnection<span class="token punctuation">.</span>HTTP_UNAUTHORIZED <span class="token operator">==</span> response<span class="token punctuation">.</span>code<span class="token punctuation">)</span> &amp;#<span class="token number">123</span><span class="token punctuation">;</span>
+                    <span class="token comment" spellcheck="true">// 启动登陆界面</span>
+                    ActivityUtils<span class="token punctuation">.</span><span class="token function">startActivity</span><span class="token punctuation">(</span>LoginActivity<span class="token punctuation">.</span><span class="token function">getIntent</span><span class="token punctuation">(</span>ActivityUtils<span class="token punctuation">.</span><span class="token function">getTopActivity</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+                &amp;#<span class="token number">125</span><span class="token punctuation">;</span>
+
+                <span class="token comment" spellcheck="true">// 若是返回新的token，则保存</span>
+                response<span class="token punctuation">.</span><span class="token function">header</span><span class="token punctuation">(</span><span class="token string">"NewToken"</span><span class="token punctuation">)</span><span class="token operator">?</span><span class="token punctuation">.</span>let &amp;#<span class="token number">123</span><span class="token punctuation">;</span>
+                    DataService<span class="token punctuation">.</span>accessToken <span class="token operator">=</span> it
+                &amp;#<span class="token number">125</span><span class="token punctuation">;</span>
+
+                <span class="token keyword">return</span> response
+            &amp;#<span class="token number">125</span><span class="token punctuation">;</span>
+        &amp;#<span class="token number">125</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">return</span> chain<span class="token punctuation">.</span><span class="token function">proceed</span><span class="token punctuation">(</span>newRequestBuilder<span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    &amp;#<span class="token number">125</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">fun</span> <span class="token function">isNeedToken</span><span class="token punctuation">(</span>request<span class="token operator">:</span> Request<span class="token punctuation">)</span><span class="token operator">:</span> Boolean &amp;#<span class="token number">123</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 匹配...</span>
+    &amp;#<span class="token number">125</span><span class="token punctuation">;</span>
+&amp;#<span class="token number">125</span><span class="token punctuation">;</span>
+</code></pre>
+<p>除了上面的实现，还需要设置登陆页面<code>Activity</code>的<code>launchMode</code>为<code>singleTask</code>，减少首页<code>Activity</code>请求失败后弹出<code>Toast</code>，另外可以在闪屏页面进行验证，不过设置超时时间尽量短。</p>
+<p>不过使用同步就会使每个需要<code>token</code>验证的请求排队，对于<code>APP</code>并发量较少的情况来说没有问题，若是一些不需要<code>token</code>验证，并发量高的<code>HTTP</code>请求，如加载瀑布流图片，则可以进一步判断，不进入同步代码块，这样也能提高效率。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>实现看起来非常简单，不过这是要在理解<code>access token</code>验证的基础上，并且需要经历很多测试（我让服务端的大神设置<code>access token</code>过期时间为5分钟，这样可以频繁触发<code>access token</code>）。建议阅读后面的参考文章。</p>
+<h2 id="参考阅读"><a href="#参考阅读" class="headerlink" title="参考阅读"></a>参考阅读</h2><p><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html">理解OAuth 2.0</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.blog.chinaunix.net/uid-9162199-id-4694665.html">OAuth 2.0 筆記 (6) Bearer Token 的使用方法</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/XiongMaoMengNan/p/6785155.html">OAuth 2.0: Bearer Token Usage</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/7a2d2d7497a1">RxJava2 + Retrofit2 完全指南 之 Authenticator处理与Token静默刷新</a></p>
+
+            </div>
+            <hr/>
+
+            
+            <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.88rem;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-large waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fa fa-close"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.png" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+            
+
+            <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    <div class="social-share" data-disabled="qzone" data-wechat-qrcode-helper="<p>微信里点“发现”->“扫一扫”二维码便可查看分享。</p>"></div>
+    
+</div>
+
+<script src="/libs/share/js/social-share.min.js"></script>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        <p class="reprint-tip">
+            <i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;
+            <span>转载规则</span>
+        </p>
+        
+            <div class="center-align">
+                <a rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                    <img alt=""
+                         style="border-width:0"
+                         src="https://i.creativecommons.org/l/by/4.0/88x31.png"/>
+                </a>
+            </div>
+            <br/>
+            <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
+                  property="dct:title" rel="dct:type">
+                    《okhttp实现token验证》
+                </span> 由
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2019/09/21/okhttp-shi-xian-token-yan-zheng/" property="cc:attributionName"
+               rel="cc:attributionURL">
+                Mycroft Wong
+            </a> 采用
+            <a rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                知识共享署名 4.0 国际许可协议
+            </a>进行许可。
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge badge-text-color">
+                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2019/10/14/permission-quan-xian/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/26.jpg" class="responsive-img" alt="Permission 权限">
+                        
+                        <span class="card-title">Permission 权限</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            Permission 权限Android引入权限的目的是保护用户隐私。APP一定要在访问用户敏感数据（如短信服务）和系统功能（如相机、网络）时申请权限。对于不同的功能，系统可能会自动通过权限申请，也可能提示用户批准权限。
+安卓系统安全架构的
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2019-10-14
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Android-%E5%9F%BA%E7%A1%80/" class="post-category" target="_blank">
+                                    Android - 基础
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Permission/" target="_blank">
+                        <span class="chip bg-color">Permission</span>
+                    </a>
+                    
+                    <a href="/tags/%E6%9D%83%E9%99%90/" target="_blank">
+                        <span class="chip bg-color">权限</span>
+                    </a>
+                    
+                    <a href="/tags/ContentProvider/" target="_blank">
+                        <span class="chip bg-color">ContentProvider</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge badge-text-color">
+                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2019/09/13/okio-guan-fang-wen-dang-fan-yi/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="Okio官方文档翻译">
+                        
+                        <span class="card-title">Okio官方文档翻译</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            Okio官方文档翻译Okio是一个辅助java.io和java.nio变得更易于访问、存储、操作数据的库。它一开始是作为Okhttp的组件存在。Okhttp是在Android中非常好用的HTTP客户端。Okio经过充分测试，并且准备好处理新
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-09-13
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E5%BC%80%E6%BA%90%E5%BA%93-okio/" class="post-category" target="_blank">
+                                    开源库 - okio
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/okio/" target="_blank">
+                        <span class="chip bg-color">okio</span>
+                    </a>
+                    
+                    <a href="/tags/okhttp/" target="_blank">
+                        <span class="chip bg-color">okhttp</span>
+                    </a>
+                    
+                    <a href="/tags/%E6%BA%90%E7%A0%81/" target="_blank">
+                        <span class="chip bg-color">源码</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: Mycroft<br />'
+            + '作者: Mycroft Wong<br />'
+            + '链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="fa fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fa fa-list"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            collapseDepth: 6,
+            headingSelector: 'h2, h3, h4, h5'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4, h5').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).slideUp(500);
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).slideDown(500);
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+    
+
+</main>
+
+
+<footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            本站由&copy;<a href="https://MycroftWong.github.io/" target="_blank">Mycroft Wong</a>基于
+            <a href="https://hexo.io/" target="_blank">Hexo</a>搭建.
+
+            
+                &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
+                <span class="white-color">51.5k</span>
+            
+
+            
+			
+                <br>
+                
+                <span id="busuanzi_container_site_pv">
+                    <i class="fa fa-heart-o"></i>
+                    本站总访问量 <span id="busuanzi_value_site_pv" class="white-color"></span>
+                </span>
+                
+                
+                <span id="busuanzi_container_site_uv">
+                    <i class="fa fa-users"></i>
+                    次,&nbsp;访客数 <span id="busuanzi_value_site_uv" class="white-color"></span> 人.
+                </span>
+                
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/MycroftWong" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fa fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:mycroftwong@gmail.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fa fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fa fa-rss"></i>
+    </a>
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+<!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fa fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+<!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fa fa-angle-up"></i>
+    </a>
+</div>
+
+
+<script src="/libs/materialize/materialize.min.js"></script>
+<script src="/libs/masonry/masonry.pkgd.min.js"></script>
+<script src="/libs/aos/aos.js"></script>
+<script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+<script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+<script src="/js/matery.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+
+
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+
+
+</body>
+</html>

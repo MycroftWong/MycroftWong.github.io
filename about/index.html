@@ -1,0 +1,1226 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="关于, blog,mycroft,android,spring,mycroftwong">
+    <meta name="description" content="关于 | Mycroft">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>关于 | Mycroft</title>
+    <link rel="icon" type="image/x-icon, image/vnd.microsoft.icon" href="https://www.mycroft.wang/images/favicon.ico">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    <style type="text/css">
+        
+        code[class*="language-"], pre[class*="language-"] {
+            white-space: pre !important;
+        }
+        
+    </style>
+
+    <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Mycroft" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<body>
+
+<header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="https://www.mycroft.wang/images/default_avatar.jpg" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">Mycroft</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fa fa-navicon"></i></a>
+<ul class="right">
+    
+    <li class="hide-on-med-and-down">
+        <a href="/" class="waves-effect waves-light">
+            
+            <i class="fa fa-home"></i>
+            
+            <span>首页</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/tags" class="waves-effect waves-light">
+            
+            <i class="fa fa-tags"></i>
+            
+            <span>标签</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/categories" class="waves-effect waves-light">
+            
+            <i class="fa fa-bookmark"></i>
+            
+            <span>分类</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/archives" class="waves-effect waves-light">
+            
+            <i class="fa fa-archive"></i>
+            
+            <span>归档</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/about" class="waves-effect waves-light">
+            
+            <i class="fa fa-user-circle-o"></i>
+            
+            <span>关于</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/friends" class="waves-effect waves-light">
+            
+            <i class="fa fa-address-book"></i>
+            
+            <span>友情链接</span>
+        </a>
+    </li>
+    
+    <li>
+        <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+            <i id="searchIcon" class="fa fa-search" title="搜索"></i>
+        </a>
+    </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="https://www.mycroft.wang/images/default_avatar.jpg" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">Mycroft</div>
+        <div class="logo-desc">
+            
+            天道酬勤
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li>
+            <a href="/" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-home"></i>
+                
+                首页
+            </a>
+        </li>
+        
+        <li>
+            <a href="/tags" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-tags"></i>
+                
+                标签
+            </a>
+        </li>
+        
+        <li>
+            <a href="/categories" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-bookmark"></i>
+                
+                分类
+            </a>
+        </li>
+        
+        <li>
+            <a href="/archives" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-archive"></i>
+                
+                归档
+            </a>
+        </li>
+        
+        <li>
+            <a href="/about" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-user-circle-o"></i>
+                
+                关于
+            </a>
+        </li>
+        
+        <li>
+            <a href="/friends" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-address-book"></i>
+                
+                友情链接
+            </a>
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/MycroftWong" class="waves-effect waves-light" target="_blank">
+                <i class="fa fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/MycroftWong" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+<style type="text/css">
+    /* don't remove. */
+    /* .about-cover {
+        height: 75vh;
+    } */
+</style>
+
+<div class="bg-cover pd-header about-cover">
+    <div class="container">
+    <div class="row">
+    <div class="col s10 offset-s1 m8 offset-m2 l8 offset-l2">
+        <div class="brand">
+            <div class="title center-align">
+                
+                    Mycroft的个人微博
+                
+            </div>
+
+            <div class="description center-align">
+                
+                    天道酬勤
+                
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+// 每天切换 banner 图.  Switch banner image every day.
+// 手机屏幕
+if (screen.width < 601) {
+    $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay() + '_phone.jpg)');
+// 平板屏幕，和电脑屏幕异常处理
+// } else if (screen.width < 992) {
+    // $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay() + '.jpg)');
+// 电脑屏幕
+} else {
+    $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay() + '.jpg)');
+}
+</script>
+    </div>
+</div>
+
+<main class="content">
+
+    <div id="aboutme" class="container about-container">
+        <div class="card">
+            <div class="card-content">
+                <div class="row">
+                    <div class="post-statis col l4 hide-on-med-and-down" data-aos="zoom-in-right">
+                        
+<div class="statis">
+    <span class="count"><a href="/" target="_blank">40</a></span>
+    <span class="name">文章</span>
+</div>
+
+
+
+<div class="statis">
+    <span class="count"><a href="/categories" target="_blank">17</a></span>
+    <span class="name">分类</span>
+</div>
+
+
+
+<div class="statis">
+    <span class="count"><a href="/tags" target="_blank">71</a></span>
+    <span class="name">标签</span>
+</div>
+
+                    </div>
+                    <div class="col s12 m12 l4">
+                        <div class="profile center-align">
+                            <div class="avatar">
+                                <img src="/medias/avatar.jpg" alt="Mycroft Wong"
+                                     class="circle responsive-img avatar-img">
+                            </div>
+                            <div class="author">
+                                <div class="post-statis hide-on-large-only" data-aos="zoom-in-right">
+                                    
+<div class="statis">
+    <span class="count"><a href="/" target="_blank">40</a></span>
+    <span class="name">文章</span>
+</div>
+
+
+
+<div class="statis">
+    <span class="count"><a href="/categories" target="_blank">17</a></span>
+    <span class="name">分类</span>
+</div>
+
+
+
+<div class="statis">
+    <span class="count"><a href="/tags" target="_blank">71</a></span>
+    <span class="name">标签</span>
+</div>
+
+                                </div>
+                                <div class="title">Mycroft Wong</div>
+                                <div class="career">Android开发工程师</div>
+                                <div class="social-link hide-on-large-only" data-aos="zoom-in-left">
+                                    
+    <a href="https://github.com/MycroftWong" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fa fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:mycroftwong@gmail.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fa fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fa fa-rss"></i>
+    </a>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col l4 hide-on-med-and-down" data-aos="zoom-in-left">
+                        <div class="social-link">
+                            
+    <a href="https://github.com/MycroftWong" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fa fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:mycroftwong@gmail.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fa fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fa fa-rss"></i>
+    </a>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="introduction center-align" data-aos="fade-up">天道酬勤</div>
+
+                <style type="text/css">
+    #posts-chart,
+    #categories-chart,
+    #tags-chart {
+        width: 100%;
+        height: 300px;
+        margin: 0.5rem auto;
+        padding: 0.5rem;
+    }
+</style>
+
+<div id="postCharts" class="post-charts">
+    <div class="title center-align" data-aos="zoom-in-up">
+        <i class="fa fa-bar-chart"></i>&nbsp;&nbsp;文章统计图
+    </div>
+    <div class="row">
+        <div class="chart col s12 m6 l4" data-aos="zoom-in-up">
+            <div id="posts-chart"></div>
+        </div>
+
+        <div class="chart col s12 m6 l4" data-aos="zoom-in-up">
+            <div id="categories-chart"></div>
+        </div>
+
+        <div class="chart col s12 m6 l4" data-aos="zoom-in-up">
+            <div id="tags-chart"></div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="/libs/echarts/echarts.min.js"></script>
+<script>
+    let postsChart = echarts.init(document.getElementById('posts-chart'));
+    let categoriesChart = echarts.init(document.getElementById('categories-chart'));
+    let tagsChart = echarts.init(document.getElementById('tags-chart'));
+
+    
+
+    let postsOption = {
+        title: {
+            text: '文章发布统计图',
+            top: -5,
+            x: 'center'
+        },
+        tooltip: {
+            trigger: 'axis'
+        },
+        xAxis: {
+            type: 'category',
+            data: ["2022-06","2022-07","2022-08","2022-09","2022-10","2022-11","2022-12","2023-01","2023-02","2023-03","2023-04","2023-05","2023-06"]
+        },
+        yAxis: {
+            type: 'value',
+        },
+        series: [
+            {
+                name: '文章篇数',
+                type: 'line',
+                color: ['#6772e5'],
+                data: [0,0,0,1,0,2,0,0,0,0,0,0,1],
+                markPoint: {
+                    symbolSize: 45,
+                    color: ['#fa755a','#3ecf8e','#82d3f4'],
+                    data: [{
+                        type: 'max',
+                        itemStyle: {color: ['#3ecf8e']},
+                        name: '最大值'
+                    }, {
+                        type: 'min',
+                        itemStyle: {color: ['#fa755a']},
+                        name: '最小值'
+                    }]
+                },
+                markLine: {
+                    itemStyle: {color: ['#ab47bc']},
+                    data: [
+                        {type: 'average', name: '平均值'}
+                    ]
+                }
+            }
+        ]
+    };
+
+    
+
+    let categoriesOption = {
+        title: {
+            text: '文章分类统计图',
+            top: -4,
+            x: 'center'
+        },
+        tooltip: {
+            trigger: 'item',
+            formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+        series: [
+            {
+                name: '分类',
+                type: 'pie',
+                radius: '50%',
+                color: ['#6772e5', '#ff9e0f', '#fa755a', '#3ecf8e', '#82d3f4', '#ab47bc', '#525f7f', '#f51c47', '#26A69A'],
+                data: [{"name":"Android - 优化","value":1},{"name":"Android","value":3},{"name":"Android - 图片","value":1},{"name":"开源库 - okio","value":1},{"name":"Android - 序列化","value":1},{"name":"Android - 基础","value":1},{"name":"Socks 5","value":1},{"name":"Java - 基础知识","value":1},{"name":"spring boot - bug","value":1},{"name":"CI/CD","value":2},{"name":"网站搭建","value":5},{"name":"开源库 - okhttp","value":9},{"name":"Android - View","value":4},{"name":"生活","value":1},{"name":"学习计划","value":1},{"name":"工具 - git","value":2},{"name":"面试","value":1}],
+                itemStyle: {
+                    emphasis: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }
+        ]
+    };
+
+    
+
+    let tagsOption = {
+        title: {
+            text: 'TOP10 标签统计图',
+            top: -5,
+            x: 'center'
+        },
+        tooltip: {},
+        xAxis: [
+            {
+                type: 'category',
+                data: ["面试","Android","okhttp","http","https","开源","责任链模式","View","源码","hexo"]
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value'
+            }
+        ],
+        series: [
+            {
+                type: 'bar',
+                color: ['#82d3f4'],
+                barWidth : 18,
+                data: [13,10,10,9,8,6,6,6,4,4],
+                markPoint: {
+                    symbolSize: 45,
+                    data: [{
+                        type: 'max',
+                        itemStyle: {color: ['#3ecf8e']},
+                        name: '最大值'
+                    }, {
+                        type: 'min',
+                        itemStyle: {color: ['#fa755a']},
+                        name: '最小值'
+                    }],
+                },
+                markLine: {
+                    itemStyle: {color: ['#ab47bc']},
+                    data: [
+                        {type: 'average', name: '平均值'}
+                    ]
+                }
+            }
+        ]
+    };
+
+    // render the charts
+    postsChart.setOption(postsOption);
+    categoriesChart.setOption(categoriesOption);
+    tagsChart.setOption(tagsOption);
+</script>
+
+                
+
+                
+                
+<div class="my-skills">
+    <div class="title center-align" data-aos="zoom-in-up">
+        <i class="fa fa-wrench"></i>&nbsp;&nbsp;我的技能
+    </div>
+    <div class="row">
+        
+        
+        
+        <div class="col s12 m6 l6" data-aos="fade-up">
+            <div class="skillbar">
+                <div class="skillbar-title"
+                     style="background: linear-gradient(to right, #FF0066 0%, #FF00CC 100%); width: 85%">
+                    <span>Java</span>
+                </div>
+                <div class="skill-bar-percent">85%</div>
+            </div>
+        </div>
+        
+        
+        <div class="col s12 m6 l6" data-aos="fade-up">
+            <div class="skillbar">
+                <div class="skillbar-title"
+                     style="background: linear-gradient(to right, #9900FF 0%, #CC66FF 100%); width: 85%">
+                    <span>Android</span>
+                </div>
+                <div class="skill-bar-percent">85%</div>
+            </div>
+        </div>
+        
+        
+        <div class="col s12 m6 l6" data-aos="fade-up">
+            <div class="skillbar">
+                <div class="skillbar-title"
+                     style="background: linear-gradient(to right, #2196F3 0%, #42A5F5 100%); width: 70%">
+                    <span>Kotlin</span>
+                </div>
+                <div class="skill-bar-percent">70%</div>
+            </div>
+        </div>
+        
+        
+        <div class="col s12 m6 l6" data-aos="fade-up">
+            <div class="skillbar">
+                <div class="skillbar-title"
+                     style="background: linear-gradient(to right, #4CAF50 0%, #81C784 100%); width: 70%">
+                    <span>SQL</span>
+                </div>
+                <div class="skill-bar-percent">70%</div>
+            </div>
+        </div>
+        
+        
+        <div class="col s12 m6 l6" data-aos="fade-up">
+            <div class="skillbar">
+                <div class="skillbar-title"
+                     style="background: linear-gradient(to right, #FFEB3B 0%, #FFF176 100%); width: 75%">
+                    <span>程序设计</span>
+                </div>
+                <div class="skill-bar-percent">75%</div>
+            </div>
+        </div>
+        
+        
+    </div>
+
+    
+
+    
+    <div class="other-skills chip-container" data-aos="zoom-in-up">
+        <div class="sub-title center-align"><i class="fa fa-book"></i>&nbsp;&nbsp;其他技能</div>
+        <div class="tag-chips center-align">
+            
+            
+            
+            
+            <a href="/tags/%E4%BC%98%E5%8C%96/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">优化</span>
+            </a>
+            
+            
+            
+            <a href="/tags/apk/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">apk</span>
+            </a>
+            
+            
+            
+            <a href="/tags/android/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">android</span>
+            </a>
+            
+            
+            
+            <a href="/tags/EditText/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">EditText</span>
+            </a>
+            
+            
+            
+            <a href="/tags/%E8%BD%AF%E9%94%AE%E7%9B%98/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">软键盘</span>
+            </a>
+            
+            
+            
+            <a href="/tags/FileProvider/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">FileProvider</span>
+            </a>
+            
+            
+            
+            <a href="/tags/Intent/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">Intent</span>
+            </a>
+            
+            
+            
+            <a href="/tags/CentOS/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">CentOS</span>
+            </a>
+            
+            
+            
+            <a href="/tags/Luban/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">Luban</span>
+            </a>
+            
+            
+            
+            <a href="/tags/%E5%9B%BE%E7%89%87/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">图片</span>
+            </a>
+            
+            
+            
+            <a href="/tags/%E5%8E%8B%E7%BC%A9/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">压缩</span>
+            </a>
+            
+            
+            
+            <a href="/tags/okio/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">okio</span>
+            </a>
+            
+            
+            
+            <a href="/tags/okhttp/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">okhttp</span>
+            </a>
+            
+            
+            
+            <a href="/tags/%E6%BA%90%E7%A0%81/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">源码</span>
+            </a>
+            
+            
+            
+            <a href="/tags/Parcelable/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">Parcelable</span>
+            </a>
+            
+            
+            
+            <a href="/tags/Serializable/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">Serializable</span>
+            </a>
+            
+            
+            
+            <a href="/tags/Permission/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">Permission</span>
+            </a>
+            
+            
+            
+            <a href="/tags/%E6%9D%83%E9%99%90/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">权限</span>
+            </a>
+            
+            
+            
+            <a href="/tags/ContentProvider/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">ContentProvider</span>
+            </a>
+            
+            
+            
+            <a href="/tags/Socks-5/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">Socks 5</span>
+            </a>
+            
+            
+            
+            <a href="/tags/Proxy/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">Proxy</span>
+            </a>
+            
+            
+            
+            
+            
+            <a href="/tags/String/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">String</span>
+            </a>
+            
+            
+            
+            <a href="/tags/StringBuilder/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">StringBuilder</span>
+            </a>
+            
+            
+            
+            <a href="/tags/StringBuffer/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">StringBuffer</span>
+            </a>
+            
+            
+            
+            <a href="/tags/spring-boot/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">spring boot</span>
+            </a>
+            
+            
+            
+            <a href="/tags/bug/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">bug</span>
+            </a>
+            
+            
+            
+            <a href="/tags/mail/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">mail</span>
+            </a>
+            
+            
+            
+            <a href="/tags/Ubuntu/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">Ubuntu</span>
+            </a>
+            
+            
+            
+            <a href="/tags/OpenVPN/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">OpenVPN</span>
+            </a>
+            
+            
+            
+            <a href="/tags/Docker/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">Docker</span>
+            </a>
+            
+            
+            
+            <a href="/tags/gitlab/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">gitlab</span>
+            </a>
+            
+            
+            
+            <a href="/tags/gitlab-runner/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">gitlab-runner</span>
+            </a>
+            
+            
+            
+            <a href="/tags/CI-CD/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">CI/CD</span>
+            </a>
+            
+            
+            
+            <a href="/tags/hexo/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">hexo</span>
+            </a>
+            
+            
+            
+            <a href="/tags/git/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">git</span>
+            </a>
+            
+            
+            
+            <a href="/tags/categories/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">categories</span>
+            </a>
+            
+            
+            
+            <a href="/tags/nginx/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">nginx</span>
+            </a>
+            
+            
+            
+            <a href="/tags/blog/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">blog</span>
+            </a>
+            
+            
+            
+            <a href="/tags/github/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">github</span>
+            </a>
+            
+            
+            
+            <a href="/tags/gitee/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">gitee</span>
+            </a>
+            
+            
+            
+            <a href="/tags/%E5%BC%80%E6%BA%90/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">开源</span>
+            </a>
+            
+            
+            
+            <a href="/tags/http/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">http</span>
+            </a>
+            
+            
+            
+            <a href="/tags/https/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">https</span>
+            </a>
+            
+            
+            
+            <a href="/tags/%E9%9D%A2%E8%AF%95/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">面试</span>
+            </a>
+            
+            
+            
+            <a href="/tags/%E8%B4%A3%E4%BB%BB%E9%93%BE%E6%A8%A1%E5%BC%8F/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">责任链模式</span>
+            </a>
+            
+            
+            
+            <a href="/tags/Interceptor/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">Interceptor</span>
+            </a>
+            
+            
+            
+            <a href="/tags/Chain/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">Chain</span>
+            </a>
+            
+            
+            
+            <a href="/tags/ConnectInterceptor/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">ConnectInterceptor</span>
+            </a>
+            
+            
+            
+            <a href="/tags/RealConnectionPool/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">RealConnectionPool</span>
+            </a>
+            
+            
+            
+            <a href="/tags/Transmitter/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">Transmitter</span>
+            </a>
+            
+            
+            
+            <a href="/tags/Exchange/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">Exchange</span>
+            </a>
+            
+            
+            
+            <a href="/tags/RealConnection/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">RealConnection</span>
+            </a>
+            
+            
+            
+            <a href="/tags/Cache/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">Cache</span>
+            </a>
+            
+            
+            
+            <a href="/tags/%E7%BC%93%E5%AD%98/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">缓存</span>
+            </a>
+            
+            
+            
+            <a href="/tags/token/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">token</span>
+            </a>
+            
+            
+            
+            <a href="/tags/View/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">View</span>
+            </a>
+            
+            
+            
+            <a href="/tags/measure/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">measure</span>
+            </a>
+            
+            
+            
+            <a href="/tags/layout/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">layout</span>
+            </a>
+            
+            
+            
+            <a href="/tags/draw/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">draw</span>
+            </a>
+            
+            
+            
+            <a href="/tags/touch-event/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">touch event</span>
+            </a>
+            
+            
+            
+            <a href="/tags/%E7%94%9F%E6%B4%BB/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">生活</span>
+            </a>
+            
+            
+            
+            <a href="/tags/branch/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">branch</span>
+            </a>
+            
+            
+            
+            <a href="/tags/aliyun/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">aliyun</span>
+            </a>
+            
+            
+            
+            <a href="/tags/Activity/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">Activity</span>
+            </a>
+            
+            
+            
+            <a href="/tags/%E5%9B%BE%E7%89%87%E5%8E%8B%E7%BC%A9/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">图片压缩</span>
+            </a>
+            
+            
+            
+            <a href="/tags/HTTP/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">HTTP</span>
+            </a>
+            
+            
+            
+            <a href="/tags/Socket/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">Socket</span>
+            </a>
+            
+            
+            
+            <a href="/tags/%E8%93%9D%E7%89%99/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">蓝牙</span>
+            </a>
+            
+            
+            
+            <a href="/tags/tomcat/" target="_blank">
+                <span class="chip center-align waves-effect waves-light chip-default">tomcat</span>
+            </a>
+            
+            
+        </div>
+    </div>
+    
+
+</div>
+                
+
+                
+                
+<div id="myGallery" class="my-gallery">
+    <div class="title center-align" data-aos="zoom-in-up">
+        <i class="fa fa-photo"></i>&nbsp;&nbsp;相册
+    </div>
+    <div class="row">
+        
+        
+        <div class="photo col s12 m6 l4" data-aos="fade-up">
+            <div class="img-item" data-src="/medias/featureimages/10.jpg">
+                <img src="/medias/featureimages/10.jpg" class="responsive-img">
+            </div>
+        </div>
+        
+        <div class="photo col s12 m6 l4" data-aos="fade-up">
+            <div class="img-item" data-src="/medias/featureimages/13.jpg">
+                <img src="/medias/featureimages/13.jpg" class="responsive-img">
+            </div>
+        </div>
+        
+        <div class="photo col s12 m6 l4" data-aos="fade-up">
+            <div class="img-item" data-src="/medias/featureimages/16.jpg">
+                <img src="/medias/featureimages/16.jpg" class="responsive-img">
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+<script>
+    $(function () {
+        let animateClass = 'animated pulse';
+        $('#myGallery .photo').hover(function () {
+            $(this).addClass(animateClass);
+        }, function () {
+            $(this).removeClass(animateClass);
+        });
+    });
+</script>
+                
+
+            </div>
+        </div>
+    </div>
+</main>
+<footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            本站由&copy;<a href="https://MycroftWong.github.io/" target="_blank">Mycroft Wong</a>基于
+            <a href="https://hexo.io/" target="_blank">Hexo</a>搭建.
+
+            
+                &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
+                <span class="white-color">51.5k</span>
+            
+
+            
+			
+                <br>
+                
+                <span id="busuanzi_container_site_pv">
+                    <i class="fa fa-heart-o"></i>
+                    本站总访问量 <span id="busuanzi_value_site_pv" class="white-color"></span>
+                </span>
+                
+                
+                <span id="busuanzi_container_site_uv">
+                    <i class="fa fa-users"></i>
+                    次,&nbsp;访客数 <span id="busuanzi_value_site_uv" class="white-color"></span> 人.
+                </span>
+                
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/MycroftWong" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fa fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:mycroftwong@gmail.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fa fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fa fa-rss"></i>
+    </a>
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+<!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fa fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+<!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fa fa-angle-up"></i>
+    </a>
+</div>
+
+
+<script src="/libs/materialize/materialize.min.js"></script>
+<script src="/libs/masonry/masonry.pkgd.min.js"></script>
+<script src="/libs/aos/aos.js"></script>
+<script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+<script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+<script src="/js/matery.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+
+
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+
+
+</body>
+</html>
