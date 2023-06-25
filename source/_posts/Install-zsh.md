@@ -16,13 +16,13 @@ sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools
 
 # install zsh-syntax-highlighting
 ## Linux
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_CUSTOM/plugins/zsh-syntax-highlighting && sed -i 's/^plugins=(/plugins=zsh-syntax-highlighting /' ~/.zshrc
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_CUSTOM/plugins/zsh-syntax-highlighting && sed -i 's/^plugins=(/plugins=(zsh-syntax-highlighting /' ~/.zshrc
 ## Mac
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_CUSTOM/plugins/zsh-syntax-highlighting && sed -i "" 's/^plugins=(/plugins=zsh-syntax-highlighting /' ~/.zshrc
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_CUSTOM/plugins/zsh-syntax-highlighting && sed -i "" 's/^plugins=(/plugins=(zsh-syntax-highlighting /' ~/.zshrc
 
 # install zsh-autosuggestions
 ## Linux
-git clone https://github.com/zsh-users/zsh-autosuggestions.git $ZSH_CUSTOM/plugins/zsh-autosuggestions && sed -i 's/^plugins=(/plugins=zsh-autosuggestions /' ~/.zshrc
+git clone https://github.com/zsh-users/zsh-autosuggestions.git $ZSH_CUSTOM/plugins/zsh-autosuggestions && sed -i 's/^plugins=(/plugins=(zsh-autosuggestions /' ~/.zshrc
 ## Mac
-git clone https://github.com/zsh-users/zsh-autosuggestions.git $ZSH_CUSTOM/plugins/zsh-autosuggestions && sed -i "" 's/^plugins=(/plugins=zsh-autosuggestions /' ~/.zshrc
+git clone https://github.com/zsh-users/zsh-autosuggestions.git $ZSH_CUSTOM/plugins/zsh-autosuggestions && sed -i "" 's/^plugins=(/plugins=(zsh-autosuggestions /' ~/.zshrc
 ```
