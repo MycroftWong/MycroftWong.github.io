@@ -1,0 +1,1124 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="CLion Toolchains, blog,mycroft,android,spring,mycroftwong">
+    <meta name="description" content="CLion ToolchainsToolchains 工具链，一些列工具。
+ChatGPT 解答 Toolchains 是什么：
+
+在 CLion 中，Toolchain 是指编译和构建项目所需的一组工具和配置。它包括编译器、链接器、构建系">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>CLion Toolchains | Mycroft</title>
+    <link rel="icon" type="image/x-icon, image/vnd.microsoft.icon" href="https://www.mycroft.wang/images/favicon.ico">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    <style type="text/css">
+        
+        code[class*="language-"], pre[class*="language-"] {
+            white-space: pre !important;
+        }
+        
+    </style>
+
+    <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Mycroft" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<body>
+
+<header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="https://www.mycroft.wang/images/default_avatar.jpg" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">Mycroft</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fa fa-navicon"></i></a>
+<ul class="right">
+    
+    <li class="hide-on-med-and-down">
+        <a href="/" class="waves-effect waves-light">
+            
+            <i class="fa fa-home"></i>
+            
+            <span>首页</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/tags" class="waves-effect waves-light">
+            
+            <i class="fa fa-tags"></i>
+            
+            <span>标签</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/categories" class="waves-effect waves-light">
+            
+            <i class="fa fa-bookmark"></i>
+            
+            <span>分类</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/archives" class="waves-effect waves-light">
+            
+            <i class="fa fa-archive"></i>
+            
+            <span>归档</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/about" class="waves-effect waves-light">
+            
+            <i class="fa fa-user-circle-o"></i>
+            
+            <span>关于</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/friends" class="waves-effect waves-light">
+            
+            <i class="fa fa-address-book"></i>
+            
+            <span>友情链接</span>
+        </a>
+    </li>
+    
+    <li>
+        <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+            <i id="searchIcon" class="fa fa-search" title="搜索"></i>
+        </a>
+    </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="https://www.mycroft.wang/images/default_avatar.jpg" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">Mycroft</div>
+        <div class="logo-desc">
+            
+            天道酬勤
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li>
+            <a href="/" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-home"></i>
+                
+                首页
+            </a>
+        </li>
+        
+        <li>
+            <a href="/tags" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-tags"></i>
+                
+                标签
+            </a>
+        </li>
+        
+        <li>
+            <a href="/categories" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-bookmark"></i>
+                
+                分类
+            </a>
+        </li>
+        
+        <li>
+            <a href="/archives" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-archive"></i>
+                
+                归档
+            </a>
+        </li>
+        
+        <li>
+            <a href="/about" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-user-circle-o"></i>
+                
+                关于
+            </a>
+        </li>
+        
+        <li>
+            <a href="/friends" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-address-book"></i>
+                
+                友情链接
+            </a>
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/MycroftWong" class="waves-effect waves-light" target="_blank">
+                <i class="fa fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/MycroftWong" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+
+<script src="/libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '/';
+            }
+        }
+    })();
+</script>
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/37.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        CLion Toolchains
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 20px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                          <div class="article-tag">
+                            <span class="chip bg-color">无标签</span>
+                          </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                <div class="post-date info-break-policy">
+                    <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2023-07-26
+                </div>
+
+                
+                    
+                    <div class="info-break-policy">
+                        <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
+                        4.6k
+                    </div>
+                    
+
+                    
+                    <div class="info-break-policy">
+                        <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                        17 分
+                    </div>
+                    
+                
+				
+				
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="fa fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="CLion-Toolchains"><a href="#CLion-Toolchains" class="headerlink" title="CLion Toolchains"></a>CLion Toolchains</h1><p><code>Toolchains</code> 工具链，一些列工具。</p>
+<p><code>ChatGPT</code> 解答 <code>Toolchains</code> 是什么：</p>
+<blockquote>
+<p>在 CLion 中，Toolchain 是指编译和构建项目所需的一组工具和配置。它包括编译器、链接器、构建系统等，用于将源代码转换为可执行文件或库文件。</p>
+<p>CLion 支持多种不同的 Toolchain，您可以根据项目的需求选择合适的 Toolchain。</p>
+</blockquote>
+<p>简单来说，<code>Toolchain</code> 包含编译、链接、构建、调试等的一系列工具。在 <code>CLion</code> 的配置中我们可以看到包括 <code>CMake</code>、<code>Build Tool</code>、<code>C Compiler</code>、<code>C++ Compiler</code>、<code>Debugger</code>。</p>
+<p>在不同的操作系统上，这些工具会有一些差异，如在 <code>Linux</code> 中，<code>C Compiler</code> 通常为 <code>cc</code>，<code>C++ Compiler</code> 通常为 <code>c++</code>，<code>Debugger</code> 为 <code>gdb</code>。而在 <code>Mac</code> 上，默认的 <code>Debugger</code> 则为 <code>LLDB</code></p>
+<h2 id="C-Compiler"><a href="#C-Compiler" class="headerlink" title="C Compiler"></a>C Compiler</h2><p>询问 <code>ChatGPT</code> 有哪些 <code>C Compiler</code>：</p>
+<blockquote>
+<p>在C语言编程中，有多种C编译器可供选择，这些编译器可以将C源代码转换为可执行的机器代码。以下是一些常见的C编译器：</p>
+<ol>
+<li><p>GCC (GNU Compiler Collection)：GCC 是一个广泛使用的开源C编译器，它支持多种平台和架构，并且拥有强大的优化功能。GCC是许多Linux发行版和其他类Unix系统中默认的C编译器。</p>
+</li>
+<li><p>Clang：Clang 是LLVM项目的一部分，是一个快速、高度兼容C编译器。它在性能上与GCC相媲美，并且支持较新的C标准。</p>
+</li>
+<li><p>Microsoft Visual C++：Microsoft Visual C++ 是Windows平台上的官方C编译器，它集成在Visual Studio开发环境中。它通常用于Windows平台的C语言开发。</p>
+</li>
+<li><p>Intel C++ Compiler：Intel C++ Compiler 是由英特尔公司开发的C编译器，专注于优化性能和并行计算。</p>
+</li>
+<li><p>TCC (Tiny C Compiler)：TCC 是一个小巧、快速的C编译器，适用于嵌入式系统和资源受限的环境。</p>
+</li>
+<li><p>Pelles C：Pelles C 是一个Windows平台上的免费C编译器，适用于学习和轻量级C开发。</p>
+</li>
+<li><p>Open Watcom：Open Watcom 是一个开源的C&#x2F;C++编译器套件，支持多种平台。</p>
+</li>
+</ol>
+<p>这些是一些常见的C编译器，每个编译器都有其特定的优点和用途。您可以根据需要和平台选择合适的C编译器来进行C语言开发。</p>
+</blockquote>
+<p>简而言之，有多种 <code>C Compiler</code>，每种操作系统有自己特有的 <code>C Compiler</code>，如 <code>Linux</code> 上的 <code>GCC</code>，<code>MacOS</code> 上的 <code>Clang</code>，<code>Windows</code> 上的 <code>Microsoft Visual C++</code>。</p>
+<p>而 <code>Microsoft Visual C++</code> 实际上是 <code>C++ Compiler</code>，它支持 <code>C90</code> 标准，也在逐步支持 <code>C99</code>，但未完全支持 <code>C99</code> 标准。</p>
+<h3 id="GCC"><a href="#GCC" class="headerlink" title="GCC"></a>GCC</h3><blockquote>
+<p>GCC (GNU Compiler Collection) 是一个广泛使用的开源编译器集合，由GNU计划开发。它支持多种编程语言，包括C、C++、Objective-C、Fortran、Ada等，并能在多种操作系统和架构上运行。</p>
+<p>GCC 是一个强大的编译器，它不仅能将源代码编译成可执行的机器代码，还提供了许多优化选项和功能，以提高程序的性能和效率。GCC 还支持各种平台上的交叉编译，可以为不同的目标平台生成代码。</p>
+<p>GCC 是自由软件，使用GNU通用公共许可证 (GPL) 授权，这意味着它可以免费使用，并且用户可以查看和修改其源代码。由于其功能强大和广泛的支持，GCC 成为了许多Linux发行版和其他类Unix系统中的默认编译器，也被广泛应用于各种开发项目中。</p>
+</blockquote>
+<p><code>GCC</code> 实际上是 <code>GNU</code> 计划开发的 <code>C Compiler</code>，基本很快支持最新的 <code>C</code> 标准。</p>
+<h3 id="Clang"><a href="#Clang" class="headerlink" title="Clang"></a>Clang</h3><blockquote>
+<p>Clang 是一个开源的C、C++、Objective-C 和Objective-C++编程语言的编译器，它是 LLVM（Low Level Virtual Machine）项目的一部分。Clang 最初由苹果公司开发，现在由一个全球性的开发社区维护和发展。</p>
+<p>Clang 的目标是成为一个高性能、高质量的编译器，它主要关注于编译速度、代码质量和用户友好性。Clang 的设计目标之一是提供更好的错误和警告信息，以帮助开发者更容易地发现和解决代码中的问题。</p>
+<p>Clang 支持多种平台和架构，可以在 Linux、macOS、Windows 和其他操作系统上运行。它在性能上与传统的编译器（如GCC）相媲美，并且有一些独特的优势，如更好的错误诊断、更快的编译速度和更好的模板支持等。</p>
+<p>除了作为独立的编译器使用，Clang 还被广泛应用于其他项目中，如编码工具、静态代码分析工具、代码编辑器等。在 macOS 和 iOS 平台上，Xcode 集成了 Clang 作为默认的编译器。</p>
+<p>总的来说，Clang 是一个强大的、高质量的开源编译器，它为 C、C++ 和 Objective-C 等编程语言提供了一种快速、高质量的编译解决方案，并且得到了全球开发者的广泛支持和贡献。</p>
+</blockquote>
+<p><code>Clang</code> 实际上就是 <code>LLVM</code> 项目中开发的 <code>C</code>、<code>C++</code>、<code>Objective-C</code>、<code>Objective-C++</code> 编译器。虽然可以在多种系统上运行，但是实际上一般只会在 <code>MacOS</code> 上使用。</p>
+<h4 id="LLVM-Low-Level-Virtual-Machine"><a href="#LLVM-Low-Level-Virtual-Machine" class="headerlink" title="LLVM - Low Level Virtual Machine"></a>LLVM - Low Level Virtual Machine</h4><blockquote>
+<p>LLVM 是一个开源的编译器基础设施项目，它最初是由苹果公司开发的，现在由一个全球性的开发社区维护和发展。LLVM 的名称最初是 “Low Level Virtual Machine” 的缩写，但随着项目的发展，它已经成为一个代表更广泛目标的名字。</p>
+<p>LLVM 提供了一套模块化、灵活和可扩展的编译器工具和技术，用于编译各种编程语言的源代码到可执行的机器代码。它的设计目标是提供高度优化的编译能力，同时提供灵活性和可扩展性，使得开发者能够针对不同的目标平台进行代码优化。</p>
+<p>LLVM 的核心组件包括：</p>
+<ol>
+<li><p>前端 (Frontend)：负责将不同编程语言（如C、C++、Objective-C、Swift等）的源代码转换成中间表示（Intermediate Representation，IR）。</p>
+</li>
+<li><p>中间表示 (IR)：LLVM使用一种通用的中间表示，它是一种低级别的、静态单赋值（Static Single Assignment，SSA）形式的代码表示形式。这种IR使得LLVM能够在不同的优化阶段进行代码优化。</p>
+</li>
+<li><p>优化器 (Optimizer)：负责在中间表示层次上对代码进行各种优化，以提高代码的性能和效率。</p>
+</li>
+<li><p>后端 (Backend)：负责将优化后的中间表示代码转换成目标平台的机器代码。</p>
+</li>
+</ol>
+<p>LLVM 的设计和实现使得它能够支持多种编程语言，能够在不同的硬件和操作系统上进行交叉编译，也能够应用于各种领域，如编译器、调试器、虚拟机等。</p>
+<p>LLVM 的开源许可证是 Apache 2.0 License，这意味着任何人都可以免费使用、修改和分发LLVM的代码。LLVM 的开发社区非常活跃，它得到了全球开发者的广泛支持和贡献。</p>
+</blockquote>
+<p><code>LLVM</code> 实际就是一系列的编译工具。将源代码经过多重处理后，生成目标平台的机器代码。</p>
+<p>前两天刚好看到 <code>Bennyhuo</code> 老师对 <code>kotlin</code> 的科普，<code>kotlin</code> 的编译器实际上也是使用 <code>kotlin</code> 编写的，目前 <code>kotlin</code> 稳定版本是 <code>1.9.0</code>，但 <code>kotlin</code> 后端编译部分已经在使用 <code>k2（kotlin 2.0）</code> 了。</p>
+<h3 id="Microsoft-Visual-C"><a href="#Microsoft-Visual-C" class="headerlink" title="Microsoft Visual C++"></a>Microsoft Visual C++</h3><blockquote>
+<p>Microsoft Visual C++（简称VC++）是微软公司开发的一款集成开发环境 (IDE) 和 C++ 编译器，主要用于在 Windows 平台上进行 C++ 开发。它是 Microsoft Visual Studio 的一部分，提供了丰富的功能和工具，用于编写、调试和部署 C++ 应用程序。</p>
+<p>Microsoft Visual C++ 提供了一个直观的图形用户界面，集成了代码编辑器、调试器、资源编辑器、可视化设计器等工具，使得开发者可以在一个集成的开发环境中完成整个 C++ 开发流程。</p>
+<p>主要特点和功能包括：</p>
+<ol>
+<li><p>C++ 编译器：Microsoft Visual C++ 提供了一个强大的 C++ 编译器，用于将 C++ 源代码编译成可执行的机器代码。</p>
+</li>
+<li><p>代码编辑器：VC++ 的代码编辑器提供了代码自动补全、语法高亮、代码折叠等功能，帮助开发者提高编码效率。</p>
+</li>
+<li><p>调试器：VC++ 的调试器支持逐步调试、断点调试、变量监视等功能，帮助开发者定位和修复程序中的错误。</p>
+</li>
+<li><p>可视化设计器：VC++ 提供了可视化设计器，使得开发者可以通过拖拽和放置的方式设计用户界面。</p>
+</li>
+<li><p>支持多种工程类型：VC++ 支持多种工程类型，包括控制台应用程序、Windows 窗体应用程序、DLL 库等。</p>
+</li>
+<li><p>广泛的库和工具：VC++ 提供了丰富的库和工具，包括标准模板库（STL）、MFC（Microsoft Foundation Classes）、ATL（Active Template Library）等，帮助开发者快速构建应用程序。</p>
+</li>
+</ol>
+<p>Microsoft Visual C++ 是一个强大且广泛使用的 C++ 开发工具，适用于 Windows 平台上的各种 C++ 应用程序开发，从简单的控制台程序到复杂的图形界面应用程序和游戏开发都可以使用 VC++ 来完成。</p>
+</blockquote>
+<p><code>Microsoft Visual C++</code> 更多的是对 <code>C++</code> 的支持，对 <code>C</code> 的支持并不是很好。</p>
+<p>所以我们在 <code>Windows</code> 上进行 <code>C</code> 开发时，如果想要使用更高的 <code>C</code> 标准，可以安装 <code>Cygwin</code> 或 <code>MinGW</code>。他们可以在 <code>Windows</code> 提供 <code>GNU</code> 工具集，如 <code>GCC</code>、<code>GDB</code>。</p>
+<p><code>Cygwin</code> 和 <code>MinGW</code> 的目的是在 <code>Windows</code> 上提供 <code>GNU</code> 工作环境。而不用必须在 <code>Unix Like</code> 上工作。实际上，<code>Windows</code> 能够提供更全面的开发工具，并且开发的程序也可能需要运行在 <code>Windows</code> 上，所以使用 <code>Cygwin</code>、<code>MinGW</code> 能够很好的解决 <code>Microsoft Visual C++</code> 对 <code>C</code> 标准的支持。</p>
+<h3 id="Cygwin"><a href="#Cygwin" class="headerlink" title="Cygwin"></a>Cygwin</h3><blockquote>
+<p>Cygwin 是一个在 Windows 操作系统上提供类 Unix 环境的兼容层和工具集。它允许在 Windows 平台上运行类 Unix 的应用程序和工具，使得开发者可以在 Windows 上编译和运行 Unix&#x2F;Linux 软件。</p>
+<p>Cygwin 包含了一套开发工具和库，如 GCC（GNU Compiler Collection）、GDB（GNU Debugger）、GNU Make 等，以及一些常用的 Unix&#x2F;Linux 命令行工具和库，如 ls、grep、awk、sed 等。这些工具和库在 Cygwin 环境下运行，提供了类 Unix 的命令行接口和功能，使得开发者可以在 Windows 上使用类 Unix 的开发环境。</p>
+<p>Cygwin 是自由软件，使用 GNU 通用公共许可证（GPL）许可证，这意味着用户可以免费使用和修改它。Cygwin 的目标是提供一个完整的 Unix&#x2F;Linux 兼容环境，使得开发者可以在 Windows 上轻松地进行 Unix&#x2F;Linux 软件的开发和移植。</p>
+<p>需要注意的是，Cygwin 是一个完整的 Unix&#x2F;Linux 兼容环境，它在 Windows 上运行的应用程序和工具将会在 Cygwin 环境中运行，而不是原生的 Windows 环境。这意味着 Cygwin 程序依赖于 Cygwin DLL，而不能直接使用 Windows DLL。如果需要在 Windows 上开发本地的 Windows 应用程序，可以考虑使用其他 Windows 开发环境，如 Microsoft Visual Studio 和 MinGW。</p>
+</blockquote>
+<h3 id="MinGW"><a href="#MinGW" class="headerlink" title="MinGW"></a>MinGW</h3><blockquote>
+<p>MinGW（Minimalist GNU for Windows）是一个在 Windows 平台上使用 GNU 工具集的开发环境。它提供了一套开发工具和库，使得开发者可以在 Windows 上编译和运行类似于 Unix 系统上的软件。</p>
+<p>MinGW 包含了 GNU 工具链，如 GCC（GNU Compiler Collection）、GDB（GNU Debugger）、GNU Make 等，以及一些常用的开发库，如头文件和静态链接库，使得开发者能够编写和构建在 Windows 上运行的 C、C++ 等应用程序。</p>
+<p>MinGW 是自由软件，使用 GPL 许可证，这意味着用户可以免费使用和修改它。MinGW 的目标是提供一个轻量级的、简化的 GNU 工具链，用于在 Windows 上进行开发，而不需要像 Cygwin 那样提供完整的 Unix 兼容性。</p>
+<p>由于 MinGW 提供了与 Unix 环境类似的开发工具和库，使得开发者可以更容易地将他们的 Unix&#x2F;Linux 软件移植到 Windows 平台上，并且可以在 Windows 上开发跨平台的软件。同时，MinGW 也能够开发本地的 Windows 应用程序，这使得它成为一个受欢迎的 Windows 开发环境选择。</p>
+<p>需要注意的是，MinGW 是一个 32 位的工具集，它不能直接用于开发 64 位的应用程序。对于 64 位开发，可以使用 MinGW-w64，它是 MinGW 的一个分支，提供了对 64 位开发的支持。</p>
+</blockquote>
+<h3 id="Cygwin-vs-MinGW"><a href="#Cygwin-vs-MinGW" class="headerlink" title="Cygwin vs MinGW"></a>Cygwin vs MinGW</h3><blockquote>
+<p>Cygwin 和 MinGW 都是用于在 Windows 平台上提供类 Unix 环境的开发工具和库，但它们在实现和用途上有一些区别。下面是 Cygwin 和 MinGW 的主要区别：</p>
+<ol>
+<li><p>实现方式：</p>
+<ul>
+<li>Cygwin：Cygwin 是一个完整的 Unix&#x2F;Linux 兼容环境，它通过提供一个兼容层来在 Windows 上模拟 Unix&#x2F;Linux 环境。Cygwin 应用程序和工具在运行时依赖于 Cygwin DLL，它负责处理与 Windows 系统的交互，并提供类 Unix 的环境支持。</li>
+<li>MinGW：MinGW 是一个最小化的 GNU 工具链，它提供了一套纯粹的编译器和工具，用于在 Windows 上编译和运行类 Unix 的应用程序。MinGW 通过直接将源代码编译为 Windows 可执行文件来实现，不需要类 Unix 的兼容层。</li>
+</ul>
+</li>
+<li><p>应用场景：</p>
+<ul>
+<li>Cygwin：Cygwin 主要用于在 Windows 上运行和开发 Unix&#x2F;Linux 软件，它提供了完整的 Unix&#x2F;Linux 兼容环境，可以运行大部分 Unix&#x2F;Linux 命令行工具和应用程序。Cygwin 可以用于开发跨平台的软件，并且提供了类 Unix 的命令行界面和功能。</li>
+<li>MinGW：MinGW 主要用于在 Windows 上开发本地的 Windows 应用程序，它提供了 Windows 版本的 GNU 工具链，可以将 C&#x2F;C++ 代码编译为原生的 Windows 可执行文件。MinGW 不提供类 Unix 的环境支持，它适用于开发原生的 Windows 应用程序。</li>
+</ul>
+</li>
+<li><p>依赖性：</p>
+<ul>
+<li>Cygwin：Cygwin 应用程序和工具依赖于 Cygwin DLL，这意味着在运行 Cygwin 程序时需要有 Cygwin 环境。</li>
+<li>MinGW：MinGW 应用程序和工具不依赖于特定的 DLL，它们是原生的 Windows 可执行文件，可以直接在 Windows 上运行。</li>
+</ul>
+</li>
+</ol>
+<p>综上所述，Cygwin 和 MinGW 在实现和用途上有所区别。如果需要在 Windows 上运行和开发类 Unix 的应用程序，可以选择 Cygwin；如果需要在 Windows 上开发本地的 Windows 应用程序，可以选择 MinGW。</p>
+</blockquote>
+<p>并没有理解 <code>ChatGPT</code> 的解释。</p>
+<h2 id="Debugger"><a href="#Debugger" class="headerlink" title="Debugger"></a>Debugger</h2><blockquote>
+<p>C 语言的调试器有很多选择，以下是一些常见的 C 调试器：</p>
+<ol>
+<li><p>GDB（GNU Debugger）：GDB 是一个功能强大的开源调试器，属于 GNU 工具集的一部分。它支持多种编程语言，包括 C 语言，可以在命令行中使用，也可以与许多集成开发环境（IDE）集成。</p>
+</li>
+<li><p>LLDB：LLDB 是一个开源调试器，属于 LLVM 项目的一部分。它最初是为 macOS 和 iOS 开发的，后来也被移植到其他平台上。LLDB 支持多种编程语言，包括 C 语言，具有现代化的调试功能和用户友好的界面。</p>
+</li>
+<li><p>Visual Studio Debugger：Visual Studio 是微软公司的集成开发环境（IDE），它包含了一个强大的调试器用于 C 语言开发。Visual Studio Debugger 提供了丰富的调试功能，包括逐步调试、断点调试、变量监视等。</p>
+</li>
+<li><p>Eclipse CDT Debugger：Eclipse 是一个开源的跨平台 IDE，CDT（C&#x2F;C++ Development Tooling）是 Eclipse 的 C&#x2F;C++ 开发工具包。Eclipse CDT Debugger 提供了调试功能，支持多种编程语言，包括 C 语言。</p>
+</li>
+<li><p>Xcode Debugger：Xcode 是苹果公司的集成开发环境（IDE），用于开发 macOS 和 iOS 应用程序。Xcode Debugger（也称为 LLDB）提供了强大的调试功能，支持 C 语言等多种编程语言。</p>
+</li>
+</ol>
+<p>这些调试器都提供了丰富的调试功能，开发者可以根据自己的需求和偏好选择合适的调试器来进行 C 语言的调试工作。</p>
+</blockquote>
+<p>可以看到 <code>GNU</code>、<code>LLVM</code>、<code>Visual Studio</code> 都提供了相应的调试器。</p>
+<h2 id="CLion-Cmake-配置"><a href="#CLion-Cmake-配置" class="headerlink" title="CLion Cmake 配置"></a>CLion Cmake 配置</h2><p>就像 <code>Intellij Idea</code> 实际上仍然使用 <code>javac</code> 编译 <code>Java</code> 代码一样，<code>CLion</code> 也是使用这些工具对 <code>C</code> 代码进行编译、调试的。</p>
+<blockquote>
+<p>在 CLion 中配置 Toolchains（工具链）和 CMake 可以让你为你的 C++ 项目选择适当的编译器和构建工具。这样，你可以确保你的项目能够正确编译和构建。</p>
+<p>以下是在 CLion 中配置 Toolchains 和 CMake 的步骤：</p>
+<p>配置 Toolchains：</p>
+<ol>
+<li>打开 CLion，进入 “File”（文件）菜单，然后选择 “Settings”（设置）。</li>
+<li>在左侧的面板中，选择 “Build, Execution, Deployment”（构建、执行、部署）选项。</li>
+<li>在右侧的面板中，选择 “Toolchains” 选项卡。</li>
+<li>点击 “+ Add” 按钮，选择你想要配置的工具链类型，比如 “MinGW”、”MSVC”（Microsoft Visual C++）或者 “WSL”（Windows Subsystem for Linux）。</li>
+<li>根据你选择的工具链类型，配置相应的工具链路径和参数。例如，对于 MinGW，你需要指定 MinGW 安装路径，对于 MSVC，你需要选择 Visual Studio 安装路径等。</li>
+<li>点击 “Apply”（应用）按钮保存配置。</li>
+</ol>
+<p>配置 CMake：</p>
+<ol>
+<li>在同一个 “Settings” 窗口中，仍然在 “Build, Execution, Deployment” 选项下，选择 “CMake” 选项卡。</li>
+<li>确保 “CMake executable”（CMake 可执行文件）字段指向正确的 CMake 可执行文件路径。你可以手动输入路径或者使用 “…” 按钮浏览选择。</li>
+<li>如果你的项目有自己的 CMake 配置文件（CMakeLists.txt），你可以在 “CMake options”（CMake 选项）字段中添加任何你想要传递给 CMake 的参数。这些参数会影响项目的构建过程。</li>
+<li>点击 “Apply” 按钮保存配置。</li>
+</ol>
+<p>完成上述配置后，CLion 将根据你选择的工具链和 CMake 配置来构建和编译你的项目。确保你的工程设置和 CMakeLists.txt 文件正确配置，这样你就能顺利构建和运行你的 C++ 项目了。</p>
+</blockquote>
+<p>在配置 <code>CMake</code> 时有一个 <code>Toolchain</code> 选项，就可以选择我们之前设置的 <code>Toolchain</code>，甚至直接可以选择 <code>Remote</code>，使用 <code>ssh</code> 使用服务器进行编译。</p>
+
+            </div>
+            <hr/>
+
+            
+            <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.88rem;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-large waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fa fa-close"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.png" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+            
+
+            <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    <div class="social-share" data-disabled="qzone" data-wechat-qrcode-helper="<p>微信里点“发现”->“扫一扫”二维码便可查看分享。</p>"></div>
+    
+</div>
+
+<script src="/libs/share/js/social-share.min.js"></script>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        <p class="reprint-tip">
+            <i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;
+            <span>转载规则</span>
+        </p>
+        
+            <div class="center-align">
+                <a rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                    <img alt=""
+                         style="border-width:0"
+                         src="https://i.creativecommons.org/l/by/4.0/88x31.png"/>
+                </a>
+            </div>
+            <br/>
+            <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
+                  property="dct:title" rel="dct:type">
+                    《CLion Toolchains》
+                </span> 由
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2023/07/26/clion-toolchains/" property="cc:attributionName"
+               rel="cc:attributionURL">
+                Mycroft Wong
+            </a> 采用
+            <a rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                知识共享署名 4.0 国际许可协议
+            </a>进行许可。
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+            <div class="article-badge left-badge badge-text-color">
+                <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/2023/07/26/clion-toolchains/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/37.jpg" class="responsive-img" alt="CLion Toolchains">
+                        
+                        <span class="card-title">CLion Toolchains</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            CLion ToolchainsToolchains 工具链，一些列工具。
+ChatGPT 解答 Toolchains 是什么：
+
+在 CLion 中，Toolchain 是指编译和构建项目所需的一组工具和配置。它包括编译器、链接器、构建系
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2023-07-26
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-user fa-fw"></i>
+                            Mycroft Wong
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge badge-text-color">
+                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2023/06/13/install-cmake/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/32.jpg" class="responsive-img" alt="Install CMake">
+                        
+                        <span class="card-title">Install CMake</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            Install CMakeUbuntu 22.04 仓库目前的 CMake 版本是 3.22.1-1ubuntu1.22.04.1，有时需要安装更新的版本，则可以下载官方包进行安装。
+下载地址：
+
+https://github.com/Ki
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2023-06-13
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-user fa-fw"></i>
+                            Mycroft Wong
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: Mycroft<br />'
+            + '作者: Mycroft Wong<br />'
+            + '链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="fa fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fa fa-list"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            collapseDepth: 6,
+            headingSelector: 'h2, h3, h4, h5'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4, h5').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).slideUp(500);
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).slideDown(500);
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+    
+
+</main>
+
+
+<footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            本站由&copy;<a href="https://MycroftWong.github.io/" target="_blank">Mycroft Wong</a>基于
+            <a href="https://hexo.io/" target="_blank">Hexo</a>搭建.
+
+            
+                &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
+                <span class="white-color">56.1k</span>
+            
+
+            
+			
+                <br>
+                
+                <span id="busuanzi_container_site_pv">
+                    <i class="fa fa-heart-o"></i>
+                    本站总访问量 <span id="busuanzi_value_site_pv" class="white-color"></span>
+                </span>
+                
+                
+                <span id="busuanzi_container_site_uv">
+                    <i class="fa fa-users"></i>
+                    次,&nbsp;访客数 <span id="busuanzi_value_site_uv" class="white-color"></span> 人.
+                </span>
+                
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/MycroftWong" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fa fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:mycroftwong@gmail.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fa fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fa fa-rss"></i>
+    </a>
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+<!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fa fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+<!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fa fa-angle-up"></i>
+    </a>
+</div>
+
+
+<script src="/libs/materialize/materialize.min.js"></script>
+<script src="/libs/masonry/masonry.pkgd.min.js"></script>
+<script src="/libs/aos/aos.js"></script>
+<script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+<script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+<script src="/js/matery.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+
+
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+
+
+</body>
+</html>
