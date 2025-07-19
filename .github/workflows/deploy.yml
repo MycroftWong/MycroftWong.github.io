@@ -1,0 +1,35 @@
+name: Deploy Hugo to GitHub Pages
+
+on:
+  push:
+    branches: [blog]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout blog branch
+        uses: actions/checkout@v4
+        with:
+          ref: blog
+          submodules: "recursive"
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: "latest"
+
+      - name: Build Hugo site
+        run: |
+          hugo
+          echo "Hugo build completed. Public directory contents:"
+          ls -la ./public/
+
+      - name: Deploy to main branch
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
+          publish_branch: main
+          keep_files: false
+          force_orphan: true
