@@ -1,0 +1,15 @@
+baseURL = 'https://mycroftwong.github.io/'
+title = "Mycroft Wong's Blog"
+languageCode = 'en-us'
+theme = "PaperMod"
+
+[params]
+color = 'linen'
+github = 'MycroftWong'
+rss = true
+
+name = 'Mycroft Wong'
+bio = 'Mobile developer'
+
+[params.contact]
+email = 'mycroftwong@gmail.com'

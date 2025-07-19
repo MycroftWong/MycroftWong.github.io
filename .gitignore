@@ -1,0 +1,7 @@
+/public/
+/resources/
+
+.vscode
+.DS_Store
+
+.hugo_build.lock
