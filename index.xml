@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Mycroft Wong&#39;s Blog</title>
+    <link>https://mycroftwong.github.io/</link>
+    <description>Recent content on Mycroft Wong&#39;s Blog</description>
+    <generator>Hugo -- 0.148.2</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 28 Jul 2025 09:56:41 +0800</lastBuildDate>
+    <atom:link href="https://mycroftwong.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Jenkinsfile Summary</title>
+      <link>https://mycroftwong.github.io/posts/jenkinsfile-summary/</link>
+      <pubDate>Mon, 28 Jul 2025 09:56:41 +0800</pubDate>
+      <guid>https://mycroftwong.github.io/posts/jenkinsfile-summary/</guid>
+      <description>&lt;p&gt;This document summarizes my key learnings and experiences from writing a Jenkinsfile to implement an Android Jenkins pipeline. It highlights the challenges I encountered, the unfamiliar syntax I discovered, and other insights gained throughout the process.&lt;/p&gt;
+&lt;h2 id=&#34;1-agent-declaration&#34;&gt;1. Agent Declaration&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-groovy&#34; data-lang=&#34;groovy&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;agent any
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;Specifies that any available agent can execute the pipeline&lt;/li&gt;
+&lt;li&gt;Can be customized with agent tags: &lt;code&gt;agent { label &#39;android-builder&#39; }&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;2-environment-block&#34;&gt;2. Environment Block&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-groovy&#34; data-lang=&#34;groovy&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;environment &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    ANDROID_HOME &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/opt/android/sdk&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    JAVA_HOME &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/Library/Java/OpenJDK/jdk-18.0.2.jdk/Contents/Home&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    PATH &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;${JAVA_HOME}/bin:$PATH&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;// ... other global variables
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Serves two main purposes:&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Install Zsh</title>
+      <link>https://mycroftwong.github.io/posts/install-zsh/</link>
+      <pubDate>Tue, 22 Jul 2025 14:38:56 +0800</pubDate>
+      <guid>https://mycroftwong.github.io/posts/install-zsh/</guid>
+      <description>&lt;p&gt;Zsh is almost best shell nowadays, because it has oh-my-zsh :). You can configure a theme, add useful plugins, such as zsh-syntax-highlighting and zsh-autosuggestions.&lt;/p&gt;
+&lt;p&gt;Here&amp;rsquo;s a simple process of installing and configuring zsh.&lt;/p&gt;
+&lt;h2 id=&#34;step-1-install-zsh&#34;&gt;Step 1: Install Zsh&lt;/h2&gt;
+&lt;h3 id=&#34;on-ubuntudebian&#34;&gt;On Ubuntu/Debian&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo apt install zsh wget git -y
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;on-macos&#34;&gt;On macOS&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;brew install zsh wget git
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;After installation, set Zsh as your default shell(or not, it will automatically change to zsh while installing oh-my-zsh):&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Install Hugo</title>
+      <link>https://mycroftwong.github.io/posts/install-hugo/</link>
+      <pubDate>Sat, 19 Jul 2025 15:43:08 +0800</pubDate>
+      <guid>https://mycroftwong.github.io/posts/install-hugo/</guid>
+      <description>&lt;p&gt;In this guide, I&amp;rsquo;ll walk you through the complete process of setting up a Hugo blog from scratch. Hugo is a fast and flexible static site generator written in Go, perfect for building blogs, documentation sites, and portfolios.&lt;/p&gt;
+&lt;h2 id=&#34;1-install-hugo&#34;&gt;1. Install Hugo&lt;/h2&gt;
+&lt;h3 id=&#34;homebrew&#34;&gt;Homebrew&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;brew install hugo
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;verify-installation&#34;&gt;Verify Installation&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hugo version
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# hugo v0.148.1+extended+withdeploy darwin/amd64 BuildDate=2025-07-11T12:56:21Z VendorInfo=brew&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;2-create-a-new-site&#34;&gt;2. Create a New Site&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hugo new site blog
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cd blog
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;3-initialize-git-repository&#34;&gt;3. Initialize Git Repository&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;git init
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Remember to add &lt;code&gt;/public/&lt;/code&gt;, &lt;code&gt;.hugo_build.lock&lt;/code&gt;, and &lt;code&gt;.DS_Store&lt;/code&gt; to &lt;code&gt;.gitignore&lt;/code&gt; to avoid committing built files:&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
